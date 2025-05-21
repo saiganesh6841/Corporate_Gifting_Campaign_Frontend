@@ -6,7 +6,6 @@ import { Field } from "@fluentui/react-components";
 const LoginFields = ({ services, classes }) => {
   return (
     <div>
-      {/* <Field label="Email" required> */}
       <CustomTextFiled
         type={"number"}
         placeholder="Enter you Email"
@@ -20,7 +19,6 @@ const LoginFields = ({ services, classes }) => {
         field="Email"
         required={true}
       />
-      {/* </Field> */}
       <CustomTextFiled
         type={"password"}
         placeholder="Enter your password"

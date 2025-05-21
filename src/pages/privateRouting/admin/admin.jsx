@@ -1,4 +1,5 @@
 import React from "react";
+import Topbar from "./topbar";
 
 function Admin() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -7,7 +8,7 @@ function Admin() {
   };
   return (
     <div>
-      <TopBar handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
+      <Topbar handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
     </div>
   );
 }

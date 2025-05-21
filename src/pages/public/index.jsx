@@ -1,16 +1,14 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./login/index";
+import Login from "./login";
 // import SetPassword from "./setPassword";
 
 const Index = () => {
-  // alert("hii");
   return (
-    
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} />
       {/* <Route path="/login" element={<Login />} /> */}
-      {/* <Route path="/forget-password" element={<SetPassword />} /> */}
     </Routes>
   );
 };

@@ -55,7 +55,7 @@ function CustomTextFiled({
             sx={{
               position: "absolute",
               right: "10px",
-              top: "13px",
+              top: "36px",
               color: "#829CC3",
               cursor: "pointer",
             }}
@@ -67,7 +67,7 @@ function CustomTextFiled({
               position: "absolute",
               right: "10px",
               color: "#829CC3",
-              top: "13px",
+              top: "36px",
               cursor: "pointer",
             }}
             onClick={() => setIsShowPassword(true)}
