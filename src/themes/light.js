@@ -9,14 +9,13 @@ export const LIGHT = createTheme(BASE_THEME, {
       main: "#561E1E",
     },
     secondary: {
-      main: "#FDEFFF",
+      main: "#C98383",
     },
     info: {
       main: "#1EA5FC",
     },
     background: {
-      default: "#ffffff",
-      paper: "#ffffff",
+      default: "#F6F3F3", // body background color
     },
   },
   custom: {

@@ -1,32 +1,30 @@
 import { Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/styles";
+import { useTranslation } from "react-i18next";
 import { useStyles } from "./styles/style";
-
 import { Logout } from "@mui/icons-material";
-// import ReusableDialog from "../../../../components/dialog/ReusableDialog";
-// import PrimaryBtn from "../../../../components/Button/PrimaryBtn";
-// import { store } from "../../../..";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const LeftDrawer = ({
   isMobile,
   menus,
-  translate,
   allowedMenus,
-  handleDrawerOpen,
-  handleDrawerClose,
+  handleCloseDrawer,
+  handleOpenDrawer,
 }) => {
-  const history = useHistory();
-  const path = history.location.pathname;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
   const classes = useStyles();
   const theme = useTheme();
+  const { t } = useTranslation(); // ✅ Use i18n translation hook
 
-  const [expandedMenus, setExpandedMenus] = React.useState([]);
+  const [expandedMenus, setExpandedMenus] = useState([]);
   const [expandedMasterData, setExpandedMasterData] = useState(true);
-
   const [expanded, setExpanded] = useState({});
-
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleExpand = (index) => {
@@ -38,22 +36,20 @@ const LeftDrawer = ({
 
   const handleClick = (index) => {
     setExpandedMasterData(false);
-
     if (expandedMenus.includes(index)) {
-      setExpandedMenus((prevExpandedMenus) =>
-        prevExpandedMenus.filter((item) => item !== index)
-      );
+      setExpandedMenus((prev) => prev.filter((item) => item !== index));
     } else {
-      setExpandedMenus((prevExpandedMenus) => [...prevExpandedMenus, index]);
+      setExpandedMenus((prev) => [...prev, index]);
     }
   };
+
   return (
     <Stack
       className={`${classes.sideBarRoot} scroll__remove ${
         isMobile ? "collapsed" : ""
       }`}
-      onMouseEnter={handleDrawerOpen}
-      onMouseLeave={handleDrawerClose}
+      onMouseEnter={handleOpenDrawer}
+      onMouseLeave={handleCloseDrawer}
     >
       <Stack
         className={classes.menuwrap}
@@ -61,20 +57,17 @@ const LeftDrawer = ({
       >
         {menus?.map((value, key) => {
           if (!allowedMenus?.includes(value?.permissionLevel)) return;
-          const mainPath = history?.location?.pathname?.split("/");
-          mainPath?.pop();
 
           return (
-            <React.Fragment>
+            <React.Fragment key={key}>
               <Stack
                 onClick={() => {
-                  handleClick(key); // Pass the correct index (key) here
-                  history?.replace(value?.link);
+                  handleClick(key);
+                  navigate(value?.link);
                   handleExpand(key);
                   handleClick(key);
                 }}
                 className={classes.menuRoot}
-                key={key}
                 style={{
                   alignItems: isMobile && "center",
                 }}
@@ -117,71 +110,104 @@ const LeftDrawer = ({
                       value?.link === path
                         ? theme.palette.primary.main
                         : theme.palette.secondary.main,
-
                     display: isMobile && "none",
-                    fontFamily: "Work Sans",
                   }}
-                  onClick={() => {
-                    history?.push(value?.link);
-                    handleClick();
-                    handleExpand();
+                  onClick={(e) => {
+                    navigate(value?.link);
                   }}
                 >
-                  {translate(value?.display)}
+                  {t(value?.display)}
                 </Typography>
+                {value?.isExpandIconVisible && (
+                  <>
+                    {expanded[key] ? (
+                      <ExpandLessIcon
+                        style={{
+                          marginLeft: "auto",
+                          display: isMobile ? "none" : "",
+                          color:
+                            (expandedMasterData &&
+                              value?.stylesForExpandedMenu &&
+                              value?.stylesForExpandedMenu(
+                                path,
+                                value?.display
+                              )) ||
+                            value?.link === path
+                              ? theme.palette.primary.main
+                              : theme.palette.secondary.main,
+                        }}
+                      />
+                    ) : (
+                      <ExpandMoreIcon
+                        style={{
+                          marginLeft: "auto",
+                          display: isMobile ? "none" : "",
+                          color:
+                            (expandedMasterData &&
+                              value?.stylesForExpandedMenu &&
+                              value?.stylesForExpandedMenu(
+                                path,
+                                value?.display
+                              )) ||
+                            value?.link === path
+                              ? theme.palette.primary.main
+                              : theme.palette.secondary.main,
+                        }}
+                      />
+                    )}
+                  </>
+                )}
               </Stack>
 
               {value?.subMenu?.map((itemValue, subIndex) => {
                 if (!allowedMenus?.includes(itemValue?.permissionLevel)) return;
 
                 return (
-                  <>
-                    <React.Fragment key={subIndex}>
-                      {expandedMenus.includes(key) && (
-                        <Stack
-                          onClick={() => {
-                            setExpandedMasterData(true);
-                            history?.push(itemValue?.link);
-                          }}
-                          className={classes.menuRoot}
-                          key={key}
+                  <React.Fragment key={subIndex}>
+                    {expandedMenus.includes(key) && (
+                      <Stack
+                        onClick={() => {
+                          setExpandedMasterData(true);
+                          navigate(itemValue?.link);
+                        }}
+                        className={classes.menuRoot}
+                        style={{
+                          alignItems: isMobile && "center",
+                          marginLeft: isMobile ? "" : "1rem",
+                        }}
+                      >
+                        {itemValue?.link === path
+                          ? React.cloneElement(itemValue?.filledIcon, {
+                              style: { color: theme.palette.primary.main },
+                            })
+                          : React.cloneElement(itemValue?.regularIcon, {
+                              style: { color: theme.palette.secondary.main },
+                            })}
+
+                        <Typography
+                          variant="subtitle1"
+                          className={classes.profileText}
                           style={{
-                            alignItems: isMobile && "center",
-                            marginLeft: isMobile ? "" : "1rem",
+                            fontWeight: itemValue?.link === path && 700,
+                            color:
+                              itemValue?.link === path
+                                ? theme.palette.primary.main
+                                : theme.palette.secondary.main,
+                            display: isMobile && "none",
+                            fontFamily: "Work Sans",
                           }}
                         >
-                          {itemValue?.link === path
-                            ? React.cloneElement(itemValue?.filledIcon, {
-                                style: { color: theme.palette.primary.main },
-                              })
-                            : React.cloneElement(itemValue?.regularIcon, {
-                                style: { color: theme.palette.secondary.main },
-                              })}
-
-                          <Typography
-                            variant="subtitle1"
-                            className={classes.profileText}
-                            style={{
-                              fontWeight: itemValue?.link === path && 700,
-                              color:
-                                itemValue?.link === path
-                                  ? theme.palette.primary.main
-                                  : theme.palette.secondary.main,
-                              display: isMobile && "none",
-                              fontFamily: "Work Sans",
-                            }}
-                          >
-                            {translate(itemValue?.display)}
-                          </Typography>
-                        </Stack>
-                      )}
-                    </React.Fragment>
-                  </>
+                          {t(itemValue?.display)}
+                        </Typography>
+                      </Stack>
+                    )}
+                  </React.Fragment>
                 );
               })}
             </React.Fragment>
           );
         })}
+
         <div
           style={{
             display: "flex",
@@ -190,64 +216,16 @@ const LeftDrawer = ({
             marginLeft: "16px",
             marginTop: "60px",
             paddingBottom: "30px",
-            // backgroundColor: theme.palette.secondary.main,
             width: "100%",
           }}
         >
           <Logout
             className={classes.logoutIcon}
-            sx={{
-              fill: "red",
-            }}
+            sx={{ fill: "red" }}
             onClick={() => setIsLogoutModalOpen(true)}
           />
         </div>
       </Stack>
-
-      {/* <ReusableDialog
-        title="Logout"
-        isOpen={isLogoutModalOpen}
-        onDismissModal={() => setIsLogoutModalOpen(false)}
-        zIndex={999999999}
-      >
-        <div style={{}}>
-          <Typography
-            sx={{
-              margin: "16px 0px",
-              fontSize: "18px",
-            }}
-          >
-            Are you sure you want to logout?
-          </Typography>
-
-          <div
-            style={{
-              textAlign: "end",
-              gap: "12px",
-            }}
-          >
-            <PrimaryBtn
-              variant="outlined"
-              style={{
-                padding: "8px 16px",
-              }}
-              onClick={() => setIsLogoutModalOpen(false)}
-            >
-              Cancel
-            </PrimaryBtn>
-            <PrimaryBtn
-              style={{
-                padding: "8px 16px",
-              }}
-              onClick={() => {
-                store.dispatch({ type: "LOGOUT" });
-              }}
-            >
-              Logout
-            </PrimaryBtn>
-          </div>
-        </div>
-      </ReusableDialog> */}
     </Stack>
   );
 };

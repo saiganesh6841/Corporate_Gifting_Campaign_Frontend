@@ -227,7 +227,7 @@ class LocalStorage {
   //side menu with url with role id
   static adminSideMenuWithRoleID = {
     Dashboard: "/admin/dashboard",
-    User: "/admin/users",
+    Users: "/admin/users",
     Role: "/admin/security/role",
     CRM: "/admin/crm",
     Leads: "/admin/crm/leads",
@@ -250,12 +250,22 @@ class LocalStorage {
     Vendor: "/admin/inventory/vendors",
     Advertisement: "/admin/advertisements",
     Subscriptions: "/admin/subscriptions",
-    Order: "/admin/orders",
+    Orders: "/admin/orders",
+    Appointments: "/admin/appointments",
     Challenges: "/admin/inventory/challenges",
     goldenTips: "/admin/inventory/goldenTips",
-    Categories: "/admin/inventory/categories",
+    Specializations: "/admin/masterData/specializations",
     Settings: "/admin/settings",
     Plans: "/admin/plans",
+    Hospitals: "/admin/hospitals",
+    Requests: "/admin/transactions/requests",
+    History: "/admin/transactions/history",
+    Transactions: "/admin/transactions",
+    Complaints: "/admin/support/complaints",
+    "Manage FAQs": "/admin/support/manageFAQs",
+    Support: "/admin/support",
+    "FAQs Category": "/admin/masterData/FAQsCategory",
+    "Master Data": "/admin/masterData",
   };
   static adminButtonPermission = [];
   static buttonPermissionDefault = [

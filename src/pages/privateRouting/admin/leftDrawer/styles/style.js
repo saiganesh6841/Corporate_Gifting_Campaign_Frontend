@@ -6,9 +6,9 @@ export const useStyles = makeStyles((theme) => ({
   sideBarRoot: {
     color: "rgb(33, 43, 54)",
     transition: "width 0.3s ease-in-out",
-    boxShadow: "none",
     backgroundImage: "none",
     overflowY: "auto",
+    overflowX: "hidden",
     display: "flex",
     flexDirection: "column",
     height: "80vh",
@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: "20px", // Apply curve only on right side
     cursor: "pointer",
     width: "220px",
-
+    boxShadow: "0px 8.23px 28.8px 0px #4859661A",
     "&.collapsed": {
       width: "55px",
     },
