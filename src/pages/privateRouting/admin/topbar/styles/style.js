@@ -1,69 +1,48 @@
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
-  inputStyles: {
-    padding: "8px 16px",
-    backgroundColor: "#E6EBF2",
-    fontSize: "18px",
-    border: "none",
-    height: "35px",
-    borderRadius: "8px",
-    width: "400px",
+  root: {
+    flexGrow: 1,
+  },
+  title: {
+    flexGrow: 1,
+  },
+  logo: {
+    height: "3.125rem",
+    width: "85px",
+    objectFit: "contain",
+  },
 
-    "&::placeholder": {
-      color: "#4879C7",
-    },
-    "&:focus": {
-      border: "none",
-      outline: "none",
-    },
+  appBarDrawerClose: {
+    backgroundColor: "#fff",
   },
-  secondGrid: {
-    backgroundColor: "#FDEAEA",
-    padding: "90px !important",
+  Toolbar: {
+    // minHeight: theme.topNavbar.height,
+    marginLeft: ".5rem",
   },
-  loginPage: {
-    boxShadow: "0px 6px 16px 0px #00000014",
-    background: "#fff",
-    width: "450px",
-    // height: "500px",
-    borderRadius: "6px",
-    padding: "1rem",
+  menuButton: {
+    marginRight: theme.spacing(1),
   },
-  titleText: {
-    fontWeight: 700,
-    textAlign: "left",
-    fontSize: "18px",
+  textLimit: {
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
   },
-  subTitleText: {
-    fontWeight: 500,
-    textAlign: "left",
-    fontSize: "14px",
-    color: "#888888",
+  floatRight: {
+    textAlign: "right",
   },
-  forgotPassword: {
-    display: "flex",
-    justifyContent: "end",
-    margin: 0,
-    fontFamily: "Segoe UI",
+  languageMenuColor: {
+    color: theme.custom.topHeader.toolBarLanguage,
+    background: "transparent",
   },
-  forgotPasswordText: {
-    color: "#323130",
-    fontFamily: "Segoe UI",
-    fontSize: "14px",
-    fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
-    "&:hover": {
-      color: "#1976D2",
-      textDecoration: "underline",
-    },
+  logoutIcon: {
+    color: theme.custom.topHeader.toolBarLogout,
   },
-  resendOTP: {
-    textDecoration: "none",
-    marginTop: "8px",
-    cursor: "pointer",
-    fontFamily: "Segoe UI",
+  profile: {
+    width: "40px",
+    height: "35px",
+    borderRadius: "100%",
+    overflow: "hidden",
   },
 }));
 

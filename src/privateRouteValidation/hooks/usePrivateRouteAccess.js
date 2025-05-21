@@ -26,8 +26,8 @@ const usePrivateRouteAccess = () => {
 
     try {
       const response = await APIRequest.request(
-        "POST",
-        ConfigAPIURL.isLogin,
+        "GET",
+        ConfigAPIURL.sessionValidation,
         ""
       );
 

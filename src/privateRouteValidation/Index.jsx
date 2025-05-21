@@ -3,13 +3,18 @@ import { Navigate, Outlet } from "react-router-dom";
 import usePrivateRouteAccess from "./hooks/usePrivateRouteAccess";
 import LoadingBackdrop from "./components/LoadingBackdrop";
 
-const PrivateRouteValidation = () => {
+const PrivateRouteValidation = ({ children }) => {
   const { haveAccess, loaded } = usePrivateRouteAccess();
+
+  console.log(haveAccess, loaded, "minhal erripuka");
+  // alert("hiii");
 
   if (!loaded) return <LoadingBackdrop />;
   if (!haveAccess) return <LoadingBackdrop accessDenied />;
-
-  return <Outlet />;
+  {
+    // /* <Outlet /> */
+  }
+  return children;
 };
 
 export default PrivateRouteValidation;
