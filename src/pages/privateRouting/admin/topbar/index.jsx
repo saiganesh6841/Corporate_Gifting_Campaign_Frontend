@@ -5,6 +5,7 @@ import { Icon } from "@fluentui/react/lib/Icon";
 import { AlertBadge24Regular } from "@fluentui/react-icons";
 import { Logout } from "@mui/icons-material";
 import useStyles from "./styles/style";
+import floraImage from "../../../../assets/Images/floraName.png";
 
 function TopBar(props) {
   const classes = useStyles();
@@ -45,8 +46,7 @@ function TopBar(props) {
               <img
                 className={classes.logo}
                 // style={{ width: "100%", height: "100%" }}
-                // src={images.companyLogo}
-                // src={images.smileJi_logo}
+                src={floraImage}
                 alt="logo"
               />
             </Stack>

@@ -38,8 +38,7 @@ export const BASE_THEME = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          background:
-            "linear-gradient(275deg, rgba(8,255,239,1) 44%, rgba(0,212,198,1) 52%, rgba(0,171,159,1) 100%)",
+          background: " #FFFFFF",
         },
       },
     },
@@ -185,4 +184,7 @@ export const BASE_THEME = createTheme({
     },
   },
   spacing: [4, 8, 12, 16, 24, 32], // xSmall, small, medium, large, XLarge, doubleLarge
+  topNavbar: {
+    height: "3.125rem",
+  },
 });

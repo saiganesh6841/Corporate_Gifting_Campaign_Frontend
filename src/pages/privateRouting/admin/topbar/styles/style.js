@@ -8,16 +8,25 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   logo: {
-    height: "3.125rem",
+    height: "2.125rem",
     width: "85px",
     objectFit: "contain",
   },
-
+  appBar: {
+    [theme.breakpoints.up("md")]: {
+      // width: `calc(100% - ${drawerWidth}px)`,
+      minHeight: theme.topNavbar.height,
+    },
+    minHeight: theme.topNavbar.height,
+    left: 0,
+    right: 0,
+    backgroundImage: theme.custom.topHeader.toolbarColor,
+  },
   appBarDrawerClose: {
-    backgroundColor: "#fff",
+    backgroundImage: theme.custom.topHeader.toolbarColor,
   },
   Toolbar: {
-    // minHeight: theme.topNavbar.height,
+    minHeight: theme.topNavbar.height,
     marginLeft: ".5rem",
   },
   menuButton: {

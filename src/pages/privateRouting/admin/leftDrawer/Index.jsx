@@ -5,9 +5,9 @@ import { useTheme } from "@mui/styles";
 import { useStyles } from "./styles/style";
 
 import { Logout } from "@mui/icons-material";
-import ReusableDialog from "../../../../components/dialog/ReusableDialog";
-import PrimaryBtn from "../../../../components/Button/PrimaryBtn";
-import { store } from "../../../..";
+// import ReusableDialog from "../../../../components/dialog/ReusableDialog";
+// import PrimaryBtn from "../../../../components/Button/PrimaryBtn";
+// import { store } from "../../../..";
 
 const LeftDrawer = ({
   isMobile,
@@ -204,7 +204,7 @@ const LeftDrawer = ({
         </div>
       </Stack>
 
-      <ReusableDialog
+      {/* <ReusableDialog
         title="Logout"
         isOpen={isLogoutModalOpen}
         onDismissModal={() => setIsLogoutModalOpen(false)}
@@ -247,7 +247,7 @@ const LeftDrawer = ({
             </PrimaryBtn>
           </div>
         </div>
-      </ReusableDialog>
+      </ReusableDialog> */}
     </Stack>
   );
 };
