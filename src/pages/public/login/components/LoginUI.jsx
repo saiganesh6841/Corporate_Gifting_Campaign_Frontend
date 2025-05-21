@@ -1,72 +1,96 @@
 import { useTheme } from "@mui/styles";
-import React from "react";
+import React, { useEffect } from "react";
 import useStyles from "../styles/style";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import CustomTextFiled from "./CustomTextFiled";
-import Typography from "../../../../components/Text/Typography";
+import CustomTextFiled from "../../../../components/loginInputFields";
+import PrimaryBtn from "../../../../components/button";
+import LoginFields from "./LoginComponent";
+import OtpField from "./OtpComponent";
+import loginLogo from "../../../../assets/Images/LoginLogo.png";
 
-function LoginUI({ services }) {
-  const { loginDetails, setLoginDetails, errors, setErrors, onAccountLogin } =
-    services;
+function LoginUI({ services, classes }) {
+  const {
+    loginDetails,
+    setLoginDetails,
+    errors,
+    setErrors,
+    onAccountLogin,
+    otpTrue,
+    seconds,
+    minutes,
+    setMinutes,
+    setSeconds,
+    resendOTP,
+  } = services;
+
+  useEffect(() => {
+    if (otpTrue) {
+      const interval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        }
+        console.log(seconds, "seconds");
+        if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(interval);
+          } else {
+            setSeconds(59);
+            setMinutes(minutes - 1);
+          }
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [otpTrue, seconds, minutes]);
   return (
     <>
-      <CustomTextFiled
-        placeholder="Email"
-        value={loginDetails?.email || ""}
-        onChange={(e) => {
-          setLoginDetails((p) => ({ ...p, email: e.target.value }));
-          setErrors({ ...errors, email: "" });
-        }}
-        validationMessage={errors?.email || ""}
-      />
-      <CustomTextFiled
-        placeholder="Password"
-        type="password"
-        validationMessage={errors?.password || ""}
-        onChange={(e) => {
-          setLoginDetails((p) => ({ ...p, password: e.target.value }));
-          setErrors({ ...errors, password: "" });
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && loginDetails?.password) {
-            onAccountLogin();
-          }
-        }}
-      />
-      <Typography
-        variant="heading"
-        style={{
-          textAlign: "end",
-          marginTop: "0px",
-          position: "relative",
-          bottom: "20px",
-          color: "#829CC3",
-          fontWeight: "400",
-        }}
-      >
-        Forgot Password?
-      </Typography>
+      <div className={classes.loginPage}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "6px 0px",
+          }}
+        >
+          <img src={loginLogo} width="80px" height="80px" />
+        </div>
+        <Typography className={classes.titleText}>
+          {!otpTrue ? "Login" : "Verify OTP"}
+        </Typography>
+        <Typography className={classes.subTitleText}>
+          {!otpTrue
+            ? "Please Login to your account"
+            : `Sent to ${loginDetails?.mobileNo}`}
+        </Typography>
+        <br />
+        {!otpTrue ? (
+          <LoginFields services={services} classes={classes} />
+        ) : (
+          <OtpField
+            otp={services.otp}
+            setOTP={services.setOTP}
+            seconds={seconds}
+            minutes={minutes}
+            resendOTP={resendOTP}
+            classes={classes}
+          />
+        )}
 
-      <Button
-        sx={{
-          backgroundColor: "#7A8391",
-          width: "100%",
-          color: "#E6EBF2",
-          padding: "12px",
-          borderRadius: "8px",
-          fontSize: "16px",
-          fontWeight: "400",
-          textTransform: "capitalize",
-          "&:hover": {
-            backgroundColor: "#666F79",
-          },
-        }}
-        onClick={onAccountLogin}
-      >
-        Log in
-      </Button>
+        {/* <OtpField /> */}
+        <br />
+        <PrimaryBtn
+          onClick={() => {
+            !otpTrue ? services?.onAccountLogin() : services?.verifyOTP();
+          }}
+        >
+          {!otpTrue ? "Continue" : "Login"}
+        </PrimaryBtn>
+      </div>
     </>
   );
 }

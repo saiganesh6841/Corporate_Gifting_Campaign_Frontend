@@ -11,6 +11,8 @@ function CustomTextFiled({
   onChange,
   validationMessage,
   onKeyDown,
+  field,
+  required,
 }) {
   const classes = useStyles();
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -23,6 +25,9 @@ function CustomTextFiled({
         flexDirection: "column",
       }}
     >
+      <label>
+        {field} {required && <span style={{ color: "red" }}>*</span>}
+      </label>
       <input
         className={classes.inputStyles}
         type={type === "password" && !isShowPassword ? "password" : "text"}

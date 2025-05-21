@@ -35,7 +35,7 @@ const PrimaryBtn = (props) => {
       type="button"
       style={{
         ...style,
-        backgroundColor: disabled && "#868686",
+        backgroundColor: disabled && theme.palette.primary.main,
         cursor: disabled ? "not-allowed" : "pointer",
       }}
       className={classes?.[variant]}

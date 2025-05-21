@@ -18,8 +18,11 @@ function useServices() {
   });
 
   const navigate = useNavigate();
-
   const [errors, setErrors] = useState({});
+  const [otpTrue, setOtpTrue] = useState(false);
+  const [otp, setOTP] = useState("");
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(25);
 
   useEffect(() => {
     // isLogin();
@@ -58,15 +61,92 @@ function useServices() {
       })
     );
 
-    if (response?.data?.responseCode === 109) {
-      await isLogin();
-    } else {
-      publishNotification(response?.data?.message, "error");
+    if (
+      response?.data?.responseCode === 108 ||
+      response?.data?.responseCode === 103
+    ) {
+      publishNotification(
+        "Wrong Credentials / User not found",
+        "error",
+        3000,
+        anchorOrigin
+      );
+    } else if (response?.data?.responseCode === 116) {
+      publishNotification("Password attempts exceeded", "error", 3000);
+    } else if (response?.data?.responseCode === 122) {
+      setOtpTrue(true);
     }
+  };
 
-    console.log(response, "loginResponse");
+  const verifyOTP = async () => {
+    const response = await APIRequest.request(
+      "POST",
+      ConfigAPIURL.verifyOtp,
+      JSON.stringify({
+        otpVal: otp,
+      })
+    );
 
-    console.log(loginDetails, "loginDetails");
+    if (response !== undefined && response !== null) {
+      if (response.data.responseCode === 109) {
+        const newToken = response.data.token;
+        localStorage.setItem("token", newToken);
+        isLogin();
+      } else if (response.data.responseCode === 118) {
+        setSnakbarValues({
+          status: true,
+          severity: "error",
+          message: "Invalid OTP",
+        });
+      } else if (response.data.responseCode === 112) {
+        setSnakbarValues({
+          status: true,
+          severity: "error",
+          message: "You don't have any permission. Please contact admin",
+        });
+      }
+    } else {
+      setSnakbarValues({
+        status: true,
+        severity: "error",
+        message: "Server Error, Please try after sometime",
+      });
+    }
+  };
+
+  const resendOTP = async () => {
+    setMinutes(0);
+    setSeconds(25);
+
+    const response = await APIRequest.request(
+      "POST",
+      ConfigAPIURL.accountLogin,
+      JSON.stringify({
+        ...loginDetails,
+      })
+    );
+
+    //redirect based on user type
+    if (
+      response?.data?.responseCode === 108 ||
+      response?.data?.responseCode === 103
+    ) {
+      publishNotification("Wrong Credentials", "error");
+    } else if (response?.data?.responseCode === 116) {
+      publishNotification("Exceeded Password attempt", "error");
+    } else if (response?.data?.responseCode === 122) {
+      const newToken = response.data.token;
+      localStorage.setItem("token", newToken);
+      setResetTimer(true);
+      setOTP("");
+      // setBlockEntry(false);
+      publishNotification("OTP sent to your mobile number", "success");
+    } else if (response.data.responseCode === 104) {
+      publishNotification(
+        "Password is not matching, please check your password",
+        "error"
+      );
+    }
   };
   return {
     loginDetails,
@@ -74,6 +154,15 @@ function useServices() {
     errors,
     setErrors,
     onAccountLogin,
+    otpTrue,
+    verifyOTP,
+    otp,
+    setOTP,
+    seconds,
+    minutes,
+    setMinutes,
+    setSeconds,
+    resendOTP,
   };
 }
 
