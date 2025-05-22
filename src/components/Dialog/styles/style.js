@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   setUpModal: {
     position: "fixed",
     top: 0,
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     padding: "0px",
   },
   children: {
-    backgroundColor: "#ECF8FF",
+    backgroundColor: theme.palette.primary.light,
     position: "sticky",
     top: 0,
     zIndex: 1,

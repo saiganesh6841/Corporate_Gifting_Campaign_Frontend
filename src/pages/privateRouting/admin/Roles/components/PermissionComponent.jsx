@@ -64,7 +64,7 @@ const PermissionComponent = ({
                 fontWeight: selectLabel === permission?.label ? "700" : "",
                 // color: selectLabel === permission?.label ? "#ffff" : "",
 
-                fontFamily: "Segoe UI",
+                // fontFamily: "Segoe UI",
                 fontSize: "14px",
                 // backgroundColor:
                 //   selectLabel === permission?.label ? "#1EA5FC" : "",

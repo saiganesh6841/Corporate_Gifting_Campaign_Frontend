@@ -42,7 +42,7 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: "400",
     lineHeight: "1.57143",
     fontSize: "0.875rem",
-    fontFamily: '"Public Sans", sans-serif',
+    // fontFamily: '"Public Sans", sans-serif',
     color: "rgb(33, 43, 54)",
   },
   profileView: {
@@ -88,7 +88,7 @@ export const useStyles = makeStyles((theme) => ({
     transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
     lineHeight: "1.57143",
     fontSize: "0.875rem",
-    fontFamily: '"Public Sans", sans-serif',
+    // fontFamily: '"Public Sans", sans-serif',
     fontWeight: "400",
     height: "36px",
     position: "relative",

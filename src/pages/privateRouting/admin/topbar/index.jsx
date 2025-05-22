@@ -56,9 +56,10 @@ function TopBar(props) {
                 <Typography
                   variant="body2"
                   sx={{
-                    fontWeight: "bold",
+                    fontWeight: 700,
                     color: theme.palette.primary.main,
-                    fontSize: "12px",
+                    fontSize: "16px",
+                    // fontFamily: "Manrope",
                   }}
                 >
                   {LocalStorage?.userDetails?.email}
@@ -67,6 +68,7 @@ function TopBar(props) {
                   variant="caption"
                   color={theme.palette.primary.main}
                   fontSize={"12px"}
+                  // fontFamily={"Manrope"}
                 >
                   {" "}
                   {LocalStorage?.userDetails?.email}

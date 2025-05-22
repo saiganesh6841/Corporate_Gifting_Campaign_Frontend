@@ -31,10 +31,12 @@ export const LIGHT = createTheme(BASE_THEME, {
     mode: "light",
     primary: {
       main: "#561E1E",
+      light: "#FBE4E4",
     },
     secondary: {
       main: "#C98383",
     },
+
     info: {
       main: "#1EA5FC",
     },

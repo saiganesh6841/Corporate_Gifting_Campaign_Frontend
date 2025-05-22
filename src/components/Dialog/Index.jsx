@@ -35,16 +35,6 @@ function DialogModal({
               {title}
             </Typography>
             <div>
-              {isDownloadTemplateButtonVisible && (
-                <PrimaryBtn
-                  style={{
-                    marginRight: "12px",
-                  }}
-                  onClick={onDownloadTemplate}
-                >
-                  Download Template
-                </PrimaryBtn>
-              )}
               <Dismiss16Filled
                 style={{
                   color: "#1EA5FC",

@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import "./font.css";
 
-const font = "Segoe UI";
+const font = "Manrope";
 
 export const BASE_THEME = createTheme({
   components: {
