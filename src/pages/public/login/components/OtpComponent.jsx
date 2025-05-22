@@ -22,7 +22,7 @@ const OtpField = ({ otp, setOTP, seconds, minutes, resendOTP, classes }) => {
           width: "100%",
           maxWidth: "500px",
           margin: "0 auto",
-          fontFamily: "Segoe UI",
+          // fontFamily: "Segoe UI",
         }}
         inputStyle={{
           flex: "1",
@@ -61,7 +61,7 @@ const OtpField = ({ otp, setOTP, seconds, minutes, resendOTP, classes }) => {
                 marginTop: "8px",
                 color: "#868686",
                 cursor: seconds !== 0 ? "not-allowed" : "pointer",
-                fontFamily: "Segoe UI",
+                // fontFamily: "Segoe UI",
               }}
             >
               Resend OTP
@@ -81,7 +81,7 @@ const OtpField = ({ otp, setOTP, seconds, minutes, resendOTP, classes }) => {
           )}
         </div>
         <div>
-          <span style={{ fontFamily: "Segoe UI" }}>
+          <span style={{ fontFamily: "Manrope" }}>
             {minutes < 10 ? `0${minutes}` : minutes}:
             {seconds < 10 ? `0${seconds}` : seconds}
           </span>

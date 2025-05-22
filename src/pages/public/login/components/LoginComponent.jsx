@@ -41,7 +41,7 @@ const LoginFields = ({ services, classes }) => {
           to="/admin/password/forgotpassword"
           style={{
             textDecoration: "none",
-            fontFamily: "Segoe UI",
+            // fontFamily: "Segoe UI",
             // visibility: "hidden",
           }}
         >

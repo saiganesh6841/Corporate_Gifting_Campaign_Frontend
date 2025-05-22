@@ -4,10 +4,23 @@ import {
   MoreHorizontal24Regular,
 } from "@fluentui/react-icons";
 import { SearchBox } from "@fluentui/react/lib/SearchBox";
-import { Stack, Typography, useTheme } from "@mui/material";
+import { Stack, useTheme } from "@mui/material";
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { Popover } from "../popover/Index";
 import { useStyles } from "../tableButtons/styles";
+import Typography from "../Text/Typogarphy";
+
+import { createTheme, ThemeProvider } from "@fluentui/react";
+import SearchBar from "../customTableSearch";
+
+const fluentTheme = createTheme({
+  semanticColors: {
+    inputText: "#333",
+    inputBorder: "#561E1E33",
+    inputPlaceholderText: "#aaa",
+    inputIcon: "#561E1E", // <-- Icon color here
+  },
+});
 // import ResponsiveTypography from "../Typography/Text";
 
 const iconStyleProps: FluentIconsProps = {
@@ -22,7 +35,7 @@ function IconsRender({ classes, button, width, functions, color }) {
   const FilledButton = button.icons.filled;
   const [filled, setFilled] = useState(true);
 
-  iconStyleProps["primaryFill"] = color;
+  iconStyleProps["primaryFill"] = filled ? color : "#FFFFFF";
 
   return (
     <Stack
@@ -31,14 +44,19 @@ function IconsRender({ classes, button, width, functions, color }) {
       onMouseLeave={() => setFilled(true)}
       className={classes.iconWrap}
       style={{
-        borderBottom: !filled
-          ? `2.3px solid ${theme?.palette?.primary?.main}` //#1EA5FC
-          : "2.3px solid transparent",
-        padding: "6px 8px",
+        // borderBottom: !filled
+        //   ? `2.3px solid ${theme?.palette?.primary?.main}` //#1EA5FC
+        //   : "2.3px solid transparent",
+        border: `1px solid #561E1E33`,
+        borderRadius: "12px",
+        padding: "8px 12px",
         // minWidth: width ? width : "90px",
-        borderRadius: "2px",
+        // borderRadius: "2px",
         transition: "backgroundColor 5s",
         marginRight: "4px",
+        backgroundColor: !filled
+          ? `${theme?.palette?.primary?.main}`
+          : "transparent",
       }}
     >
       {filled ? (
@@ -46,16 +64,15 @@ function IconsRender({ classes, button, width, functions, color }) {
       ) : (
         <FilledButton {...iconStyleProps} />
       )}
-      <ResponsiveTypography
-        fs="medium"
+      <Typography
         // style={{fontWeight: filled ? 400 : 600, color: filled ? "black": "#1EA5FC"}}
         style={{
           fontWeight: 400,
-          color: filled ? "black" : theme?.palette?.primary?.main,
+          color: filled ? theme?.palette?.primary?.main : "#FFFFFF",
         }}
       >
         {button.label}
-      </ResponsiveTypography>
+      </Typography>
     </Stack>
   );
 }
@@ -181,21 +198,15 @@ const Toolbar = ({
               style={{ cursor: "pointer" }}
             >
               <Filter24Regular {...iconStyleProps} />
-              <ResponsiveTypography
-                fs="medium"
-                style={{ fontWeight: 400, color: "black" }}
-              >
+              <Typography style={{ fontWeight: 400, color: "black" }}>
                 {"Filter"}
-              </ResponsiveTypography>
+              </Typography>
             </Stack>
 
             <Stack width="200px">
-              <SearchBox
-                placeholder="Search here"
-                onChange={handleSearch}
-                onClear={() => resetRecords()}
-              />
+              <SearchBar placeholder="Quick search" onChange={handleSearch} />
             </Stack>
+
             <ColumnTriple24Regular
               onClick={() =>
                 buttonFunctions?.editColumn && buttonFunctions?.editColumn()

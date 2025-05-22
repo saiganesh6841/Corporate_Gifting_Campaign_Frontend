@@ -32,7 +32,7 @@ function Admin(props) {
 
       <div
         style={{
-          margin: "50px 0px 0px 100px",
+          margin: "70px 0px 0px 100px",
         }}
       >
         <AdminContentRouting />

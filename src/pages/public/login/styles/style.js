@@ -45,11 +45,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "end",
     margin: 0,
-    fontFamily: "Segoe UI",
+    // fontFamily: "Segoe UI",
   },
   forgotPasswordText: {
     color: "#323130",
-    fontFamily: "Segoe UI",
+    // fontFamily: "Segoe UI",
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     marginTop: "8px",
     cursor: "pointer",
-    fontFamily: "Segoe UI",
+    // fontFamily: "Segoe UI",
   },
 }));
 

@@ -109,7 +109,13 @@ function User() {
       <Header classes={classes} text="Users" />
       <Separator className="seperator" style={{ margin: 0, padding: 0 }} />
 
-      <div className={classes.spaceBetween}>
+      <div
+        className={classes.spaceBetween}
+        style={{
+          backgroundColor: "#FFFFFF",
+          padding: "14px",
+        }}
+      >
         <Toolbar
           classes={classes}
           tableButtons={query?.active ? activeTableButton : inactiveTableButton}
