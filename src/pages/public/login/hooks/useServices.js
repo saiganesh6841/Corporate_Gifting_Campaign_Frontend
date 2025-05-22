@@ -25,7 +25,7 @@ function useServices() {
   const [seconds, setSeconds] = useState(25);
 
   useEffect(() => {
-    // isLogin();
+    isLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -36,6 +36,15 @@ function useServices() {
       ""
     );
     if (response?.data?.responseCode === 109) {
+      if (!response?.data?.user?.permission?.active) {
+        publishNotification(
+          "You do not have permission to log in. Please contact the administrator for assistance",
+          "error"
+        );
+        localStorage.clear();
+        sessionStorage.clear();
+        return;
+      }
       const userDetails = { ...response?.data?.user };
       LocalStorage.userDetails = userDetails;
       localStorage.setItem("userDetails", JSON.stringify(userDetails));

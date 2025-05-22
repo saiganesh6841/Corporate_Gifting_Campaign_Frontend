@@ -21,18 +21,18 @@ import LocalStorage from "../../../../config/LocalStorage";
 function TopBar(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [showLogoutModal, setShowLogoutModal] = React.useState(false);
+  // const [showLogoutModal, setShowLogoutModal] = React.useState(false);
 
-  const openLogoutModal = () => {
-    setShowLogoutModal(true);
-  };
-  const closeModal = () => {
-    setShowLogoutModal(false);
-  };
+  // const openLogoutModal = () => {
+  //   setShowLogoutModal(true);
+  // };
+  // const closeModal = () => {
+  //   setShowLogoutModal(false);
+  // };
 
   return (
     <>
-      <div>
+      {/* <div style={{ margin: "16px" }}>
         <AppBar
           position="fixed"
           className={
@@ -40,7 +40,6 @@ function TopBar(props) {
           }
         >
           <Toolbar className={classes.Toolbar}>
-            {/* props.t("topNavBar.menu") */}
 
             <Stack className={classes.title}>
               <img
@@ -82,7 +81,52 @@ function TopBar(props) {
             </Stack>
           </Toolbar>
         </AppBar>
-      </div>
+      </div> */}
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1100,
+          margin: "16px",
+          borderRadius: "15px",
+          backgroundColor: "#FFFFFF",
+          minHeight: theme.topNavbar.height,
+          boxShadow: theme.shadows[2],
+        }}
+      >
+        <Toolbar className={classes.Toolbar}>
+          <Stack className={classes.title}>
+            <img className={classes.logo} src={floraImage} alt="logo" />
+          </Stack>
+
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Box textAlign="right">
+              <Typography
+                variant="body2"
+                sx={{
+                  fontWeight: 700,
+                  color: theme.palette.primary.main,
+                  fontSize: "16px",
+                }}
+              >
+                {LocalStorage?.userDetails?.email}
+              </Typography>
+              <Typography
+                variant="caption"
+                color={theme.palette.primary.main}
+                fontSize={"12px"}
+              >
+                {LocalStorage?.userDetails?.email}
+              </Typography>
+            </Box>
+            <Avatar
+              src={LocalStorage?.userDetails?.profileImage}
+              alt="profile"
+              sx={{ width: 36, height: 36 }}
+            />
+          </Stack>
+        </Toolbar>
+      </Box>
     </>
   );
 }

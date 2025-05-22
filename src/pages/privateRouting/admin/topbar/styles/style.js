@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   Toolbar: {
     minHeight: theme.topNavbar.height,
     // marginLeft: ".8rem",
-    padding: "12px",
+    padding: "10px",
   },
   menuButton: {
     marginRight: theme.spacing(1),
