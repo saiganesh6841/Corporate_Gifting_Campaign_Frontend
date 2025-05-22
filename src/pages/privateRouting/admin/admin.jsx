@@ -33,6 +33,8 @@ function Admin(props) {
       <div
         style={{
           margin: "70px 0px 0px 100px",
+          filter: !mobileOpen ? "blur(4px)" : "none",
+          transition: "filter 0.3s ease-in-out",
         }}
       >
         <AdminContentRouting />
