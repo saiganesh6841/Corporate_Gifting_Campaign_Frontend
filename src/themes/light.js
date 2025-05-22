@@ -3,6 +3,30 @@ import { createTheme } from "@mui/material/styles";
 
 export const LIGHT = createTheme(BASE_THEME, {
   name: "LIGHT",
+
+  title: {
+    fontSize: "24px",
+    fontWeight: 700,
+    lineHeight: "37.24px",
+    color: "#323130",
+  },
+  heading: {
+    fontSize: "16px",
+    fontWeight: 600,
+    lineHeight: "21.79px",
+  },
+
+  subHeading: {
+    fontSize: "14px",
+    fontWeight: 400,
+    lineHeight: "19px",
+  },
+  content: {
+    fontSize: "12px",
+    fontWeight: 400,
+    lineHeight: "24px",
+  },
+
   palette: {
     mode: "light",
     primary: {

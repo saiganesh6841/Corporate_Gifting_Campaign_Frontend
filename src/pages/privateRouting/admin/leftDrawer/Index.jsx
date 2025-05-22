@@ -7,6 +7,9 @@ import { useStyles } from "./styles/style";
 import { Logout } from "@mui/icons-material";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import DialogModal from "../../../../components/Dialog/Index";
+import ConfirmationModal from "../../../../components/ConfirmationModal/Index";
+import useServices from "./hooks/useServices";
 
 const LeftDrawer = ({
   isMobile,
@@ -21,7 +24,7 @@ const LeftDrawer = ({
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation(); // ✅ Use i18n translation hook
-
+  const services = useServices();
   const [expandedMenus, setExpandedMenus] = useState([]);
   const [expandedMasterData, setExpandedMasterData] = useState(true);
   const [expanded, setExpanded] = useState({});
@@ -208,23 +211,21 @@ const LeftDrawer = ({
           );
         })}
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            rowGap: "24px",
-            marginLeft: "16px",
-            marginTop: "60px",
-            paddingBottom: "30px",
-            width: "100%",
-          }}
-        >
+        <div className={classes.logout}>
           <Logout
             className={classes.logoutIcon}
             sx={{ fill: "red" }}
             onClick={() => setIsLogoutModalOpen(true)}
           />
         </div>
+        <ConfirmationModal
+          isOpen={isLogoutModalOpen}
+          onDismissModal={() => setIsLogoutModalOpen(false)}
+          title={"Logout"}
+          content={"Are you sure you want to logout?"}
+          Button={"Logout"}
+          onClick={services?.logoutFunction}
+        />
       </Stack>
     </Stack>
   );

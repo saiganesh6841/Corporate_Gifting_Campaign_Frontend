@@ -118,4 +118,13 @@ export const useStyles = makeStyles((theme) => ({
     WebkitBoxPack: "center",
     justifyContent: "center",
   },
+  logout: {
+    display: "flex",
+    flexDirection: "column",
+    rowGap: "24px",
+    marginLeft: "16px",
+    marginTop: "60px",
+    paddingBottom: "30px",
+    width: "100%",
+  },
 }));

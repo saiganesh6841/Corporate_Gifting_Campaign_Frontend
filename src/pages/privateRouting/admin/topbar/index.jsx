@@ -1,4 +1,13 @@
-import { AppBar, IconButton, Stack, Toolbar, Tooltip } from "@mui/material";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  IconButton,
+  Stack,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React, { useEffect } from "react";
 import { Icon } from "@fluentui/react/lib/Icon";
 
@@ -6,10 +15,12 @@ import { AlertBadge24Regular } from "@fluentui/react-icons";
 import { Logout } from "@mui/icons-material";
 import useStyles from "./styles/style";
 import floraImage from "../../../../assets/Images/floraName.png";
+import { useTheme } from "@mui/styles";
+import LocalStorage from "../../../../config/LocalStorage";
 
 function TopBar(props) {
   const classes = useStyles();
-
+  const theme = useTheme();
   const [showLogoutModal, setShowLogoutModal] = React.useState(false);
 
   const openLogoutModal = () => {
@@ -30,17 +41,6 @@ function TopBar(props) {
         >
           <Toolbar className={classes.Toolbar}>
             {/* props.t("topNavBar.menu") */}
-            <Tooltip ml={1} title={"menu"}>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={props.handleDrawerToggle}
-                className={classes.menuButton}
-              >
-                <Icon iconName="Waffle" style={{ color: "white" }} />
-              </IconButton>
-            </Tooltip>
 
             <Stack className={classes.title}>
               <img
@@ -51,16 +51,33 @@ function TopBar(props) {
               />
             </Stack>
 
-            {/* <Hidden only={["", "", "", ""]}> */}
-            {/* <Tooltip
-              ml={2}
-              title={"Notification"}
-              style={{ visibility: "hidden" }}
-            >
-              <IconButton>
-                <AlertBadge24Regular style={{ color: "white" }} />
-              </IconButton>
-            </Tooltip> */}
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Box textAlign="right">
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontWeight: "bold",
+                    color: theme.palette.primary.main,
+                    fontSize: "12px",
+                  }}
+                >
+                  {LocalStorage?.userDetails?.email}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color={theme.palette.primary.main}
+                  fontSize={"12px"}
+                >
+                  {" "}
+                  {LocalStorage?.userDetails?.email}
+                </Typography>
+              </Box>
+              <Avatar
+                src={LocalStorage?.userDetails?.profileImage}
+                alt="profile"
+                sx={{ width: 36, height: 36 }}
+              />
+            </Stack>
           </Toolbar>
         </AppBar>
       </div>
