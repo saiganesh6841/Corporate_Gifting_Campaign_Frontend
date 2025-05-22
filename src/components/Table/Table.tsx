@@ -15,6 +15,7 @@ import * as React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Stack } from "@fluentui/react";
 import useTable from "./useTable";
+import Typography from "../Text/Typogarphy";
 // import noTabelData from "../../assets/images/noData.png";
 // import Typography from "../Text/Typography";
 
@@ -200,16 +201,6 @@ const TableComponent = (props) => {
               top: 60,
             }}
           >
-            {/* <img
-              src={noTabelData}
-              style={{
-                maxHeight: "200px",
-                maxWidth: "200px",
-                marginTop: "125px",
-                marginBottom: "30px",
-              }}
-              alt="no data found"
-            /> */}
             <Typography variant="heading">
               No data available at the moment
             </Typography>

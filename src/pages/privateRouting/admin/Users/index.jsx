@@ -19,6 +19,8 @@ import useDownloadCSV from "../../../../hooks/useDownloadCSV";
 import LocalStorage from "../../../../config/LocalStorage";
 import Header from "../../../../components/HeaderUi/Index";
 import Toolbar from "../../../../components/EnhancedToolbar/Toolbar";
+import TableComponent from "../../../../components/Table/Table";
+import Pagination from "../../../../components/Table/Pagination";
 
 function User() {
   const classes = useStyles();
@@ -27,7 +29,6 @@ function User() {
   const [openForm, setOpenForm] = useState({ ...form });
 
   const [errors, setErrors] = useState({});
-
   // active and inactive buttons function
   const inactiveTableButton = tableButtons.filter((item) =>
     inactiveLabels.includes(item.id)
@@ -126,6 +127,35 @@ function User() {
           setQuery={setQuery}
           resetRecords={resetRecords}
         />
+
+        <FluentProvider theme={teamsLightTheme}>
+          <Stack
+            style={{
+              marginTop: "2rem",
+              boxShadow: " rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+              borderRadius: "5px",
+            }}
+            className="tablegrid"
+          >
+            <TableComponent
+              items={services?.tableData?.rows || []}
+              columns={columns}
+              multiselect={true}
+              viewColumn={viewColumn}
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+              updateRecord={clickRecordAction}
+              rowAction={handlerowAction}
+              loading={services?.loading}
+              handleBulkSelection={handleBulkSelection}
+            />
+          </Stack>
+          <Pagination
+            query={query}
+            setQuery={setQuery}
+            tableData={services?.tableData}
+          />
+        </FluentProvider>
       </div>
     </div>
   );

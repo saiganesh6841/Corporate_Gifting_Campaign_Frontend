@@ -204,7 +204,12 @@ const Toolbar = ({
             </Stack>
 
             <Stack width="200px">
-              <SearchBar placeholder="Quick search" onChange={handleSearch} />
+              <SearchBar
+                placeholder="Quick search"
+                onChange={(e) => {
+                  handleSearch(e, e.target.value);
+                }}
+              />
             </Stack>
 
             <ColumnTriple24Regular
