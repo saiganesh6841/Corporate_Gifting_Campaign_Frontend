@@ -1,11 +1,10 @@
-import deepClone from "deep-clone";
 import { useEffect, useState } from "react";
-import { store } from "../../../../..";
+// import { store } from "../../../../..";
 import ConfigAPIURL from "../../../../../config/ConfigAPIURL";
 import LocalStorage from "../../../../../config/LocalStorage";
 import useAlert from "../../../../../hooks/useAlert";
 import APIRequest from "../../../../../utils/APIRequest";
-import APIRequestDataTableQuery from "../../../../../utils/APIRequestDataTableQuery";
+// import APIRequestDataTableQuery from "../../../../../utils/APIRequestDataTableQuery";
 import fieldsValidation from "../../../../../utils/FieldsValidation";
 import Validation from "../../../../../utils/Validation";
 
@@ -79,7 +78,7 @@ const useServices = (props) => {
           return element.button === "query" ? true : false;
         })
       ) {
-        APIRequestDataTableQuery.request(
+        APIRequest.request(
           "POST",
           ConfigAPIURL.fetchUsers,
           JSON.stringify(query)

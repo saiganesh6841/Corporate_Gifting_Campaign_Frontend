@@ -1,0 +1,38 @@
+import { Stack } from "@fluentui/react";
+import { CircularProgress } from "@mui/material";
+import React, { useLayoutEffect, Suspense } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import WithSuspense from "../../../components/withSuspense";
+// import useServices from "./hook/userServices";
+// import WithSuspense from "../../../components/Suspense/Index";
+
+// Lazy-loaded components
+const Users = React.lazy(() => import("./Users"));
+// const Role = React.lazy(() => import("./Roles/index"));
+// const Settings = React.lazy(() => import("./Settings"));
+// const Dashboard = React.lazy(() => import("./Dashboard"));
+// const taskManagement = React.lazy(() => import("./task-management")); // Will add later
+
+function AdminContentRouting() {
+  // const services = useServices();
+
+  return (
+    <Suspense fallback={<CircularProgress />}>
+      <Routes>
+        <Route path="users" element={<Users />} />
+
+        {/* <Route path="/admin/dashboard" element={<WithSuspense Component={Dashboard} />} /> */}
+
+        {/* <Route path="/admin/security" element={<Navigate to="/admin/security/role" replace />} />
+        <Route path="/admin/security/role" element={<WithSuspense Component={Role} />} /> */}
+
+        {/* <Route path="/admin/settings" element={<WithSuspense Component={Settings} />} /> */}
+
+        {/* Fallback route */}
+        <Route path="*" element={<h3>Coming soon.</h3>} />
+      </Routes>
+    </Suspense>
+  );
+}
+
+export default AdminContentRouting;
