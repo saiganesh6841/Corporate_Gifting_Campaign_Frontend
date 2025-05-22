@@ -3,27 +3,27 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    height: "100vh",
+    height: "80vh",
   },
   spaceBetween: {
     margin: `0 ${theme.spacing(2)}`,
   },
   label: {
     fontWeight: 600,
-    fontSize: theme.fonts.heading,
+    // fontSize: theme.fonts.heading,
   },
   distinct: {
-    marginTop: theme.spacingArea.doubleLarge,
+    // marginTop: theme.spacingArea.doubleLarge,
   },
   gapMedium: {
-    gap: theme.spacingArea.XLarge,
+    // gap: theme.spacingArea.XLarge,
   },
   input: {
     borderRadius: "8px",
     border: "1px solid #E5E5E5",
     overflow: "hidden",
     fontSize: "14px",
-    marginTop: theme.spacingArea.xSmall,
+    // marginTop: theme.spacingArea.xSmall,
   },
   dropdown: {
     border: "1.5px solid #E5E5E5",
@@ -37,17 +37,17 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: "18px",
   },
   subscriptionHeader: {
-    backgroundColor: theme?.palette?.background?.default,
+    // backgroundColor: theme?.palette?.background?.default,
     borderTopLeftRadius: "15px",
     borderTopRightRadius: "15px",
     height: "50px",
     paddingBottom: "12px",
   },
   renewButton: {
-    backgroundColor: theme?.palette?.primary?.main,
+    // backgroundColor: theme?.palette?.primary?.main,
     color: "#fff",
     "&:hover": {
-      backgroundColor: theme?.palette?.primary?.main,
+      // backgroundColor: theme?.palette?.primary?.main,
       color: "#fff",
     },
     padding: "8px 30px",

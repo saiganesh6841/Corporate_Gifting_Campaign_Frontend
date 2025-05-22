@@ -32,7 +32,7 @@ const Typography = (props) => {
   return (
     <Text
       onClick={onClick}
-      className={classes?.[variant]}
+      className={classes?.[variant || "content"]}
       nowrap={nowrap && true}
       style={{
         textTransform: cap ? cap : "capitalize",

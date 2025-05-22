@@ -74,12 +74,7 @@ function useServices() {
       response?.data?.responseCode === 108 ||
       response?.data?.responseCode === 103
     ) {
-      publishNotification(
-        "Wrong Credentials / User not found",
-        "error",
-        3000,
-        anchorOrigin
-      );
+      publishNotification("Wrong Credentials / User not found", "error");
     } else if (response?.data?.responseCode === 116) {
       publishNotification("Password attempts exceeded", "error", 3000);
     } else if (response?.data?.responseCode === 122) {
@@ -102,24 +97,24 @@ function useServices() {
         localStorage.setItem("token", newToken);
         isLogin();
       } else if (response.data.responseCode === 118) {
-        setSnakbarValues({
-          status: true,
-          severity: "error",
-          message: "Invalid OTP",
-        });
+        // setSnakbarValues({
+        //   status: true,
+        //   severity: "error",
+        //   message: "Invalid OTP",
+        // });
       } else if (response.data.responseCode === 112) {
-        setSnakbarValues({
-          status: true,
-          severity: "error",
-          message: "You don't have any permission. Please contact admin",
-        });
+        // setSnakbarValues({
+        //   status: true,
+        //   severity: "error",
+        //   message: "You don't have any permission. Please contact admin",
+        // });
       }
     } else {
-      setSnakbarValues({
-        status: true,
-        severity: "error",
-        message: "Server Error, Please try after sometime",
-      });
+      // setSnakbarValues({
+      //   status: true,
+      //   severity: "error",
+      //   message: "Server Error, Please try after sometime",
+      // });
     }
   };
 

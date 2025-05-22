@@ -6,6 +6,7 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 import { getTheme } from "./themes"; // where LIGHT/DARK is defined
 import { SnackbarProvider } from "notistack";
 import "./config/i18n.js"; //
+import "./index.css";
 
 const theme = getTheme("LIGHT"); //  DARK, LIGHT   You can make this dynamic
 

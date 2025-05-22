@@ -3,9 +3,11 @@ import Topbar from "./topbar";
 import LeftDrawer from "./leftDrawer/Index";
 import SideBarMenu from "../../../config/SideBarMenu.jsx";
 import LocalStorage from "../../../config/LocalStorage.js";
+import AdminContentRouting from "./AdminContentRouting";
 
 function Admin(props) {
   const [mobileOpen, setMobileOpen] = React.useState(true);
+
   const handleCloseDrawer = () => {
     setMobileOpen(true);
   };
@@ -23,9 +25,18 @@ function Admin(props) {
     }
     setAllowedMenus(result);
   }, []);
+
   return (
     <div>
       <Topbar mobileOpen={mobileOpen} />
+
+      <div
+        style={{
+          margin: "70px 0px 0px 100px",
+        }}
+      >
+        <AdminContentRouting />
+      </div>
 
       <LeftDrawer
         isMobile={mobileOpen}
