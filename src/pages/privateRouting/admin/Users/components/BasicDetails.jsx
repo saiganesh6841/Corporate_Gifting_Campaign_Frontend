@@ -9,19 +9,17 @@ import {
   Combobox,
   Button,
 } from "@fluentui/react-components";
-import { Eye24Filled, EyeOff24Filled } from "@fluentui/react-icons";
+import {
+  Eye24Filled,
+  EyeOff24Filled,
+  ArrowCounterclockwiseRegular,
+} from "@fluentui/react-icons";
 import { Grid, InputAdornment } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import CustomDropdown from "../../../../../components/Fields/Dropdown";
-import CustomTextField from "../../../../../components/Fields/TextField";
 import LogoUploader from "../../../../../components/LogoUploader/LogoUploader";
-import Typography from "../../../../../components/Text/Typography";
-import DatePickerComponent from "../../../../../components/datepicker/Index";
 import Reset from "../../../../../components/icons/Reset";
 import utilController from "../../../../../utils/Utilcontroller";
 import Validation from "../../../../../utils/Validation";
-import { DatePicker } from "@fluentui/react-datepicker-compat";
 
 const genders = ["male", "female", "other"];
 
@@ -68,10 +66,6 @@ function BasicDetails({
     });
     setPassword(generatedPassword);
   };
-
-  // Get departments and userTypes from the Redux store
-  const departments = useSelector((state) => state.departments);
-  const userTypes = useSelector((state) => state.userTypes);
 
   // console.log(userForm,"user data")
 
@@ -231,7 +225,7 @@ function BasicDetails({
         </Field>
       </Grid>
 
-      <Grid item xs={6}>
+      {/* <Grid item xs={6}>
         <Field
           className={classes.label}
           label="Date of Birth"
@@ -249,7 +243,7 @@ function BasicDetails({
             disabled={openForm?.divType === "view"}
           />
         </Field>
-      </Grid>
+      </Grid> */}
 
       <Grid item xs={6}>
         <Field
@@ -395,15 +389,7 @@ function BasicDetails({
               }
             />
             <span style={{ display: "flex", alignItems: "center" }}>
-              {userForm?.userType !== "customer" && (
-                <IconButton
-                  aria-label="generate random password"
-                  onClick={handleGeneratePassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  <Reset />
-                </IconButton>
-              )}
+              <ArrowCounterclockwiseRegular />
             </span>
           </Grid>
           {userForm?.userType !== "customer" && (

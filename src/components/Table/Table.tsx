@@ -145,7 +145,7 @@ const TableComponent = (props) => {
           zIndex: 1,
         }}
       >
-        <TableRow style={{ fontWeight: 600, backgroundColor: " #f7f9fc" }}>
+        <TableRow style={{ fontWeight: 600, backgroundColor: " #FBE4E4" }}>
           {multiselect && (
             <TableSelectionCell
               checked={
@@ -159,7 +159,9 @@ const TableComponent = (props) => {
                 const response = getRows((rows) => rows?.item);
                 handleBulkSelection(response, newAllRowsSelected);
               }}
-              checkboxIndicator={{ "aria-label": "Select all rows " }}
+              // checkboxIndicator={{
+              //   "aria-label": "Select all rows ",
+              // }}
             />
           )}
           {columns?.map((column) => (

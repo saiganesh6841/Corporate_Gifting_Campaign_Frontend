@@ -91,7 +91,6 @@ const useServices = (props) => {
       }
     } catch (err) {
       console.log(err);
-    } finally {
     }
   };
 
