@@ -26,6 +26,7 @@ class SideBarMenu {
       eventKey: "dashboard",
       subMenu: [],
     },
+
     {
       display: "sideNavMenu.users",
       link: "/admin/users",
