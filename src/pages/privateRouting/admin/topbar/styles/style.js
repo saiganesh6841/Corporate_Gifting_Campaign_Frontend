@@ -21,13 +21,15 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     right: 0,
     backgroundImage: theme.custom.topHeader.toolbarColor,
+    borderRadius: "0px 0px 15px 15px",
   },
   appBarDrawerClose: {
     backgroundImage: theme.custom.topHeader.toolbarColor,
   },
   Toolbar: {
     minHeight: theme.topNavbar.height,
-    marginLeft: ".5rem",
+    // marginLeft: ".8rem",
+    padding: "12px",
   },
   menuButton: {
     marginRight: theme.spacing(1),
