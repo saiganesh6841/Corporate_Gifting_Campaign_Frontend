@@ -10,7 +10,6 @@ import {
   PeopleTeam24Filled,
   PeopleTeam24Regular,
 } from "@fluentui/react-icons";
-import React from "react";
 
 class SideBarMenu {
   static menuForSuperAdmin = [
@@ -23,7 +22,7 @@ class SideBarMenu {
       className: "",
       permissionLevel: "Dashboard",
       regularIcon: <Board24Regular />,
-      filledIcon: <Board24Filled style={{ color: "white" }} />,
+      filledIcon: <Board24Filled style={{ color: "#C98383" }} />,
       eventKey: "dashboard",
       subMenu: [],
     },
@@ -36,7 +35,7 @@ class SideBarMenu {
       className: "",
       permissionLevel: "Users",
       regularIcon: <PeopleTeam24Regular />,
-      filledIcon: <PeopleTeam24Filled style={{ color: "white" }} />,
+      filledIcon: <PeopleTeam24Filled style={{ color: "#C98383" }} />,
       eventKey: "users",
       subMenu: [],
     },
@@ -126,7 +125,7 @@ class SideBarMenu {
       className: "",
       permissionLevel: "Setting", //Advertisement
       regularIcon: <Megaphone24Regular />,
-      filledIcon: <Megaphone24Filled style={{ color: "white" }} />,
+      filledIcon: <Megaphone24Filled style={{ color: "#C98383" }} />,
       eventKey: "setting",
       subMenu: [],
     },

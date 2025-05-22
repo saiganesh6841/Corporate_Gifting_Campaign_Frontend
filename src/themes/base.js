@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 import "./font.css";
 
-const font = "Poppins";
+const font = "Segoe UI";
 
 export const BASE_THEME = createTheme({
   components: {
