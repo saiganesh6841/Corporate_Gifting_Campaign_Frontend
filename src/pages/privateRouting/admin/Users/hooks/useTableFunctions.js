@@ -147,7 +147,7 @@ const useTableFunctions = ({
         ...p,
         isOpen: true,
         divType: "column",
-        title: "",
+        title: "Choose Columns",
         description: "",
         width: 500,
         hasCloseButton: true,

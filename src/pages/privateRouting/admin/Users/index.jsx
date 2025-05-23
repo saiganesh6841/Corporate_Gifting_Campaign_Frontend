@@ -164,7 +164,7 @@ function User() {
             isOpen={openForm?.isOpen}
             title={openForm?.title}
             width={openForm?.width}
-            hasCloseButton={false}
+            hasCloseButton={openForm?.hasCloseButton}
             dismissPanel={resetForm}
             onRenderFooterContent={() => (
               <OnRenderFooterContent

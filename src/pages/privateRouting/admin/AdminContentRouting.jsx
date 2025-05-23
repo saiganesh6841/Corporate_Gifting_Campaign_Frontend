@@ -23,11 +23,6 @@ function AdminContentRouting() {
 
         <Route path="dashboard" element={<Dashboard />} />
 
-        {/* <Route path="/admin/security" element={<Navigate to="/admin/security/role" replace />} />
-        <Route path="/admin/security/role" element={<WithSuspense Component={Role} />} /> */}
-
-        {/* <Route path="/admin/settings" element={<WithSuspense Component={Settings} />} /> */}
-
         {/* Fallback route */}
         <Route path="*" element={<h3>Coming soon.</h3>} />
       </Routes>

@@ -8,17 +8,15 @@
 import React, { useEffect } from "react";
 import utilController from "../../utils/Utilcontroller";
 import deepClone from "deep-clone";
-import OnRenderFooterContent from "../panelFooter/Footer";
 import Typography from "../Text/Typogarphy";
-import { Checkbox, Stack } from "@fluentui/react";
+import { Stack } from "@fluentui/react";
+import { FluentProvider, teamsLightTheme } from "@fluentui/react-components";
+import { Checkbox, useTheme } from "@mui/material";
+import OnRenderFooterContent from "../panelFooter/Footer";
 // import PanelFooter from "../panelFooter/Index";
 
 const heading = "Choose Columns";
 const paragraph = "Choose the conditions for your Custom Columns";
-
-const buttonStyles = {
-  root: { marginRight: 8, border: "none", fontWeight: 600 },
-};
 
 const ColumnOption = ({
   filteredColumn,
@@ -27,6 +25,7 @@ const ColumnOption = ({
   setViewColumn,
   filterColumn,
 }) => {
+  const theme = useTheme();
   const [newColumns, setNewColumns] = React.useState(deepClone(filteredColumn));
 
   // useEffect(() => {
@@ -52,83 +51,66 @@ const ColumnOption = ({
   };
 
   return (
-    <Stack verticalAlign="space-between" className="choose-panel">
-      <Stack>
+    <FluentProvider theme={teamsLightTheme}>
+      <Stack verticalAlign="space-between" className="choose-panel">
+        <Stack>
+          <Stack style={{ gap: "1.2rem", marginTop: "1.3rem" }}>
+            {newColumns?.length > 0 &&
+              newColumns?.map((value, ind) => {
+                if (!value?.fieldName) return;
+
+                return (
+                  <Stack
+                    key={ind}
+                    horizontal
+                    style={{
+                      alignItems: "center",
+                    }}
+                  >
+                    <Checkbox
+                      disabled={value?.primaryKey}
+                      checked={value?.visibility} //value?.visibility
+                      onChange={(e, checked) => updateColumn(ind, checked)}
+                      sx={{
+                        "&.Mui-checked": {
+                          color: value?.primaryKey
+                            ? "rgb(200, 198, 196)"
+                            : theme?.palette?.primary?.main, // ✅ applies color to the checkmark
+                        },
+                      }}
+                    />
+                    <Typography variant="heading">
+                      {utilController?.textCapitalise(value?.fieldName)}
+                    </Typography>
+                  </Stack>
+                );
+              })}
+          </Stack>
+        </Stack>
+
         <Stack
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexDirection: "row",
+            position: "fixed",
+            bottom: 0,
+            right: 0,
+            width: `${openForm?.width}px`,
+            padding: "12px",
+            backgroundColor: "white",
           }}
         >
-          <span>
-            <Typography
-              fs="xLarge"
-              style={{ fontWeight: 700, fontSize: "28px" }}
-            >
-              {heading}
-            </Typography>
-          </span>
-        </Stack>
-
-        <Stack style={{ gap: "1.2rem", marginTop: "1.3rem" }}>
-          {newColumns?.length > 0 &&
-            newColumns?.map((value, ind) => {
-              if (!value?.fieldName) return;
-
-              return (
-                <Stack key={ind} horizontal gap=".3rem">
-                  <Checkbox
-                    disabled={value?.primaryKey}
-                    checked={value?.visibility}
-                    // onChange={(e, checked) => UpdateFilter(ind, checked)}
-                    onChange={(e, checked) => updateColumn(ind, checked)}
-                  />
-                  <Typography fs="medium">
-                    {utilController?.textCapitalise(value?.fieldName)}
-                  </Typography>
-                </Stack>
-              );
-            })}
+          <OnRenderFooterContent
+            field1={{
+              text: "Save",
+              handle: handleSaveColumns,
+            }}
+            field2={{
+              text: "Reset",
+              handle: resetColumns,
+            }}
+          />
         </Stack>
       </Stack>
-      {/* <Stack
-          horizontal
-          horizontalAlign="space-between"
-          style={{
-            border: "1px solid black",
-            position: "fixed",
-            bottom: 10,
-            width: "20%",
-          }}
-        >
-          <DefaultButton styles={buttonStyles} onClick={() => resetColumns()}>
-            Reset
-          </DefaultButton>
-  
-          <PrimaryButton
-            styles={buttonStyles}
-            onClick={() => handleSaveColumns()}
-          >
-            Save
-          </PrimaryButton>
-        </Stack> */}
-      <br />
-      <br />
-      <OnRenderFooterContent
-        width={openForm?.width}
-        // field1={{ text: "Reset", onClick: resetColumns }}
-        // field2={{ text: "Save", onClick: handleSaveColumns }}
-        fieldLeft={[
-          { text: "Reset", onClick: resetColumns, type: "default" },
-          // { text: "Reset", onClick: resetColumns, type: "primary" },
-        ]}
-        fieldRight={[
-          // { text: "Draft", onClick: handleSaveColumns, type: "default" },
-          { text: "Save", onClick: handleSaveColumns, type: "primary" },
-        ]}
-      />
-    </Stack>
+    </FluentProvider>
   );
 };
 
