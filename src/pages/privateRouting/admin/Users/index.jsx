@@ -119,6 +119,7 @@ function User() {
           backgroundColor: "#FFFFFF",
           padding: "14px",
           height: "70vh",
+          borderRadius: "10px",
         }}
       >
         <Toolbar
@@ -137,7 +138,7 @@ function User() {
             style={{
               marginTop: "1rem",
               boxShadow: " rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-              borderRadius: "5px",
+              borderRadius: "15px",
             }}
             className="tablegrid"
           >

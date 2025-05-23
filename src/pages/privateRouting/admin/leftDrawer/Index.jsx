@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/styles";
@@ -10,6 +10,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DialogModal from "../../../../components/Dialog/Index";
 import ConfirmationModal from "../../../../components/ConfirmationModal/Index";
 import useServices from "./hooks/useServices";
+import Typography from "../../../../components/Text/Typogarphy";
 
 const LeftDrawer = ({
   isMobile,
@@ -217,6 +218,9 @@ const LeftDrawer = ({
             sx={{ fill: "red" }}
             onClick={() => setIsLogoutModalOpen(true)}
           />
+          <Typography variant="heading" style={{ color: "red" }}>
+            {!isMobile && "Logout"}
+          </Typography>
         </div>
         <ConfirmationModal
           isOpen={isLogoutModalOpen}
