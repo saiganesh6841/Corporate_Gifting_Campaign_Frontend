@@ -80,10 +80,10 @@ const useServices = (props) => {
       ) {
         APIRequest.request(
           "POST",
-          ConfigAPIURL.fetchUsers,
+          ConfigAPIURL.getAllUsers,
           JSON.stringify(query)
         ).then((tableData) => {
-          setTableData(tableData);
+          setTableData(tableData?.data);
           setLoading({ ...loading, isOpen: false });
         });
       } else {
@@ -95,7 +95,8 @@ const useServices = (props) => {
   };
 
   const sendToServer = async (userForm, isEdit) => {
-    const method = isEdit ? "PUT" : "POST";
+    publishNotification("Error full error", "error");
+    const method = isEdit ? "POST" : "POST";
     const URL = isEdit ? ConfigAPIURL.userUpdate : ConfigAPIURL.createUser;
 
     let validationFields = {};

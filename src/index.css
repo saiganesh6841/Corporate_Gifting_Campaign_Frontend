@@ -12,8 +12,9 @@
 
 .input__Style{
   border: 1px solid #E5E5E5 !important;
-  height: 49px !important;
+  height: 40px !important;
   border-radius: 8px !important;
+  font-size: 14px !important;
 }
 
 /* Remove the default blue outline and underline on focus */
@@ -32,6 +33,25 @@
 .customTableHead:hover{
   background-color:#FFF3F3 !important;
   }
+  .box_container {
+    box-shadow: 0px 8px 18px 0px #00000014;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    margin-bottom: 20px;
+    min-width: 270px;
+  }
+  .inputStyleOverride .fui-Combobox__input {
+    font-size: 14px !important;
+    height: 40px !important;
+  }
+  
+  .inputStyleOverride .fui-Combobox__listbox {
+    font-size: 14px !important;
+  }
+  .MuiSnackbar-root {
+    z-index: 1500 !important;
+  }
+  
 
 
 

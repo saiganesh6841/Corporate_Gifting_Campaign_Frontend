@@ -5,7 +5,7 @@ class ConfigAPIURL {
   //List of Pay Defination APIs and request method type
   static sessionValidation = this.baseUrl + "/admin/islogin"; //get
   static accountLogin = this.baseUrl + "/admin/accountLogin";
-  static verifyOtp = this.baseUrl + "/admin/verify/otp";
+  static verifyOtp = this.baseUrl + "/admin/verifyOtp";
   static resendOtp = this.baseUrl + "/admin/resend/otp";
   static adminLogout = this.baseUrl + "/admin/logout";
   static adminGeneratePassword = this.baseUrl + "/admin/password/generate";
@@ -21,13 +21,11 @@ class ConfigAPIURL {
   //Admin APIS
 
   // developer 1
-  static getAllUser = this.baseUrl + "/api" + "/admin/user/all";
-  static getAllLeads = this.baseUrl + "/admin/leads/list";
-  static createLeads = this.baseUrl + "/admin/leads/create"; //post
-  static getLeadDetails = this.baseUrl + "/admin/leads/details"; //post
-  static updateLeads = this.baseUrl + "/admin/leads/update";
-  static getConstantsData = this.baseUrl + "/admin/constant/data";
-  static deleteLead = this.baseUrl + "/admin/leads/delete"; //POST
+  static getAllUsers = this.baseUrl + "/admin/user/getAll";
+  static getUserDetails = this.baseUrl + "/admin/user/get";
+  static createUser = this.baseUrl + "/admin/user/create";
+  static userUpdate = this.baseUrl + "/admin/user/update";
+  static deleteUsers = this.baseUrl + "/admin/user/delete";
 }
 
 export default ConfigAPIURL;

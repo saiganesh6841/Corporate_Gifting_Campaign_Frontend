@@ -110,6 +110,7 @@ function User() {
     setQuery({ ...queryBody });
     // setOpenForm({ ...form });
   };
+  console.log(services?.tableData?.rows, "data");
   return (
     <div className={classes.root}>
       <Header classes={classes} text="Users" />

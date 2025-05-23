@@ -212,12 +212,11 @@ const LeftDrawer = ({
           );
         })}
 
-        <div className={classes.logout}>
-          <Logout
-            className={classes.logoutIcon}
-            sx={{ fill: "red" }}
-            onClick={() => setIsLogoutModalOpen(true)}
-          />
+        <div
+          className={classes.logout}
+          onClick={() => setIsLogoutModalOpen(true)}
+        >
+          <Logout className={classes.logoutIcon} sx={{ fill: "red" }} />
           <Typography variant="heading" style={{ color: "red" }}>
             {!isMobile && "Logout"}
           </Typography>

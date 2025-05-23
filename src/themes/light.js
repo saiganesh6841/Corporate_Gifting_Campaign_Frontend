@@ -3,15 +3,15 @@ import { createTheme } from "@mui/material/styles";
 
 export const LIGHT = createTheme(BASE_THEME, {
   name: "LIGHT",
-  MuiCheckbox: {
-    colorSecondary: {
-      Mui: {
-        checked: {
-          color: "#FF6F00",
-        },
-      },
-    },
-  },
+  // MuiCheckbox: {
+  //   colorSecondary: {
+  //     Mui: {
+  //       checked: {
+  //         color: "#FF6F00",
+  //       },
+  //     },
+  //   },
+  // },
 
   title: {
     fontSize: "24px",

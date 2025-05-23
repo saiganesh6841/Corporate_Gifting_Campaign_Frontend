@@ -84,16 +84,16 @@ const useTableHeader = (setOpenForm, openForm) => {
       ),
     },
     {
-      columnId: "mobilenumber", // this is the unique id for a column
+      columnId: "mobileNumber", // this is the unique id for a column
       fieldName: "Mobile Number", // field name visible on header
       minWidth: 200,
 
       renderCell: (item) => (
         // what should be rendered on the cell
         <TableCellLayout truncate>
-          <Tooltip content={item?.mobileNo}>
+          <Tooltip content={item?.mobileNumber}>
             <Text truncate wrap={false} className={styles.text}>
-              {item?.mobileNo}
+              {item?.mobileNumber}
             </Text>
           </Tooltip>
         </TableCellLayout>
@@ -187,7 +187,7 @@ const useTableHeader = (setOpenForm, openForm) => {
       minWidth: 170,
       renderCell: (item) => (
         <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-          {item?.dob ? utilController.getFormattedDate(item?.dob) : "NA"}
+          {item?.dob ?? "NA"}
         </TableCellLayout>
       ),
     },

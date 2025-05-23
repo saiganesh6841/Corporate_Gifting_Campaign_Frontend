@@ -7,13 +7,13 @@ import LocalStorage from "../../../../config/LocalStorage";
 import { useNavigate } from "react-router-dom";
 
 const requiredFields = {
-  mobileNo: "",
+  email: "",
   password: "",
 };
 function useServices() {
   const { publishNotification } = useAlert();
   const [loginDetails, setLoginDetails] = useState({
-    mobileNo: "",
+    email: "",
     password: "",
   });
 
@@ -77,7 +77,9 @@ function useServices() {
       publishNotification("Wrong Credentials / User not found", "error");
     } else if (response?.data?.responseCode === 116) {
       publishNotification("Password attempts exceeded", "error", 3000);
-    } else if (response?.data?.responseCode === 122) {
+    } else if (response?.data?.responseCode === 105) {
+      publishNotification("otp send successfully", "success");
+
       setOtpTrue(true);
     }
   };

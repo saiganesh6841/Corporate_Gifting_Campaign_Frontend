@@ -76,6 +76,7 @@ const ColumnOption = ({
                           color: value?.primaryKey
                             ? "rgb(200, 198, 196)"
                             : theme?.palette?.primary?.main, // ✅ applies color to the checkmark
+                          borderColor: "red",
                         },
                       }}
                     />

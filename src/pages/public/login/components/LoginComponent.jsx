@@ -9,11 +9,11 @@ const LoginFields = ({ services, classes }) => {
       <CustomTextFiled
         type={"number"}
         placeholder="Enter you Email"
-        value={services?.loginDetails?.mobileNo}
+        value={services?.loginDetails?.email}
         onChange={(e) => {
           services?.setLoginDetails((p) => ({
             ...p,
-            mobileNo: e.target.value,
+            email: e.target.value,
           }));
         }}
         field="Email"

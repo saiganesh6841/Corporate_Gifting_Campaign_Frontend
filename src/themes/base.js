@@ -50,16 +50,16 @@ export const BASE_THEME = createTheme({
         },
       },
     },
-    MuiCheckbox: {
-      styleOverrides: {
-        root: {
-          color: "#FF6F00",
-          "&.Mui-checked": {
-            color: "#FF6F00",
-          },
-        },
-      },
-    },
+    // MuiCheckbox: {
+    //   styleOverrides: {
+    //     root: {
+    //       color: "#FF6F00",
+    //       "&.Mui-checked": {
+    //         color: "#FF6F00",
+    //       },
+    //     },
+    //   },
+    // },
     MuiDrawer: {
       styleOverrides: {
         paper: {
