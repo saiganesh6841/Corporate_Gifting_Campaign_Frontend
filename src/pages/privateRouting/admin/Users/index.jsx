@@ -24,6 +24,8 @@ import Pagination from "../../../../components/Table/Pagination";
 import { PanelConfirmation } from "../../../../components/confirmationpanel/Index";
 import OnRenderFooterContent from "../../../../components/panelFooter/Footer";
 import AEVForm from "./components/AEVForm";
+import CustomFilter from "../../../../components/customFilter/Index";
+import ViewColumn from "../../../../components/ViewColumn/Index";
 
 function User() {
   const classes = useStyles();
@@ -191,6 +193,27 @@ function User() {
                 services={services}
                 openForm={openForm}
                 setOpenForm={setOpenForm}
+              />
+            )}
+
+            {openForm?.divType === "filter" && (
+              <CustomFilter
+                query={query}
+                setQuery={setQuery}
+                openForm={openForm}
+                resetForm={resetForm}
+                resetQueryBody={resetQueryBody}
+                inventory={true}
+                orders={true}
+              />
+            )}
+            {openForm?.divType === "column" && (
+              <ViewColumn
+                filteredColumn={viewColumn}
+                openForm={openForm}
+                resetForm={resetForm}
+                setViewColumn={setViewColumn}
+                filterColumn={filterColumn(columns)}
               />
             )}
           </PanelConfirmation>

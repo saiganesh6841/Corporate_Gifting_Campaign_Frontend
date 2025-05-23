@@ -20,6 +20,7 @@
     "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.2.4",
     "@mui/styles": "^5.2.3",
+    "deep-clone": "^4.0.0",
     "export-to-csv": "^0.2.2",
     "i18next": "^25.2.0",
     "i18next-browser-languagedetector": "^8.1.0",

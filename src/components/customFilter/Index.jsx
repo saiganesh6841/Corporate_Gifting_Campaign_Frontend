@@ -45,11 +45,11 @@ const CustomFilter = ({ query, setQuery, openForm, resetForm, children }) => {
 
   return (
     <FluentProvider theme={teamsLightTheme}>
-      <Stack style={{ paddingTop: "8px", gap: "16px" }}>
-        <Stack style={{ gap: "8px" }}>
+      <Stack style={{ paddingTop: "16px", gap: "16px" }}>
+        {/* <Stack style={{ gap: "8px" }}>
           <Typography variant="heading">{heading}</Typography>
           <Typography variant="subHeading">{paragraph}</Typography>
-        </Stack>
+        </Stack> */}
 
         <Field label="Active">
           <Dropdown
