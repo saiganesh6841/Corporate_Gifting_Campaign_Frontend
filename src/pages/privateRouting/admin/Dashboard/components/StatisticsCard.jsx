@@ -1,16 +1,18 @@
 import { Box } from "@mui/material";
-import Typography from "../../../../../components/Text/Typography";
 import { PeopleTeam24Filled } from "@fluentui/react-icons";
 import { FluentProvider, teamsLightTheme } from "@fluentui/react-components";
+import Typography from "../../../../../components/Text/Typogarphy";
 
-function StatisticsCard({ classes, background, Icon, label, totalNumber , newlyAddedCount }) {
+function StatisticsCard({
+  classes,
+  background,
+  Icon,
+  label,
+  totalNumber,
+  newlyAddedCount,
+}) {
   return (
-    <Box
-      className={classes.statisticsCardContainer}
-      sx={{
-        background: background,
-      }}
-    >
+    <Box className={classes.statisticsCardContainer}>
       <Box className={classes.topBar}>
         <Typography
           style={{

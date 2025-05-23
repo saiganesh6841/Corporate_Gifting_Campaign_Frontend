@@ -1,9 +1,9 @@
 import { Combobox, Dropdown, Option } from "@fluentui/react-components";
 import { Grid, useTheme } from "@mui/material";
 import React from "react";
-import Typography from "../../../../../components/Text/Typography";
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { onFormatDate } from "../utils/util";
+import Typography from "../../../../../components/Text/Typogarphy";
 const moduleOptionsList = {
   users: "Users",
   subscription: "Subscription",
@@ -20,16 +20,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
 
   return (
     <Grid container>
-      <Grid item xs={4}>
-        <Typography
-          variant="subHeading"
-          style={{
-            color: theme?.palette?.primary?.main,
-            fontWeight: "600",
-          }}
-        >
-          Graphical Representation
-        </Typography>
+      <Grid item xs={6}>
         <Dropdown
           size="large"
           placeholder="Select Module"
@@ -37,6 +28,8 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
             background: "#FFF",
             border: "none",
             paddingLeft: "0px",
+            minWidth: "unset",
+            width: "200px",
           }}
           className="dashboardDropdown"
           value={moduleOptionsList[graphFiltersData?.module]}
@@ -55,7 +48,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
         </Dropdown>
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item xs={4}>
         <DatePicker
           maxDate={new Date(graphFiltersData?.endDate * 1000)}
           formatDate={onFormatDate}
@@ -105,13 +98,8 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
         <Dropdown
           size="large"
           placeholder="Time"
-          style={{
-            background: "#FFF",
-            border: "none",
-            paddingLeft: "0px",
-            display: "inline",
-          }}
           className="time-select"
+          style={{ minWidth: "unset", width: "150px" }}
           value={timeData[graphFiltersData?.dateType]}
           onOptionSelect={(e, data) => {
             setGraphFiltersData((p) => ({
@@ -121,7 +109,9 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
           }}
         >
           {Object.keys(timeData)?.map((data) => (
-            <Option key={data} value={data}>{timeData[data]}</Option>
+            <Option key={data} value={data}>
+              {timeData[data]}
+            </Option>
           ))}
         </Dropdown>
       </Grid>

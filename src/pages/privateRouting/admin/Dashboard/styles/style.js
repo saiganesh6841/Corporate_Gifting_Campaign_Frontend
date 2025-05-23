@@ -10,20 +10,20 @@ export const useStyles = makeStyles((theme) => ({
   },
   label: {
     fontWeight: 600,
-    fontSize: theme.fonts.heading,
+    // fontSize: theme.fonts.heading,
   },
   distinct: {
-    marginTop: theme.spacingArea.doubleLarge,
+    // marginTop: theme.spacingArea.doubleLarge,
   },
   gapMedium: {
-    gap: theme.spacingArea.XLarge,
+    // gap: theme.spacingArea.XLarge,
   },
   input: {
     borderRadius: "8px",
     border: "1px solid #E5E5E5",
     overflow: "hidden",
     fontSize: "14px",
-    marginTop: theme.spacingArea.xSmall,
+    // marginTop: theme.spacingArea.xSmall,
   },
   dashboardHeading: {
     display: "flex",
@@ -38,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: "50px",
   },
   dashBoardStatAndGraphContainer: {
-    width: "68%",
+    width: "100%",
     boxShadow: "0px 7px 17px 0px #0000001A",
     padding: "16px",
     height: "100%",
@@ -52,7 +52,7 @@ export const useStyles = makeStyles((theme) => ({
     width: "32%",
     // height: "130px",
     borderRadius: "8px",
-    // background: "linear-gradient(to right, #005CEA, #12B1DE)",
+    background: "#fff",
     padding: "8px 16px",
   },
   statastics: {

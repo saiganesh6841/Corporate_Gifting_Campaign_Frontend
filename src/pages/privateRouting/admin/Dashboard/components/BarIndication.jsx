@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import Typography from "../../../../../components/Text/Typography";
+import Typography from "../../../../../components/Text/Typogarphy";
 
 function BarIndication({ amount, label, backgroundColor }) {
   return (

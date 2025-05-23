@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
-import Typography from "../../../../../components/Text/Typography";
 import { useStyles } from "../styles/style";
 import { formatCamelCaseToWords } from "../utils/util";
 import useStructuredData from "../hooks/useStructuredData";
