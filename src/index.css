@@ -10,3 +10,25 @@
   overflow-x: auto;
 }
 
+.input__Style{
+  border: 1px solid #E5E5E5 !important;
+  height: 49px !important;
+  border-radius: 8px !important;
+}
+
+/* Remove the default blue outline and underline on focus */
+.input__Style:focus,
+.input__Style:focus-visible,
+.input__Style:focus-within {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Important: Fluent UI adds a ::after underline — kill it */
+.input__Style::after {
+  content: none !important;
+  display: none !important;
+}
+
+
+

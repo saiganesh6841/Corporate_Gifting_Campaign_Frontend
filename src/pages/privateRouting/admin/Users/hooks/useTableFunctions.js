@@ -66,14 +66,12 @@ const useTableFunctions = ({
 
   const add = () => {
     if (recordId.length < 1) {
-      // fetchRoles();
-      // clearFuction();
       setOpenForm((p) => {
         return {
           ...p,
           isOpen: true,
           divType: "add",
-          title: "Create Lead",
+          title: "Create User",
           width: 700,
           hasCloseButton: false,
         };

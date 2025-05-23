@@ -3,10 +3,10 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    height: "80vh",
+    height: "100%",
   },
   spaceBetween: {
-    margin: `0 ${theme.spacing(2)}`,
+    // margin: `0 ${theme.spacing(2)}`,
   },
   label: {
     fontWeight: 600,
@@ -24,6 +24,10 @@ export const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     fontSize: "14px",
     // marginTop: theme.spacingArea.xSmall,
+  },
+
+  panelHeader: {
+    backgroundColor: theme.palette.primary.light,
   },
   dropdown: {
     border: "1.5px solid #E5E5E5",

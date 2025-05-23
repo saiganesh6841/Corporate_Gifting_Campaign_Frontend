@@ -25,6 +25,7 @@ const Header = ({ text, children, classes }) => {
             fontWeight: 700,
             marginLeft: ".4rem",
             marginTop: ".8rem",
+            marginBottom: ".8rem",
             fontSize: "28px",
           }}
         >

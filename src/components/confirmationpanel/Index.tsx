@@ -1,63 +1,96 @@
 import { Panel, PanelType } from "@fluentui/react/lib/Panel";
+import { IconButton } from "@fluentui/react/lib/Button";
+import { Stack, Text } from "@fluentui/react";
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import { ToastContainer } from "react-toastify";
-// import { openPanel, closePanel } from "../../../Redux/panelSlice";
-
-const buttonStyles = { root: { marginRight: 8 } };
+import { useTheme } from "@mui/material";
+import Typography from "../Text/Typogarphy";
+import { Dismiss24Regular } from "@fluentui/react-icons";
 
 export const PanelConfirmation: React.FunctionComponent<{
-  panelType: PanelType;
-  description: string;
+  panelType?: PanelType;
+  description?: string;
+  headerText?: string;
+  width?: string;
+  isOpen: boolean;
+  onRenderFooterContent?: () => React.ReactNode;
+  hasCloseButton?: boolean;
+  dismissPanel: () => void;
+  isNoFooter?: boolean;
+  isExport?: boolean;
+  className?: string;
+  children: React.ReactNode;
 }> = (props) => {
-  const dispatch = useDispatch();
-  /** @
-  isOpen state for opening the panel
-  children what all should be rendered
-  */
-
   const {
     description,
+    title,
     panelType,
     children,
     width,
     isOpen,
     onRenderFooterContent,
-    hasCloseButton,
+    hasCloseButton = true,
     dismissPanel,
     isNoFooter,
     isExport,
     className,
-  }: any = props;
+  } = props;
+
+  const theme = useTheme();
+
+  // Custom header layout
+  const renderHeader = () => (
+    <Stack
+      horizontal
+      horizontalAlign="space-between"
+      verticalAlign="center"
+      style={{
+        backgroundColor: theme.palette.primary.light,
+        padding: "24px",
+        width: "100%",
+        height: "50px",
+      }}
+    >
+      <Typography variant="title">{title || "Panel Header"}</Typography>
+      {hasCloseButton && (
+        <Dismiss24Regular
+          onClick={dismissPanel}
+          style={{
+            color: "black",
+            cursor: "pointer",
+          }}
+        />
+      )}
+    </Stack>
+  );
 
   return (
     <div>
       <Panel
         styles={{
+          main: {
+            borderTopLeftRadius: "24px",
+            borderBottomLeftRadius: "24px",
+            padding: 0,
+          },
           root: {
-            marginTop: 50,
             padding: 0,
             backgroundColor: "rgba(0,0,0,0.271)",
             opacity: isExport ? 0 : 1,
           },
         }}
-        // forceFocusInsideTrap={true}
-        // isBlocking={true}
         className={"notification__panel " + className}
-        hasCloseButton={hasCloseButton}
         isOpen={isOpen}
         onDismiss={dismissPanel}
-        // headerText="Panel with footer at bottom"
         closeButtonAriaLabel="Close"
-        onRenderFooterContent={!isNoFooter && onRenderFooterContent}
         type={PanelType.custom}
-        customWidth={width ? width : "1368px"}
+        customWidth={width || "1368px"}
         isFooterAtBottom={true}
-        // Stretch panel content to fill the available height so the footer is positioned
-        // at the bottom of the page
+        hasCloseButton={false}
+        onRenderNavigation={undefined} // Prevents default space
+        onRenderNavigationContent={() => renderHeader()}
+        onRenderFooterContent={!isNoFooter && onRenderFooterContent}
       >
         {children}
-        <ToastContainer />
       </Panel>
     </div>
   );

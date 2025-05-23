@@ -21,6 +21,9 @@ import Header from "../../../../components/HeaderUi/Index";
 import Toolbar from "../../../../components/EnhancedToolbar/Toolbar";
 import TableComponent from "../../../../components/Table/Table";
 import Pagination from "../../../../components/Table/Pagination";
+import { PanelConfirmation } from "../../../../components/confirmationpanel/Index";
+import OnRenderFooterContent from "../../../../components/panelFooter/Footer";
+import AEVForm from "./components/AEVForm";
 
 function User() {
   const classes = useStyles();
@@ -108,13 +111,12 @@ function User() {
   return (
     <div className={classes.root}>
       <Header classes={classes} text="Users" />
-      <Separator className="seperator" style={{ margin: 0, padding: 0 }} />
 
       <div
-        className={classes.spaceBetween}
         style={{
           backgroundColor: "#FFFFFF",
           padding: "14px",
+          height: "70vh",
         }}
       >
         <Toolbar
@@ -131,7 +133,7 @@ function User() {
         <FluentProvider theme={teamsLightTheme}>
           <Stack
             style={{
-              marginTop: "2rem",
+              marginTop: "1rem",
               boxShadow: " rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
               borderRadius: "5px",
             }}
@@ -155,6 +157,43 @@ function User() {
             setQuery={setQuery}
             tableData={services?.tableData}
           />
+          <PanelConfirmation
+            isNoFooter={openForm?.divType === "column"}
+            isOpen={openForm?.isOpen}
+            title={openForm?.title}
+            width={openForm?.width}
+            hasCloseButton={false}
+            dismissPanel={resetForm}
+            onRenderFooterContent={() => (
+              <OnRenderFooterContent
+                field1={{
+                  text: openForm?.divType === "view" ? "" : "Submit",
+                  handle: () => {
+                    setOpenForm({
+                      ...openForm,
+                      isSaveForm: true,
+                    });
+                  },
+                }}
+                field2={{
+                  text: openForm?.divType === "filter" ? "Reset" : "Cancel",
+                  handle:
+                    openForm?.divType === "filter" ? resetQueryBody : resetForm,
+                }}
+              />
+            )}
+          >
+            {(openForm?.divType === "add" ||
+              openForm?.divType === "edit" ||
+              openForm?.divType === "view") && (
+              <AEVForm
+                classes={classes}
+                services={services}
+                openForm={openForm}
+                setOpenForm={setOpenForm}
+              />
+            )}
+          </PanelConfirmation>
         </FluentProvider>
       </div>
     </div>
