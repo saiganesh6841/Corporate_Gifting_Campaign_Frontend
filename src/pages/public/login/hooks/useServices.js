@@ -141,7 +141,7 @@ function useServices() {
     } else if (response?.data?.responseCode === 122) {
       const newToken = response.data.token;
       localStorage.setItem("token", newToken);
-      setResetTimer(true);
+      // setResetTimer(true);
       setOTP("");
       // setBlockEntry(false);
       publishNotification("OTP sent to your mobile number", "success");

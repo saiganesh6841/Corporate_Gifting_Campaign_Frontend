@@ -3,6 +3,7 @@ import { CircularProgress } from "@mui/material";
 import React, { useLayoutEffect, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import WithSuspense from "../../../components/withSuspense";
+import Dashboard from "./Dashboard/Index";
 // import useServices from "./hook/userServices";
 // import WithSuspense from "../../../components/Suspense/Index";
 
@@ -10,7 +11,6 @@ import WithSuspense from "../../../components/withSuspense";
 const Users = React.lazy(() => import("./Users"));
 // const Role = React.lazy(() => import("./Roles/index"));
 // const Settings = React.lazy(() => import("./Settings"));
-// const Dashboard = React.lazy(() => import("./Dashboard"));
 // const taskManagement = React.lazy(() => import("./task-management")); // Will add later
 
 function AdminContentRouting() {
@@ -21,7 +21,7 @@ function AdminContentRouting() {
       <Routes>
         <Route path="users" element={<Users />} />
 
-        {/* <Route path="/admin/dashboard" element={<WithSuspense Component={Dashboard} />} /> */}
+        <Route path="dashboard" element={<Dashboard />} />
 
         {/* <Route path="/admin/security" element={<Navigate to="/admin/security/role" replace />} />
         <Route path="/admin/security/role" element={<WithSuspense Component={Role} />} /> */}
