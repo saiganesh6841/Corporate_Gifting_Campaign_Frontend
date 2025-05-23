@@ -113,21 +113,6 @@ const ColumnOption = ({
             Save
           </PrimaryButton>
         </Stack> */}
-      <br />
-      <br />
-      <OnRenderFooterContent
-        width={openForm?.width}
-        // field1={{ text: "Reset", onClick: resetColumns }}
-        // field2={{ text: "Save", onClick: handleSaveColumns }}
-        fieldLeft={[
-          { text: "Reset", onClick: resetColumns, type: "default" },
-          // { text: "Reset", onClick: resetColumns, type: "primary" },
-        ]}
-        fieldRight={[
-          // { text: "Draft", onClick: handleSaveColumns, type: "default" },
-          { text: "Save", onClick: handleSaveColumns, type: "primary" },
-        ]}
-      />
     </Stack>
   );
 };

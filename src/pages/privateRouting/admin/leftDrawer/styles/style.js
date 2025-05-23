@@ -116,7 +116,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   logout: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
+    gap: "10px",
     rowGap: "24px",
     marginLeft: "16px",
     marginTop: "60px",

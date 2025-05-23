@@ -167,6 +167,7 @@ const TableComponent = (props) => {
           {columns?.map((column) => (
             <TableHeaderCell
               style={{ textTransform: "capitalize", fontWeight: 600 }}
+              className="customTableHead"
               key={column?.columnId}
               {...columnSizing_unstable.getTableHeaderCellProps(
                 column?.columnId

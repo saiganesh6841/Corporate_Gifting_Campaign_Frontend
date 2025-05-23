@@ -29,6 +29,9 @@
   content: none !important;
   display: none !important;
 }
+.customTableHead:hover{
+  background-color:#FFF3F3 !important;
+  }
 
 
 
