@@ -11,6 +11,9 @@ import Dashboard from "./Dashboard/Index";
 const Users = React.lazy(() => import("./Users"));
 const Role = React.lazy(() => import("./Roles/index"));
 const Room = React.lazy(() => import("./Room/index"));
+const Task = React.lazy(() => import("./Task/index"));
+const ScheduleTime = React.lazy(() => import("./ScheduleTime/index"));
+
 // const Settings = React.lazy(() => import("./Settings"));
 // const taskManagement = React.lazy(() => import("./task-management")); // Will add later
 
@@ -24,7 +27,9 @@ function AdminContentRouting() {
 
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="/security/role" element={<Role />} />
-        <Route path="tasks" element={<Room />} />
+        <Route path="tasks" element={<Task />} />
+        <Route path="rooms" element={<Room />} />
+        <Route path="scheduleTime" element={<ScheduleTime />} />
 
         {/* Fallback route */}
         <Route path="*" element={<h3>Coming soon.</h3>} />

@@ -1,31 +1,12 @@
 import { IconButton, Stack } from "@fluentui/react";
-import {
-  Field,
-  FluentProvider,
-  Input,
-  Option,
-  teamsLightTheme,
-  Text,
-  Combobox,
-  Button,
-  Dropdown,
-} from "@fluentui/react-components";
-import {
-  Eye24Filled,
-  EyeOff24Filled,
-  ArrowCounterclockwiseRegular,
-} from "@fluentui/react-icons";
+import { Field, Input } from "@fluentui/react-components";
 import { Box, Grid, InputAdornment } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LogoUploader from "../../../../../components/LogoUploader/LogoUploader";
-import Reset from "../../../../../components/icons/Reset";
 import utilController from "../../../../../utils/Utilcontroller";
-import Validation from "../../../../../utils/Validation";
 import { useTheme } from "@mui/styles";
-import SectionHeading from "../../../../../components/SectionHeader/Index";
-import DatePickerComponent from "../../../../../components/DatePicker/Index";
-
-const genders = ["male", "female", "other"];
+import { ColorFilled, Eye16Filled } from "@fluentui/react-icons";
+import DialogModal from "../../../../../components/Dialog/Index";
 
 function BasicDetails({
   classes,
@@ -33,12 +14,11 @@ function BasicDetails({
   userForm,
   openForm,
   roles,
-  fetchRoles,
   errors,
-  resetPasswordAttempts,
 }) {
   const theme = useTheme();
-
+  const colorInputRef = useRef();
+  const [isOpen, setIsOpen] = useState(false);
   // console.log(userForm,"user data")
 
   const handleChange = (event, name) => {
@@ -51,9 +31,19 @@ function BasicDetails({
     delete errors[name];
   };
 
-  console.log(roles, "roles");
   return (
     <Grid container spacing={2}>
+      {userForm?.roomLogo && userForm?.roomName && userForm?.color && (
+        <Grid item xs={12}>
+          {" "}
+          <Stack className={classes.preview}>
+            <div className={classes.eyeFilled} onClick={() => setIsOpen(true)}>
+              <Eye16Filled /> Preview
+            </div>
+          </Stack>
+        </Grid>
+      )}
+
       <Grid item xs={12}>
         <Stack
           style={{
@@ -68,6 +58,7 @@ function BasicDetails({
             logoUrl={userForm?.roomLogo}
             onUpload={(url) => setUserForm({ ...userForm, roomLogo: url })}
             error={errors}
+            name="roomLogo"
           />
         </Stack>
       </Grid>
@@ -75,45 +66,96 @@ function BasicDetails({
       <Grid item xs={6}>
         <Field
           className={classes.label}
-          label="Full Name"
+          label="Room Name"
           required
           validationMessage={
-            errors?.fullName ? "Full Name field is required" : ""
+            errors?.roomName ? "Room Name field is required" : ""
           }
-          htmlFor="fullName"
+          htmlFor="roomName"
         >
           <Input
-            id="fullName"
+            id="roomName"
             className={"input__Style"}
             size={"large"}
             placeholder="Enter your full name"
-            value={userForm?.fullName || ""}
-            onChange={(e) => handleChange(e, "fullName")}
+            value={userForm?.roomName || ""}
+            onChange={(e) => handleChange(e, "roomName")}
             disabled={openForm?.divType === "view"}
           />
         </Field>
       </Grid>
-      <Grid item xs={6}>
+
+      <Grid item xs={6} style={{ position: "relative" }}>
         <Field
           className={classes.label}
-          label="Full Name"
-          required
+          label="Color Code"
           validationMessage={
-            errors?.fullName ? "Full Name field is required" : ""
+            errors?.color ? "Color Code field is required" : ""
           }
-          htmlFor="fullName"
+          htmlFor="color"
         >
           <Input
-            id="fullName"
+            id="color"
             className={"input__Style"}
             size={"large"}
-            placeholder="Enter your full name"
-            value={userForm?.fullName || ""}
-            onChange={(e) => handleChange(e, "fullName")}
+            placeholder="Enter a color code"
+            value={userForm?.color || ""}
+            onChange={(e) => handleChange(e, "color")}
             disabled={openForm?.divType === "view"}
+            // Remove hidden input from here (don't cover full input)
+            contentAfter={
+              <InputAdornment position="end" style={{ position: "relative" }}>
+                <IconButton
+                  onClick={() => {
+                    if (openForm?.divType === "view") return;
+                    colorInputRef.current?.click();
+                  }}
+                  disabled={openForm?.divType === "view"}
+                  aria-label="Pick color"
+                  style={{ position: "relative", zIndex: 1 }}
+                >
+                  <ColorFilled primaryFill="#4F5CE7" fontSize={24} />
+                </IconButton>
+
+                {/* Place hidden color input exactly over the icon */}
+                <input
+                  ref={colorInputRef}
+                  type="color"
+                  value={userForm?.color || "#000000"}
+                  onChange={(e) => handleChange(e, "color")}
+                  className={classes.inputColorPicker}
+                />
+              </InputAdornment>
+            }
           />
         </Field>
       </Grid>
+
+      <DialogModal
+        isOpen={isOpen}
+        onDismissModal={() => setIsOpen(false)}
+        title={"Preview"}
+        width={"180px"}
+      >
+        <div
+          className={classes.imagePreview}
+          style={{ backgroundColor: userForm?.color || "#ffffff" }}
+        >
+          {userForm?.roomLogo ? (
+            <img
+              src={userForm?.roomLogo}
+              alt="Logo Preview"
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+              }}
+            />
+          ) : (
+            <span style={{ color: "#fff" }}>No Logo</span>
+          )}
+        </div>
+      </DialogModal>
     </Grid>
   );
 }

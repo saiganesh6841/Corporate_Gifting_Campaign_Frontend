@@ -3,6 +3,7 @@ import { Dismiss16Filled } from "@fluentui/react-icons";
 import PrimaryBtn from "../button/index";
 import { Typography } from "@mui/material";
 import useStyles from "./styles/style";
+import { useTheme } from "@mui/styles";
 
 function DialogModal({
   width,
@@ -14,6 +15,7 @@ function DialogModal({
   isDownloadTemplateButtonVisible,
 }) {
   const classes = useStyles();
+  const theme = useTheme();
   return (
     isOpen && (
       <div className={classes.setUpModal}>
@@ -28,7 +30,7 @@ function DialogModal({
             <Typography
               variant="heading"
               style={{
-                color: "#1EA5FC",
+                color: theme.palette.primary.main,
                 fontWeight: "bold",
               }}
             >
@@ -37,7 +39,7 @@ function DialogModal({
             <div>
               <Dismiss16Filled
                 style={{
-                  color: "#1EA5FC",
+                  color: theme.palette.primary.main,
                   cursor: "pointer",
                 }}
                 onClick={onDismissModal}

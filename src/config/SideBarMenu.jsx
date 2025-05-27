@@ -55,7 +55,7 @@ class SideBarMenu {
     },
     {
       display: "sideNavMenu.room",
-      link: "/admin/room",
+      link: "/admin/rooms",
       linkPage: false,
       onclick: null,
       urlEndWith: "room",
@@ -64,6 +64,19 @@ class SideBarMenu {
       regularIcon: <PeopleTeam24Regular />,
       filledIcon: <PeopleTeam24Filled style={{ color: "#C98383" }} />,
       eventKey: "room",
+      subMenu: [],
+    },
+    {
+      display: "sideNavMenu.scheduleTime",
+      link: "/admin/scheduleTime",
+      linkPage: false,
+      onclick: null,
+      urlEndWith: "scheduleTime",
+      className: "",
+      permissionLevel: "Schedule Time",
+      regularIcon: <PeopleTeam24Regular />,
+      filledIcon: <PeopleTeam24Filled style={{ color: "#C98383" }} />,
+      eventKey: "scheduleTime",
       subMenu: [],
     },
 

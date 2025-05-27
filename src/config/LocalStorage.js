@@ -269,6 +269,8 @@ class LocalStorage {
     "FAQs Category": "/admin/masterData/FAQsCategory",
     "Master Data": "/admin/masterData",
     Task: "/admin/tasks",
+    Room: "/admin/rooms",
+    "Schedule Time": "/admin/scheduleTime",
   };
   static adminButtonPermission = [];
   static buttonPermissionDefault = [

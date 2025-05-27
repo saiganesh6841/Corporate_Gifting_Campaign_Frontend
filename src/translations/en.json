@@ -52,7 +52,9 @@
     "support":"Support",
     "masterData":"Master Data",
     "FAQsCategory":"FAQs Category",
-    "tasks":"Task"
+    "tasks":"Task",
+    "room":"Room",
+    "scheduleTime":"Schedule Time"
   }
   
 }
