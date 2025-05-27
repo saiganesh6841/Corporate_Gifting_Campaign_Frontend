@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { store } from "../../../../..";
 import ConfigAPIURL from "../../../../../config/ConfigAPIURL";
 import LocalStorage from "../../../../../config/LocalStorage";
 import useAlert from "../../../../../hooks/useAlert";
@@ -7,12 +6,13 @@ import APIRequest from "../../../../../utils/APIRequest";
 // import APIRequestDataTableQuery from "../../../../../utils/APIRequestDataTableQuery";
 import fieldsValidation from "../../../../../utils/FieldsValidation";
 import Validation from "../../../../../utils/Validation";
+import { store } from "../../../../../main";
 
 const required = {
   userType: "",
   fullName: "",
   email: "",
-  mobileNo: "",
+  mobileNumber: "",
   password: "",
   permission: "",
 };
@@ -22,7 +22,7 @@ const customerRequiredDetails = {
   fullName: "",
   email: "",
   mobileNo: "",
-  password: "",
+  permission: "",
 };
 // this is api calls happen
 const useServices = (props) => {
@@ -95,13 +95,12 @@ const useServices = (props) => {
   };
 
   const sendToServer = async (userForm, isEdit) => {
-    publishNotification("Error full error", "error");
     const method = isEdit ? "POST" : "POST";
     const URL = isEdit ? ConfigAPIURL.userUpdate : ConfigAPIURL.createUser;
 
     let validationFields = {};
 
-    if (userForm?.userType === "customer") {
+    if (userForm?.userType === "worker") {
       validationFields = { ...customerRequiredDetails };
     } else {
       validationFields = { ...required };
@@ -173,18 +172,18 @@ const useServices = (props) => {
   };
 
   const getEditTable = async ({ setUserForm }) => {
+    console.log(recordId[0], "data");
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        `${ConfigAPIURL.userDetails}`,
+        `${ConfigAPIURL.getUserDetails}`,
         JSON.stringify({
-          userId: recordId[0]?._id,
+          userId: recordId[0]?.userId,
         })
       );
       if (response?.data?.responseCode === 109) {
-        fetchUserSubscriptionDetails();
-        const user = response?.data?.user;
+        const user = response?.data?.rows;
         setUserForm({
           userId: user?.userId || "",
           userType: user?.userType || "",
@@ -192,10 +191,9 @@ const useServices = (props) => {
           fname: user?.fname || "",
           lname: user?.lname || "",
           email: user?.email || "",
-          mobileNo: user?.mobileNo || "",
+          mobileNumber: user?.mobileNumber || "",
           permission: user?.permission?._id || "",
           permissionName: user?.permission?.name || "",
-          department: user?.department || "",
           password: user?.password || "",
           gender: user?.gender || "",
           profileImage: user?.profileImage,
@@ -211,20 +209,6 @@ const useServices = (props) => {
     }
   };
 
-  const getUserRatings = async () => {
-    const id = recordId[0]?._id;
-    const response = await APIRequest.request(
-      "POST",
-      ConfigAPIURL.getUserRatings,
-      JSON.stringify({
-        userId: id,
-      })
-    );
-    if (response?.data?.responseCode === 109) {
-      setUserRatings(response?.data?.result?.feedbackId);
-    }
-  };
-
   const getAllSubscription = async () => {
     const response = await APIRequest.request(
       "POST",
@@ -237,7 +221,7 @@ const useServices = (props) => {
   };
 
   const deleteUser = async () => {
-    const ids = recordId?.map((id) => id?._id);
+    const ids = recordId?.map((id) => id?.userId);
     const payload = {
       userId: ids,
     };
@@ -288,20 +272,31 @@ const useServices = (props) => {
     }
   };
 
-  const fetchRoles = () => {
-    APIRequest.request("GET", ConfigAPIURL.getRoles, "").then((response) => {
+  const fetchRoles = async (keyword) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.listRoles,
+        JSON.stringify({ active: true, keyword: keyword ?? "" })
+      );
       if (response?.data?.responseCode === 109) {
-        setRoles(response?.data?.result);
+        setRoles(response?.data?.rows);
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const resetPasswordAttempts = async () => {
     try {
       const response = await APIRequest.request(
-        "PUT",
+        "POST",
         ConfigAPIURL.userUpdate,
-        JSON.stringify({ passwordAttempt: 0, _id: recordId[0]?._id })
+        JSON.stringify({
+          passwordAttempt: 0,
+          _id: recordId[0]?._id,
+          userId: recordId[0]?.userId,
+        })
       );
 
       if (response?.data?.responseCode === 109) {
@@ -347,49 +342,6 @@ const useServices = (props) => {
     }
   };
 
-  //added
-  const fetchUserSubscriptionDetails = async () => {
-    try {
-      const response = await APIRequest.request(
-        "POST",
-        ConfigAPIURL.userSubscriptionDetails,
-        JSON.stringify({ userId: recordId[0]?._id })
-      );
-
-      if (response?.data?.responseCode === 109) {
-        const subscriptionData = response?.data?.result || [];
-
-        setuserSubscriptionDetails({
-          currentSubscription: subscriptionData?.[0] || null,
-          historySubscription: subscriptionData?.slice(1) || [],
-        });
-      } else {
-        publishNotification("Failed to fetch Subscription Details", "error");
-      }
-    } catch (error) {
-      console.error("Error fetching Subscription Details:", error);
-      publishNotification(
-        "An error occurred while fetching Subscription Details",
-        "error"
-      );
-    }
-  };
-
-  const purchaseSubscription = async (payLoad, handleCloseModal) => {
-    const response = await APIRequest.request(
-      "POST",
-      ConfigAPIURL.pruchaseChallenge,
-      JSON.stringify({
-        ...payLoad,
-        user: recordId[0]?._id,
-      })
-    );
-    if (response?.data?.responseCode === 109) {
-      fetchUserSubscriptionDetails();
-      handleCloseModal();
-    }
-  };
-
   return {
     tableData,
     setTableData,
@@ -408,12 +360,9 @@ const useServices = (props) => {
     createdByList,
     getAllSubscription,
     subscriptionList,
-    getUserRatings,
     getDropdownChallenges,
     challengeDropdownList,
-    fetchUserSubscriptionDetails,
     userSubscriptionDetails,
-    purchaseSubscription,
   };
 };
 

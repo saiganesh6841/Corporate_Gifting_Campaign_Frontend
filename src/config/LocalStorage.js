@@ -1,3 +1,5 @@
+import { Task } from "@mui/icons-material";
+
 class LocalStorage {
   //Base URL For Live & Staging
   // static aws = {
@@ -266,6 +268,7 @@ class LocalStorage {
     Support: "/admin/support",
     "FAQs Category": "/admin/masterData/FAQsCategory",
     "Master Data": "/admin/masterData",
+    Task: "/admin/tasks",
   };
   static adminButtonPermission = [];
   static buttonPermissionDefault = [

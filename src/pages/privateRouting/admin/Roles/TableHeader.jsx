@@ -33,16 +33,12 @@ const useTableHeader = (setOpenForm, openForm, services) => {
       ),
     },
     {
-      columnId: "owner", // this is the unique id for a column
+      columnId: "createdByUser", // this is the unique id for a column
       fieldName: "Created By",
       minWidth: 150,
       renderCell: (item) => (
         <TableCellLayout style={{ textTransform: "capitalize" }} truncate>
-          {`${
-            item?.createdBy?.fullName === undefined
-              ? " "
-              : item?.createdBy?.fullName
-          }`}
+          {`${item?.createdByUser}`}
         </TableCellLayout>
       ),
     },

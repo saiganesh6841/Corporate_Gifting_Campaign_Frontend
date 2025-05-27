@@ -1,5 +1,4 @@
 import React from "react";
-import { CSVLink } from "react-csv";
 import { ExportToCsv } from "export-to-csv";
 import { enqueueSnackbar } from "notistack";
 import useAlert from "../../../../../hooks/useAlert";

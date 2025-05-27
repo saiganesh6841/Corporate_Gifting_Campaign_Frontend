@@ -1,21 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { userDetails } from "../constants/constant";
-// const form = {
-//   userId: "",
-//   userType: "admin",
-//   fullName: "",
-//   email: "",
-//   mobileNo: null,
-//   permission: null,
-//   permissionName: "",
-//   password: "",
-//   dob: null,
-//   gender: null,
-//   profileImage: "",
-// };
+import { formDetails } from "../constants/constant";
 
 const useAevForm = ({ openForm, services }) => {
-  const [userForm, setUserForm] = useState(userDetails);
+  const [userForm, setUserForm] = useState(formDetails);
 
   React.useEffect(() => {
     if (openForm?.isSaveForm) {
@@ -34,15 +21,12 @@ const useAevForm = ({ openForm, services }) => {
     if (openForm?.divType === "edit" || openForm.divType === "view") {
       services?.getEditTable({ setUserForm });
     }
-    if (openForm?.divType === "add") {
-      services?.fetchRoles();
-    }
   }, [openForm?.divType]);
 
   return {
     userForm,
     setUserForm,
-    initialUserForm: userDetails,
+    initialUserForm: formDetails,
   };
 };
 

@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   spaceBetween: {
-    margin: `0 ${theme.spacingArea.large}`,
+    // margin: `0 ${theme.spacingArea.large}`,
     padding: 0,
   },
   label: {
@@ -154,7 +154,7 @@ export const useStyles = makeStyles((theme) => ({
   permissionsContainer: {
     paddingTop: "0",
     padding: "25px",
-    maxHeight: "500px",
+    maxHeight: "600px",
     overflowY: "scroll",
     minWidth: "340px",
   },

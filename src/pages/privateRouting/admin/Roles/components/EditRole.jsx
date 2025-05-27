@@ -9,7 +9,7 @@ import useAevForm from "../hooks/useAevForm";
 import { useStyles } from "../styles/style";
 import AccessComponent from "./AccessComponent";
 import PermissionComponent from "./PermissionComponent";
-import roleImage from "../../../../../assets/images/pana.png";
+import roleImage from "../../../../../assets/Images/floraName.png";
 
 function AEVForm(props) {
   const { openForm, recordId, addForm, setAddForm, addFormDetails } = props;

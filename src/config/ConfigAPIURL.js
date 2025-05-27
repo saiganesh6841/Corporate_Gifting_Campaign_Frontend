@@ -20,12 +20,26 @@ class ConfigAPIURL {
 
   //Admin APIS
 
-  // developer 1
+  // users
   static getAllUsers = this.baseUrl + "/admin/user/getAll";
   static getUserDetails = this.baseUrl + "/admin/user/get";
   static createUser = this.baseUrl + "/admin/user/create";
   static userUpdate = this.baseUrl + "/admin/user/update";
-  static deleteUsers = this.baseUrl + "/admin/user/delete";
+  static deleteUser = this.baseUrl + "/admin/user/delete";
+
+  //roles
+  static listRoles = this.baseUrl + "/admin/role/list";
+  static roleCreate = this.baseUrl + "/admin/role/create";
+  static deleteRole = this.baseUrl + "/admin/role/delete";
+  static roleUpdate = this.baseUrl + "/admin/role/update";
+  static roleDetails = this.baseUrl + "/admin/role/get";
+
+  // rooms
+  static listRooms = this.baseUrl + "/admin/room/getAll";
+  static getRoom = this.baseUrl + "/admin/room/get";
+  static createRoom = this.baseUrl + "/admin/room/create";
+  static updateRoom = this.baseUrl + "/admin/room/update";
+  static deleteRoom = this.baseUrl + "/admin/room/delete";
 }
 
 export default ConfigAPIURL;

@@ -23,17 +23,11 @@ export const form = {
   discription: "",
 };
 
-export const userDetails = {
-  fullName: "",
-  active: true,
-  userType: "admin",
-  dob: null,
-  gender: "male",
-  email: "",
-  mobileNumber: null,
-  password: "",
-  permission: "",
-  profileImage: "",
+export const formDetails = {
+  roomId: "",
+  roomName: "",
+  color: "",
+  roomLogo: "",
 };
 
 export const inactiveLabels = ["view", "restore", "export"];

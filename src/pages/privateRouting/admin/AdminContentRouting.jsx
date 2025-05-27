@@ -9,7 +9,8 @@ import Dashboard from "./Dashboard/Index";
 
 // Lazy-loaded components
 const Users = React.lazy(() => import("./Users"));
-// const Role = React.lazy(() => import("./Roles/index"));
+const Role = React.lazy(() => import("./Roles/index"));
+const Room = React.lazy(() => import("./Room/index"));
 // const Settings = React.lazy(() => import("./Settings"));
 // const taskManagement = React.lazy(() => import("./task-management")); // Will add later
 
@@ -22,6 +23,8 @@ function AdminContentRouting() {
         <Route path="users" element={<Users />} />
 
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="/security/role" element={<Role />} />
+        <Route path="tasks" element={<Room />} />
 
         {/* Fallback route */}
         <Route path="*" element={<h3>Coming soon.</h3>} />

@@ -12,6 +12,21 @@ export const LIGHT = createTheme(BASE_THEME, {
   //     },
   //   },
   // },
+  spacingArea: {
+    xSmall: "4px",
+    small: "8px",
+    medium: "12px",
+    large: "16px",
+    XLarge: "24px",
+    doubleLarge: "32px",
+  },
+  fonts: {
+    title: "28px",
+    heading: "16px",
+    subHeading: "14px",
+    content: "14px",
+    xSmall: "12px",
+  },
 
   title: {
     fontSize: "24px",

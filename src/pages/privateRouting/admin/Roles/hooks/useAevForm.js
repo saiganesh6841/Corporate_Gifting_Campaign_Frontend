@@ -1,7 +1,6 @@
-import { store } from "../../../../..";
+import { store } from "../../../../../main";
 import ConfigAPIURL from "../../../../../config/ConfigAPIURL";
 import useAlert from "../../../../../hooks/useAlert";
-import apiFetchRequest from "../../../../../utils/ApiFetchRequest";
 import APIRequest from "../../../../../utils/APIRequest";
 
 const useAevForm = ({ openForm }) => {
@@ -14,11 +13,11 @@ const useAevForm = ({ openForm }) => {
       const response = await APIRequest.request(
         "POST",
         ConfigAPIURL.roleDetails,
-        JSON.stringify({ roleId: recordId })
+        JSON.stringify({ recordId: recordId })
       );
 
       if (response?.data?.responseCode === 109) {
-        let serverResponse = response.data.role;
+        let serverResponse = response.data.data;
         console.log("serverResponse", serverResponse);
         setAddForm(serverResponse);
       }

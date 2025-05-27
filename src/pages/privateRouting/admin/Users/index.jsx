@@ -26,12 +26,16 @@ import OnRenderFooterContent from "../../../../components/panelFooter/Footer";
 import AEVForm from "./components/AEVForm";
 import CustomFilter from "../../../../components/customFilter/Index";
 import ViewColumn from "../../../../components/ViewColumn/Index";
+import ConfirmationModal from "../../../../components/ConfirmationModal/Index";
+import { withTranslation } from "react-i18next";
+import { connect } from "react-redux";
 
 function User() {
   const classes = useStyles();
   const theme = useTheme();
   const [query, setQuery] = useState({ ...queryBody });
   const [openForm, setOpenForm] = useState({ ...form });
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const [errors, setErrors] = useState({});
   // active and inactive buttons function
@@ -54,6 +58,15 @@ function User() {
     setRecordId([]);
   };
 
+  const handleDelete = () => {
+    setIsDeleteOpen(true);
+  };
+  const dismissDelete = () => {
+    setIsDeleteOpen(false);
+    clearSelectedRows();
+    setRecordId([]);
+  };
+
   const columns = useTableHeader(setOpenForm, openForm);
   const {
     viewColumn,
@@ -71,7 +84,7 @@ function User() {
   const services = useServices({
     query,
     recordId,
-    // dismissDelete,
+    dismissDelete,
     openForm,
     setOpenForm,
     clearSelectedRows,
@@ -89,7 +102,7 @@ function User() {
     viewColumn,
     setOpenForm,
     recordId,
-    // handleDelete,
+    handleDelete,
     clearSelectedRows,
     // handleRestore,
   });
@@ -110,7 +123,7 @@ function User() {
     setQuery({ ...queryBody });
     // setOpenForm({ ...form });
   };
-  console.log(services?.tableData?.rows, "data");
+  console.log(isDeleteOpen, "data");
   return (
     <div className={classes.root}>
       <Header classes={classes} text="Users" />
@@ -197,35 +210,65 @@ function User() {
                 setOpenForm={setOpenForm}
               />
             )}
-
-            {openForm?.divType === "filter" && (
-              <CustomFilter
-                query={query}
-                setQuery={setQuery}
-                openForm={openForm}
-                resetForm={resetForm}
-                resetQueryBody={resetQueryBody}
-                inventory={true}
-                orders={true}
-              />
-            )}
-            {openForm?.divType === "column" && (
-              <ViewColumn
-                filteredColumn={viewColumn}
-                openForm={openForm}
-                resetForm={resetForm}
-                setViewColumn={setViewColumn}
-                filterColumn={filterColumn(columns)}
-              />
-            )}
           </PanelConfirmation>
+          {openForm?.divType === "filter" && (
+            <CustomFilter
+              query={query}
+              setQuery={setQuery}
+              openForm={openForm}
+              resetForm={resetForm}
+              resetQueryBody={resetQueryBody}
+              inventory={true}
+              orders={true}
+            />
+          )}
+          {openForm?.divType === "column" && (
+            <ViewColumn
+              filteredColumn={viewColumn}
+              openForm={openForm}
+              resetForm={resetForm}
+              setViewColumn={setViewColumn}
+              filterColumn={filterColumn(columns)}
+            />
+          )}
+          <ConfirmationModal
+            isOpen={isDeleteOpen}
+            onDismissModal={dismissDelete}
+            title={
+              recordId?.length > 1
+                ? `${isDeleteOpen ? "Delete" : "Restore"} Users`
+                : `${isDeleteOpen ? "Delete" : "Restore"} User`
+            }
+            content={`Are you sure you want to ${
+              isDeleteOpen ? "delete" : "restore"
+            } selected ${recordId?.length > 1 ? "Users" : "User"}?`}
+            Button={"Delete"}
+            onClick={isDeleteOpen && services?.deleteUser}
+          />
         </FluentProvider>
       </div>
     </div>
   );
 }
 
-export default User;
+const mapStateToProps = (state) => {
+  return {
+    shortcutKeyValue: state.shortcutKeyValue,
+    sideDrawerData: state.sideDrawerData,
+  };
+};
+const mapDispachToProps = (dispatch) => {
+  return {
+    shortcutKey: (shortcutKeyValue) =>
+      dispatch({ type: "SHORTCUTKEY", value: shortcutKeyValue }),
+    publishNotification: (notification) =>
+      dispatch({ type: "NOTIFICATION_OPEN", value: notification }),
+  };
+};
+// export default User;
+export default withTranslation("translations")(
+  connect(mapStateToProps, mapDispachToProps)(User)
+);
 
 // /* eslint-disable react-hooks/exhaustive-deps */
 // import { Separator } from "@fluentui/react";
@@ -315,11 +358,11 @@ export default User;
 //   const handleRestore = () => {
 //     setIsRestoreOpen(true);
 //   };
-//   const dismissDelete = () => {
-//     setIsDeleteOpen(false);
-//     clearSelectedRows();
-//     setRecordId([]);
-//   };
+// const dismissDelete = () => {
+//   setIsDeleteOpen(false);
+//   clearSelectedRows();
+//   setRecordId([]);
+// };
 //   const dismissRestore = () => {
 //     setIsRestoreOpen(false);
 //     clearSelectedRows();

@@ -1,7 +1,7 @@
 import { useStyles } from "../styles/style";
 import { Box, Checkbox, Typography } from "@mui/material";
 import utilController from "../../../../../utils/Utilcontroller";
-import MuiTypography from "../../../../../components/Typography/MuiTypograpy";
+// import MuiTypography from "../../../../../components/Typography/MuiTypograpy";
 import { useTheme } from "@mui/styles";
 
 const PermissionComponent = ({
@@ -17,7 +17,7 @@ const PermissionComponent = ({
   return (
     <Box className={classes.PermissinboxContainer}>
       <Box className={classes.permissionHeader}>
-        <MuiTypography
+        <Typography
           variant="subDescription"
           style={{
             fontWeight: "700",
@@ -25,7 +25,7 @@ const PermissionComponent = ({
           }}
         >
           {heading}
-        </MuiTypography>
+        </Typography>
       </Box>
       <Box className={classes.labels}>
         {permissions?.map((permission, index) => (

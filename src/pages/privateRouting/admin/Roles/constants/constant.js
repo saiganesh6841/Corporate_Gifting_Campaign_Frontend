@@ -1,39 +1,30 @@
 export const queryBody = {
+  userType: "all",
+  keyword: "",
   active: true,
-  userType: "All",
   page: 0,
   pageSize: 10,
-  keyword: "",
-  sortOrder: "false",
-  sortField: "",
   startDate: null,
-  endDate: Math.floor(new Date().setHours(23, 59, 0, 0) / 1000),
-  createdByKeyword: "",
+  endDate: new Date() / 1000,
 };
 
 export const form = {
   isOpen: false,
+  isDialogOpen: false,
   title: "",
   divType: "", // like add,edit
   functionName: "",
   rowDetails: null,
-  width: 700,
+  width: 1285,
   hasCloseButton: true,
   isSaveForm: false,
   discription: "",
 };
-
-export const userDetails = {
-  fullName: "",
-  active: true,
-  userType: "admin",
-  dob: null,
-  gender: "male",
-  email: "",
-  mobileNumber: null,
-  password: "",
-  permission: "",
-  profileImage: "",
+export const addFormDetails = {
+  name: "",
+  permission: [],
+  active: false,
+  microPermission: [],
 };
 
 export const inactiveLabels = ["view", "restore", "export"];

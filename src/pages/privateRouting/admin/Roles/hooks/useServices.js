@@ -4,7 +4,7 @@ import LocalStorage from "../../../../../config/LocalStorage";
 import ConfigAPIURL from "../../../../../config/ConfigAPIURL";
 import APIRequest from "../../../../../utils/APIRequest";
 import useAlert from "../../../../../hooks/useAlert";
-import { store } from "../../../../..";
+import { store } from "../../../../../main";
 
 // this is api calls happen
 const useServices = (props) => {
@@ -47,7 +47,7 @@ const useServices = (props) => {
       ) {
         APIRequest.request(
           "POST",
-          ConfigAPIURL.fetchAllRoles,
+          ConfigAPIURL.listRoles,
           JSON.stringify(query)
         ).then((tableData) => {
           console.log(tableData);
@@ -62,6 +62,7 @@ const useServices = (props) => {
 
       console.log(err);
     } finally {
+      console.log();
     }
   };
 

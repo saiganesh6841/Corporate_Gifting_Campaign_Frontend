@@ -25,39 +25,7 @@ import useServices from "./hooks/useServices";
 import useTable from "./hooks/useTable";
 import useTableFunctions from "./hooks/useTableFunctions";
 import { useStyles } from "./styles/style";
-
-const queryBody = {
-  userType: "all",
-  keyword: "",
-  active: true,
-  page: 0,
-  pageSize: 10,
-  startDate: null,
-  endDate: new Date() / 1000,
-};
-
-const form = {
-  isOpen: false,
-  isDialogOpen: false,
-  title: "",
-  divType: "", // like add,edit
-  functionName: "",
-  rowDetails: null,
-  width: 1285,
-  hasCloseButton: true,
-  isSaveForm: false,
-  discription: "",
-};
-
-const addFormDetails = {
-  name: "",
-  permission: [],
-  active: false,
-  microPermission: [],
-};
-
-const inactiveLabels = ["view", "restore", "export"];
-const activeLabels = ["view", "restore"];
+import { addFormDetails, form, queryBody } from "./constants/constant";
 
 function Roles(props) {
   const classes = useStyles();
@@ -166,21 +134,17 @@ function Roles(props) {
 
   return (
     <>
-      <div
-        style={{
-          marginBottom: "44px",
-          marginLeft: "16px",
-          marginRight: "16px",
-          backgroundColor: "#fff",
-          borderRadius: "15px",
-          paddingTop: "10px",
-        }}
-      >
+      <div className={classes.root}>
         <Header classes={classes} text="Roles" />
 
-        <Separator className="seperator" style={{ margin: 0, padding: 0 }} />
-
-        <div className={classes.spaceBetween}>
+        <div
+          style={{
+            backgroundColor: "#FFFFFF",
+            padding: "14px",
+            height: "70vh",
+            borderRadius: "10px",
+          }}
+        >
           <Toolbar
             // handleSearch={(searchValue) =>
             //   setQuery({ ...query, keyword: searchValue })
@@ -231,6 +195,7 @@ function Roles(props) {
               <PanelConfirmation
                 isNoFooter={openForm.divType === "column"}
                 isOpen={openForm?.isOpen}
+                title={openForm?.title}
                 width={openForm?.width}
                 hasCloseButton={
                   openForm.divType === "column"
@@ -342,16 +307,16 @@ function Roles(props) {
             />
 
             <ConfirmationModal
-              open={
+              isOpen={
                 openForm?.isDialogOpen && openForm?.divType === "deleteDialog"
               }
-              handleCancel={resetForm}
-              handleDelete={() => handleDeleteRecord(openForm?.rowDetails)}
+              onDismissModal={resetForm}
               title={recordId?.length > 1 ? "Delete Roles" : "Delete Role"}
               content={`Are you sure you want to delete selected ${
                 recordId?.length > 1 ? "Roles" : "Role"
               }?`}
-              buttonName={"Delete"}
+              Button={"Delete"}
+              onClick={() => handleDeleteRecord(openForm?.rowDetails)}
             />
           </FluentProvider>
         </div>

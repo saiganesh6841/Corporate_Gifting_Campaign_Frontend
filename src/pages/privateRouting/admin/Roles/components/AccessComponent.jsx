@@ -1,17 +1,18 @@
 import { Box, Checkbox, Grid } from "@mui/material";
 import utilController from "../../../../../utils/Utilcontroller";
 import { useStyles } from "../styles/style";
-import MuiTypography from "../../../../../components/Typography/MuiTypograpy";
+// import MuiTypography from "../../../../../components/Typography/MuiTypograpy";
 import { useTheme } from "@mui/styles";
+import Typography from "../../../../../components/Text/Typogarphy";
 
-const AccessComponent = ({ selectLabel, permissions, onChange, disabled}) => {
+const AccessComponent = ({ selectLabel, permissions, onChange, disabled }) => {
   const classes = useStyles();
   const theme = useTheme();
 
   return (
     <Box className={classes.boxContainer}>
       <Box className={classes.permissionHeader}>
-        <MuiTypography
+        <Typography
           variant="subDescription"
           style={{
             fontWeight: "700",
@@ -19,7 +20,7 @@ const AccessComponent = ({ selectLabel, permissions, onChange, disabled}) => {
           }}
         >
           Access to
-        </MuiTypography>
+        </Typography>
       </Box>
       <Grid container spacing={2}>
         {permissions?.map((permission, index) => {
@@ -34,7 +35,7 @@ const AccessComponent = ({ selectLabel, permissions, onChange, disabled}) => {
                   inputProps={{
                     "aria-label": "primary checkbox",
                   }}
-                  disabled= {disabled}
+                  disabled={disabled}
                 />
                 {utilController.textCapitalise(buttons.label)}
               </Grid>
