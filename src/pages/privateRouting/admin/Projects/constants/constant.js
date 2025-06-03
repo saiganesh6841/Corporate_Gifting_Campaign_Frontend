@@ -23,18 +23,23 @@ export const form = {
   discription: "",
 };
 
-export const taskDetails = {
+export const projectDetails = {
   projectId: "",
-  floorNo: "",
-  flatNo: "",
-  room: "",
-  workerId: "",
-  task: [
-    {
-      taskNo: 1,
-      taskDescription: "",
-    },
-  ],
+  projectName: "",
+  location: "",
+  clientName: "",
+  companyName: "",
+  mobileNumber: "",
+  email: "",
+  startDate: "",
+  endDate: "",
+  uploadImage: "",
+  // task: [
+  //   {
+  //     taskNo: 1,
+  //     taskDescription: "",
+  //   },
+  // ],
 };
 export const inactiveLabels = ["restore"];
 // export const inactiveLabels = ["view", "restore", "export"];

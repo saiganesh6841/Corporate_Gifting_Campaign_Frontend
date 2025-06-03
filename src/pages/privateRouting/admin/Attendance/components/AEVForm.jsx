@@ -41,7 +41,6 @@ const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
                 userForm,
                 openForm,
                 errors: services?.errors,
-                services,
               }}
             />
           )}

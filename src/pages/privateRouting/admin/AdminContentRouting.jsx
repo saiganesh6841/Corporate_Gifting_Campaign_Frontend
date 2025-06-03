@@ -13,7 +13,8 @@ const Role = React.lazy(() => import("./Roles/index"));
 const Room = React.lazy(() => import("./Room/index"));
 const Task = React.lazy(() => import("./Task/index"));
 const ScheduleTime = React.lazy(() => import("./ScheduleTime/index"));
-
+const Attendance = React.lazy(() => import("./Attendance/index"));
+const Projects = React.lazy(() => import("./Projects/index"));
 // const Settings = React.lazy(() => import("./Settings"));
 // const taskManagement = React.lazy(() => import("./task-management")); // Will add later
 
@@ -29,7 +30,10 @@ function AdminContentRouting() {
         <Route path="/security/role" element={<Role />} />
         <Route path="tasks" element={<Task />} />
         <Route path="rooms" element={<Room />} />
-        <Route path="scheduleTime" element={<ScheduleTime />} />
+        {/* <Route path="scheduleTime" element={<ScheduleTime />} /> */}
+        <Route path="projects" element={<Projects />} />
+
+        <Route path="attendance" element={<Attendance />} />
 
         {/* Fallback route */}
         <Route path="*" element={<h3>Coming soon.</h3>} />

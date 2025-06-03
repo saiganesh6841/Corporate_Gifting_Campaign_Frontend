@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField, Stack, Icon } from "@fluentui/react";
 import PrimaryBtn from "../button";
+import { Input } from "@fluentui/react-components";
 
 const MessageInputBar = ({
   placeholder = "Write message",
@@ -16,18 +17,19 @@ const MessageInputBar = ({
       tokens={{ childrenGap: 8 }}
       styles={{ root: { width: "100%", alignItems: "center" } }}
     >
-      <TextField
+      <Input
         value={inputValue}
         onChange={onInputChange}
         placeholder={placeholder}
-        styles={{
-          root: { flexGrow: 1 },
-          field: { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
-          ...inputStyles,
-        }}
+        style={{ width: "100%" }}
+        // styles={{
+        //   root: { flexGrow: 1 },
+        //   field: { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
+        //   ...inputStyles,
+        // }}
       />
 
-      <PrimaryBtn onClick={onSend}>
+      <PrimaryBtn onClick={onSend} style={{ width: "100px" }}>
         <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 6 }}>
           <Icon iconName="Send" />
           <span>{buttonLabel}</span>

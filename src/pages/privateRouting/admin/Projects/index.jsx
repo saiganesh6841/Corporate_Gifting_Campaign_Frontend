@@ -126,7 +126,7 @@ function User() {
   console.log(isDeleteOpen, "data");
   return (
     <div className={classes.root}>
-      <Header classes={classes} text="Users" />
+      <Header classes={classes} text="Projects" />
 
       <div
         style={{
@@ -200,9 +200,7 @@ function User() {
               />
             )}
           >
-            {(openForm?.divType === "add" ||
-              openForm?.divType === "edit" ||
-              openForm?.divType === "view") && (
+            {(openForm?.divType === "add" || openForm?.divType === "edit") && (
               <AEVForm
                 classes={classes}
                 services={services}
@@ -210,28 +208,27 @@ function User() {
                 setOpenForm={setOpenForm}
               />
             )}
-            {openForm?.divType === "column" && (
-              <ViewColumn
-                filteredColumn={viewColumn}
-                openForm={openForm}
-                resetForm={resetForm}
-                setViewColumn={setViewColumn}
-                filterColumn={filterColumn(columns)}
-              />
-            )}
-            {openForm?.divType === "filter" && (
-              <CustomFilter
-                query={query}
-                setQuery={setQuery}
-                openForm={openForm}
-                resetForm={resetForm}
-                resetQueryBody={resetQueryBody}
-                inventory={true}
-                orders={true}
-              />
-            )}
           </PanelConfirmation>
-
+          {openForm?.divType === "filter" && (
+            <CustomFilter
+              query={query}
+              setQuery={setQuery}
+              openForm={openForm}
+              resetForm={resetForm}
+              resetQueryBody={resetQueryBody}
+              inventory={true}
+              orders={true}
+            />
+          )}
+          {openForm?.divType === "column" && (
+            <ViewColumn
+              filteredColumn={viewColumn}
+              openForm={openForm}
+              resetForm={resetForm}
+              setViewColumn={setViewColumn}
+              filterColumn={filterColumn(columns)}
+            />
+          )}
           <ConfirmationModal
             isOpen={isDeleteOpen}
             onDismissModal={dismissDelete}

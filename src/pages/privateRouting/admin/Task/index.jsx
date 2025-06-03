@@ -29,6 +29,7 @@ import ViewColumn from "../../../../components/ViewColumn/Index";
 import ConfirmationModal from "../../../../components/ConfirmationModal/Index";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
+import ViewTask from "./components/ViewTask";
 
 function User() {
   const classes = useStyles();
@@ -200,10 +201,17 @@ function User() {
               />
             )}
           >
-            {(openForm?.divType === "add" ||
-              openForm?.divType === "edit" ||
-              openForm?.divType === "view") && (
+            {(openForm?.divType === "add" || openForm?.divType === "edit") && (
               <AEVForm
+                classes={classes}
+                services={services}
+                openForm={openForm}
+                setOpenForm={setOpenForm}
+              />
+            )}
+
+            {openForm?.divType === "view" && (
+              <ViewTask
                 classes={classes}
                 services={services}
                 openForm={openForm}

@@ -63,8 +63,8 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "add",
-          title: "Create Task",
-          width: 700,
+          title: "Create Project",
+          width: 900,
           hasCloseButton: false,
         };
       });
@@ -85,8 +85,8 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "view",
-          title: "View Task",
-          width: 700,
+          title: "View Project",
+          width: 900,
           hasCloseButton: false,
           rowDetails: recordId,
         };
@@ -107,7 +107,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "edit",
-          title: "Edit Task",
+          title: "Edit Project",
           width: 900,
           hasCloseButton: false,
           rowDetails: recordId,

@@ -9,9 +9,12 @@ import Validation from "../../../../../utils/Validation";
 import { store } from "../../../../../main";
 
 const required = {
-  roomName: "",
-  roomLogo: "",
-  color: "",
+  userType: "",
+  fullName: "",
+  email: "",
+  mobileNumber: "",
+  password: "",
+  permission: "",
 };
 
 // this is api calls happen
@@ -30,9 +33,8 @@ const useServices = (props) => {
   } = props;
 
   const { publishNotification } = useAlert();
-
-  const [roles, setRoles] = useState([]);
   const [createdByList, setCreatedByList] = useState([]);
+
   const [tableData, setTableData] = useState({
     result: null,
     pages: 0,
@@ -63,7 +65,7 @@ const useServices = (props) => {
       ) {
         APIRequest.request(
           "POST",
-          ConfigAPIURL.listRooms,
+          ConfigAPIURL.listAttendance,
           JSON.stringify(query)
         ).then((tableData) => {
           setTableData(tableData?.data);
@@ -79,9 +81,21 @@ const useServices = (props) => {
 
   const sendToServer = async (userForm, isEdit) => {
     const method = isEdit ? "POST" : "POST";
-    const URL = isEdit ? ConfigAPIURL.updateRoom : ConfigAPIURL.createRoom;
-
+    const URL = isEdit ? ConfigAPIURL.userUpdate : ConfigAPIURL.createUser;
     const validationErrors = fieldsValidation(userForm, required); //userForm, requiredFields
+
+    if (userForm?.email) {
+      const isValid = Validation.emailValidation(userForm?.email);
+      if (!isValid) {
+        errors["email"] = "Please enter valid email address";
+        return;
+      }
+    }
+
+    if (userForm?.mobileNo?.length < 10) {
+      errors["mobileNo"] = "Mobile number must be at least 10 characters";
+      return;
+    }
 
     if (validationErrors !== true) {
       setErrors(validationErrors);
@@ -91,9 +105,11 @@ const useServices = (props) => {
     const payload = isEdit
       ? {
           ...userForm,
-          recordId: recordId[0]?._id,
+          _id: recordId[0]?._id,
+          permission: userForm?.permission ? userForm?.permission : null,
+          email: userForm?.email?.toLowerCase(),
         }
-      : { ...userForm };
+      : { ...userForm, email: userForm?.email?.toLowerCase() };
 
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
@@ -137,18 +153,29 @@ const useServices = (props) => {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        `${ConfigAPIURL.getRoom}`,
+        `${ConfigAPIURL.getUserDetails}`,
         JSON.stringify({
-          recordId: recordId[0]?._id,
+          userId: recordId[0]?.userId,
         })
       );
       if (response?.data?.responseCode === 109) {
-        const data = response?.data?.room;
+        const user = response?.data?.rows;
         setUserForm({
-          roomId: data?.roomId || "",
-          roomName: data?.roomName || "",
-          roomLogo: data?.roomLogo || "",
-          color: data?.color || "",
+          userId: user?.userId || "",
+          userType: user?.userType || "",
+          userName: user?.userName || "",
+          fname: user?.fname || "",
+          lname: user?.lname || "",
+          email: user?.email || "",
+          mobileNumber: user?.mobileNumber || "",
+          permission: user?.permission?._id || "",
+          permissionName: user?.permission?.name || "",
+          password: user?.password || "",
+          gender: user?.gender || "",
+          profileImage: user?.profileImage,
+          dob: user?.dob || null,
+          isSuperAdmin: user?.isSuperAdmin || false,
+          fullName: user?.fullName || "",
         });
       }
     } catch (error) {
@@ -159,16 +186,16 @@ const useServices = (props) => {
   };
 
   const deleteUser = async () => {
-    const ids = recordId?.map((id) => id?._id);
+    const ids = recordId?.map((id) => id?.userId);
     const payload = {
-      roomIds: ids,
+      userId: ids,
     };
 
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        ConfigAPIURL.deleteRoom,
+        ConfigAPIURL.deleteUser,
         JSON.stringify(payload)
       );
       if (response?.data?.responseCode === 109) {
@@ -213,8 +240,6 @@ const useServices = (props) => {
     loading,
     sendToServer,
     deleteUser,
-    roles,
-    setRoles,
     errors,
     setErrors,
     createdByList,

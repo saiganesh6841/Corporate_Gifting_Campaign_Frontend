@@ -20,24 +20,35 @@ function BasicDetails({
   openForm,
   roles,
   errors,
+  services,
 }) {
   const theme = useTheme();
-  const [fields, setFields] = useState([{ value: "" }, { value: "" }]);
-  const handleChange = (index, value) => {
-    const updated = [...fields];
-    updated[index].value = value;
-    setFields(updated);
+  const handleTaskChange = (index, value) => {
+    const updatedTasks = [...userForm.task];
+    updatedTasks[index].taskDescription = value;
+    setUserForm((prev) => ({
+      ...prev,
+      task: updatedTasks,
+    }));
   };
 
-  const handleAdd = () => {
-    setFields([...fields, { value: "" }]);
+  const handleAddTask = () => {
+    setUserForm((prev) => ({
+      ...prev,
+      task: [...(prev.task || []), { taskNo: null, taskDescription: "" }],
+    }));
   };
 
-  const handleRemove = (index) => {
-    const updated = fields.filter((_, i) => i !== index);
-    setFields(updated);
+  const handleRemoveTask = (index) => {
+    const updatedTasks = userForm.task.filter((_, i) => i !== index);
+    setUserForm((prev) => ({
+      ...prev,
+      task: updatedTasks,
+    }));
   };
 
+  const isEdit = openForm?.divType === "edit";
+  console.log(userForm?.taskDescription, "isEdit");
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -50,30 +61,35 @@ function BasicDetails({
                 required
                 validationMessage={errors?.userType}
               >
-                <Dropdown
+                <Combobox
                   className={` input__Style`}
                   size="medium"
-                  value={
-                    userForm?.userType
-                      ? userForm?.userType.charAt(0).toUpperCase() +
-                        userForm?.userType.slice(1)
-                      : ""
-                  }
+                  value={userForm?.projectName}
+                  onOptionSelect={(e, data) => {
+                    const selectedItem = services?.projectList?.find(
+                      (item) => item._id === data.optionValue
+                    );
+                    if (selectedItem) {
+                      setUserForm((prev) => ({
+                        ...prev,
+                        projectId: selectedItem._id,
+                        projectName: selectedItem.projectName,
+                        floorNo: "",
+                        floor: "",
+                      }));
+                    }
+                  }}
                 >
-                  {["admin", "worker", "supervisor"].map((type) => (
+                  {services?.projectList?.map((item) => (
                     <Option
-                      key={type}
-                      onClick={() => {
-                        setUserForm((p) => ({
-                          ...p,
-                          userType: type,
-                        }));
-                      }}
+                      key={item?._id}
+                      value={item?._id}
+                      text={item?.projectName}
                     >
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                      {item?.projectName}
                     </Option>
                   ))}
-                </Dropdown>
+                </Combobox>
               </Field>
             </Grid>
 
@@ -84,30 +100,63 @@ function BasicDetails({
                 required
                 validationMessage={errors?.userType}
               >
-                <Dropdown
+                <Combobox
                   className={` input__Style`}
                   size="medium"
-                  value={
-                    userForm?.userType
-                      ? userForm?.userType.charAt(0).toUpperCase() +
-                        userForm?.userType.slice(1)
-                      : ""
-                  }
+                  onClick={() => services?.floorsDropdown(userForm?.projectId)}
+                  value={userForm?.floor}
+                  onOptionSelect={(e, data) => {
+                    setUserForm((prev) => ({
+                      ...prev,
+                      floorNo: data.optionValue,
+                      floor: data?.optionText,
+                    }));
+                  }}
                 >
-                  {["admin", "worker", "supervisor"].map((type) => (
+                  {services?.floorList?.map((item) => (
                     <Option
-                      key={type}
-                      onClick={() => {
-                        setUserForm((p) => ({
-                          ...p,
-                          userType: type,
-                        }));
-                      }}
+                      key={item?._id}
+                      value={item?._id}
+                      text={item?.floor}
                     >
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                      {item?.floor}
                     </Option>
                   ))}
-                </Dropdown>
+                </Combobox>
+              </Field>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Field
+                className={classes.label}
+                label="Select Flat"
+                required
+                validationMessage={errors?.userType}
+              >
+                <Combobox
+                  className={` input__Style`}
+                  size="medium"
+                  onClick={() =>
+                    services?.flatDropdown(
+                      userForm?.projectId,
+                      userForm?.floorNo
+                    )
+                  }
+                  value={userForm?.flat}
+                  onOptionSelect={(e, data) => {
+                    setUserForm((prev) => ({
+                      ...prev,
+                      flatNo: data.optionValue,
+                      flat: data?.optionText,
+                    }));
+                  }}
+                >
+                  {services?.flatList?.map((item) => (
+                    <Option key={item?._id} value={item?._id} text={item?.flat}>
+                      {item?.flat}
+                    </Option>
+                  ))}
+                </Combobox>
               </Field>
             </Grid>
             <Grid item xs={6}>
@@ -117,65 +166,38 @@ function BasicDetails({
                 required
                 validationMessage={errors?.userType}
               >
-                <Dropdown
+                <Combobox
                   className={` input__Style`}
                   size="medium"
-                  value={
-                    userForm?.userType
-                      ? userForm?.userType.charAt(0).toUpperCase() +
-                        userForm?.userType.slice(1)
-                      : ""
+                  onClick={() =>
+                    services?.roomDropdown(
+                      userForm?.projectId,
+                      userForm?.floorNo,
+                      userForm?.flatNo
+                    )
                   }
+                  value={userForm?.roomName}
+                  onOptionSelect={(e, data) => {
+                    setUserForm((prev) => ({
+                      ...prev,
+                      room: data.optionValue,
+                      roomName: data?.optionText,
+                    }));
+                  }}
                 >
-                  {["admin", "worker", "supervisor"].map((type) => (
+                  {services?.roomList?.map((item) => (
                     <Option
-                      key={type}
-                      onClick={() => {
-                        setUserForm((p) => ({
-                          ...p,
-                          userType: type,
-                        }));
-                      }}
+                      key={item?._id}
+                      value={item?._id}
+                      text={item?.roomName}
                     >
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                      {item?.roomName}
                     </Option>
                   ))}
-                </Dropdown>
+                </Combobox>
               </Field>
             </Grid>
-            <Grid item xs={6}>
-              <Field
-                className={classes.label}
-                label="Select Flat"
-                required
-                validationMessage={errors?.userType}
-              >
-                <Dropdown
-                  className={` input__Style`}
-                  size="medium"
-                  value={
-                    userForm?.userType
-                      ? userForm?.userType.charAt(0).toUpperCase() +
-                        userForm?.userType.slice(1)
-                      : ""
-                  }
-                >
-                  {["admin", "worker", "supervisor"].map((type) => (
-                    <Option
-                      key={type}
-                      onClick={() => {
-                        setUserForm((p) => ({
-                          ...p,
-                          userType: type,
-                        }));
-                      }}
-                    >
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </Option>
-                  ))}
-                </Dropdown>
-              </Field>
-            </Grid>
+
             <Grid item xs={6}>
               <Field
                 className={classes.label}
@@ -183,30 +205,29 @@ function BasicDetails({
                 required
                 validationMessage={errors?.userType}
               >
-                <Dropdown
+                <Combobox
                   className={` input__Style`}
                   size="medium"
-                  value={
-                    userForm?.userType
-                      ? userForm?.userType.charAt(0).toUpperCase() +
-                        userForm?.userType.slice(1)
-                      : ""
-                  }
+                  onClick={() => services?.workerDropdown(userForm?.projectId)}
+                  value={userForm?.worker}
+                  onOptionSelect={(e, data) => {
+                    setUserForm((prev) => ({
+                      ...prev,
+                      workerId: data.optionValue,
+                      worker: data?.optionText,
+                    }));
+                  }}
                 >
-                  {["admin", "worker", "supervisor"].map((type) => (
+                  {services?.workerList?.map((item) => (
                     <Option
-                      key={type}
-                      onClick={() => {
-                        setUserForm((p) => ({
-                          ...p,
-                          userType: type,
-                        }));
-                      }}
+                      key={item?.workerId}
+                      value={item?.workerId}
+                      text={item?.workerName}
                     >
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                      {item?.workerName}
                     </Option>
                   ))}
-                </Dropdown>
+                </Combobox>
               </Field>
             </Grid>
           </Grid>
@@ -214,16 +235,9 @@ function BasicDetails({
       </Grid>
       <Grid item xs={12}>
         <Box className="box_container">
-          {/* {fields?.map((val, index) => (
-            <Stack horizontal >
-              <Box>{index + 1}</Box>
-              <Input />
-              <Delete16Filled />
-            </Stack>
-          ))} */}
           <Grid container spacing={2} style={{ padding: "10px" }}>
-            {fields?.map((val, index) => (
-              <Grid item xs={12} key={index}>
+            {isEdit ? (
+              <Grid item xs={12}>
                 <Stack
                   direction="row"
                   alignItems="center"
@@ -248,31 +262,88 @@ function BasicDetails({
                       flexShrink: 0,
                     }}
                   >
-                    {index + 1}
+                    {1}
                   </Box>
-
-                  {/* Input Field */}
-                  <Input fullWidth placeholder="ABC" style={{ flexGrow: 1 }} />
-
-                  {/* Delete Icon */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
+                  <Input
+                    fullWidth
+                    placeholder="ABC"
+                    value={userForm?.taskDescription || ""}
+                    onChange={(e) => {
+                      setUserForm((prev) => ({
+                        ...prev,
+                        taskDescription: e.target.value,
+                      }));
                     }}
-                  >
-                    <Delete16Filled
-                      sx={{ color: "#5a1a16", cursor: "pointer" }}
-                    />
-                  </Box>
+                    style={{ flexGrow: 1 }}
+                  />
                 </Stack>
               </Grid>
-            ))}
+            ) : (
+              userForm?.task?.map((task, index) => (
+                <Grid item xs={12} key={index}>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    horizontal
+                    spacing={2}
+                    gap={8}
+                    sx={{ width: "100%" }}
+                  >
+                    {/* Circular Number */}
+                    <Box
+                      sx={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: "50%",
+                        backgroundColor: "#fdecea",
+                        color: "#5a1a16",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 14,
+                        fontWeight: 500,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {index + 1}
+                    </Box>
+
+                    {/* Input Field */}
+                    <Input
+                      fullWidth
+                      placeholder="ABC"
+                      value={task.taskDescription}
+                      onChange={(e) => handleTaskChange(index, e.target.value)}
+                      style={{ flexGrow: 1 }}
+                    />
+
+                    {/* Delete Icon */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handleRemoveTask(index)}
+                    >
+                      <Delete16Filled
+                        sx={{ color: "#5a1a16", cursor: "pointer" }}
+                      />
+                    </Box>
+                  </Stack>
+                </Grid>
+              ))
+            )}
           </Grid>
 
-          <Box sx={{ display: "flex", justifyContent: "end", padding: "10px" }}>
-            <PrimaryBtn style={{ width: "100px" }}>Add</PrimaryBtn>
-          </Box>
+          {!isEdit && (
+            <Box
+              sx={{ display: "flex", justifyContent: "end", padding: "10px" }}
+              onClick={handleAddTask}
+            >
+              <PrimaryBtn style={{ width: "100px" }}>Add</PrimaryBtn>
+            </Box>
+          )}
         </Box>
       </Grid>
     </Grid>

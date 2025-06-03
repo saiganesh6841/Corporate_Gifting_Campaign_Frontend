@@ -39,6 +39,7 @@
     border-bottom-left-radius: 8px;
     margin-bottom: 20px;
     min-width: 270px;
+    /* min-height: 150px; */
   }
   .inputStyleOverride .fui-Combobox__input {
     font-size: 14px !important;
@@ -50,6 +51,9 @@
   }
   .MuiSnackbar-root {
     z-index: 1500 !important;
+  }
+  .fui-checkbox .f35ds98  {
+    background-color:  green;
   }
   
 

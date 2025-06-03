@@ -63,7 +63,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "add",
-          title: "Create Task",
+          title: "Create Schedule Time",
           width: 700,
           hasCloseButton: false,
         };
@@ -85,7 +85,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "view",
-          title: "View Task",
+          title: "View Schedule Time",
           width: 700,
           hasCloseButton: false,
           rowDetails: recordId,
@@ -107,7 +107,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "edit",
-          title: "Edit Task",
+          title: "Edit Schedule Time",
           width: 900,
           hasCloseButton: false,
           rowDetails: recordId,
@@ -119,7 +119,6 @@ const useTableFunctions = ({
       publishNotification("Please select a record", "error");
     }
   };
-
   const viewFilter = () => {
     setOpenForm((p) => {
       return {

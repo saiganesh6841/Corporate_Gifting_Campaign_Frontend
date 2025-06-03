@@ -9,12 +9,11 @@ import Validation from "../../../../../utils/Validation";
 import { store } from "../../../../../main";
 
 const required = {
-  userType: "",
-  fullName: "",
-  email: "",
-  mobileNumber: "",
-  password: "",
-  permission: "",
+  projectId: "",
+  floorNo: "",
+  flatNo: "",
+  room: "",
+  workerId: "",
 };
 
 // this is api calls happen
@@ -34,6 +33,11 @@ const useServices = (props) => {
 
   const { publishNotification } = useAlert();
   const [createdByList, setCreatedByList] = useState([]);
+  const [projectList, setProjectList] = useState([]);
+  const [floorList, setFloorList] = useState([]);
+  const [flatList, setFlatList] = useState([]);
+  const [roomList, setRoomList] = useState([]);
+  const [workerList, setWorkerList] = useState([]);
 
   const [tableData, setTableData] = useState({
     result: null,
@@ -46,9 +50,9 @@ const useServices = (props) => {
     message: "",
   });
 
-  // useEffect(() => {
-  //   createdByUsers();
-  // }, []);
+  useEffect(() => {
+    projectDropdown();
+  }, []);
 
   useEffect(() => {
     if (!query) return;
@@ -65,7 +69,7 @@ const useServices = (props) => {
       ) {
         APIRequest.request(
           "POST",
-          ConfigAPIURL.getAllUsers,
+          ConfigAPIURL.listTasks,
           JSON.stringify(query)
         ).then((tableData) => {
           setTableData(tableData?.data);
@@ -81,21 +85,8 @@ const useServices = (props) => {
 
   const sendToServer = async (userForm, isEdit) => {
     const method = isEdit ? "POST" : "POST";
-    const URL = isEdit ? ConfigAPIURL.userUpdate : ConfigAPIURL.createUser;
+    const URL = isEdit ? ConfigAPIURL.updateTask : ConfigAPIURL.createTask;
     const validationErrors = fieldsValidation(userForm, required); //userForm, requiredFields
-
-    if (userForm?.email) {
-      const isValid = Validation.emailValidation(userForm?.email);
-      if (!isValid) {
-        errors["email"] = "Please enter valid email address";
-        return;
-      }
-    }
-
-    if (userForm?.mobileNo?.length < 10) {
-      errors["mobileNo"] = "Mobile number must be at least 10 characters";
-      return;
-    }
 
     if (validationErrors !== true) {
       setErrors(validationErrors);
@@ -105,11 +96,9 @@ const useServices = (props) => {
     const payload = isEdit
       ? {
           ...userForm,
-          _id: recordId[0]?._id,
-          permission: userForm?.permission ? userForm?.permission : null,
-          email: userForm?.email?.toLowerCase(),
+          recordId: recordId[0]?._id,
         }
-      : { ...userForm, email: userForm?.email?.toLowerCase() };
+      : { ...userForm };
 
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
@@ -153,29 +142,61 @@ const useServices = (props) => {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        `${ConfigAPIURL.getUserDetails}`,
+        `${ConfigAPIURL.getTask}`,
         JSON.stringify({
-          userId: recordId[0]?.userId,
+          recordId: recordId[0]?._id,
         })
       );
       if (response?.data?.responseCode === 109) {
-        const user = response?.data?.rows;
+        const task = response?.data?.task?.[0];
         setUserForm({
-          userId: user?.userId || "",
-          userType: user?.userType || "",
-          userName: user?.userName || "",
-          fname: user?.fname || "",
-          lname: user?.lname || "",
-          email: user?.email || "",
-          mobileNumber: user?.mobileNumber || "",
-          permission: user?.permission?._id || "",
-          permissionName: user?.permission?.name || "",
-          password: user?.password || "",
-          gender: user?.gender || "",
-          profileImage: user?.profileImage,
-          dob: user?.dob || null,
-          isSuperAdmin: user?.isSuperAdmin || false,
-          fullName: user?.fullName || "",
+          taskId: task?.taskId,
+          projectId: task?.projectId,
+          projectName: task?.projectName,
+          floorNo: task?.floorId,
+          floor: task?.floor,
+          flatNo: task?.flatId,
+          flat: task?.flat,
+          roomName: task?.room,
+          workerId: task?.workerId,
+          room: task?.roomId,
+          worker: task?.worker,
+          taskDescription: task?.taskDescription,
+        });
+      }
+    } catch (error) {
+      publishNotification("Error while fetching user details", "error");
+    } finally {
+      store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
+    }
+  };
+
+  const getViewTable = async ({ setUserForm }) => {
+    try {
+      store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
+      const response = await APIRequest.request(
+        "POST",
+        `${ConfigAPIURL.taskView}`,
+        JSON.stringify({
+          recordId: recordId[0]?._id,
+        })
+      );
+      if (response?.data?.responseCode === 109) {
+        const task = response?.data?.task?.[0];
+        setUserForm({
+          taskId: task?.taskId,
+          projectId: task?.projectId,
+          projectName: task?.projectName,
+          floorNo: task?.floorId,
+          floor: task?.floor,
+          flatNo: task?.flatId,
+          flat: task?.flat,
+          roomName: task?.roomName,
+          workerId: task?.workerId,
+          room: task?.roomId,
+          worker: task?.worker,
+          taskDescription: task?.taskDescription,
+          images: task?.images,
         });
       }
     } catch (error) {
@@ -186,16 +207,16 @@ const useServices = (props) => {
   };
 
   const deleteUser = async () => {
-    const ids = recordId?.map((id) => id?.userId);
+    const ids = recordId?.map((id) => id?._id);
     const payload = {
-      userId: ids,
+      taskIds: ids,
     };
 
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        ConfigAPIURL.deleteUser,
+        ConfigAPIURL.deleteTask,
         JSON.stringify(payload)
       );
       if (response?.data?.responseCode === 109) {
@@ -233,6 +254,49 @@ const useServices = (props) => {
   //   }
   // };
 
+  const fetchDropdownData = async (url, setState, payload = {}) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        url,
+        JSON.stringify(payload)
+      );
+      if (response?.data?.responseCode === 109) {
+        setState(response.data?.result);
+      }
+    } catch (error) {
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  const projectDropdown = () =>
+    fetchDropdownData(ConfigAPIURL.projectDropdown, setProjectList);
+
+  // Pass projectId for floorDropdown
+  const floorsDropdown = (projectId) =>
+    fetchDropdownData(ConfigAPIURL.floorsDropdown, setFloorList, { projectId });
+
+  // Pass projectId and floorId for flatDropdown
+  const flatDropdown = (projectId, floorId) =>
+    fetchDropdownData(ConfigAPIURL.flatDropdown, setFlatList, {
+      projectId,
+      floorId,
+    });
+
+  // Pass projectId, floorId, flatId for roomDropdown
+  const roomDropdown = (projectId, floorId, flatId) =>
+    fetchDropdownData(ConfigAPIURL.roomDropdown, setRoomList, {
+      projectId,
+      floorId,
+      flatId,
+    });
+
+  // Pass only projectId for workerDropdown
+  const workerDropdown = (projectId) =>
+    fetchDropdownData(ConfigAPIURL.workersDropdown, setWorkerList, {
+      projectId,
+    });
+
   return {
     tableData,
     setTableData,
@@ -243,6 +307,17 @@ const useServices = (props) => {
     errors,
     setErrors,
     createdByList,
+    projectList,
+    projectDropdown,
+    floorList,
+    flatList,
+    workerList,
+    roomList,
+    workerDropdown,
+    roomDropdown,
+    flatDropdown,
+    floorsDropdown,
+    getViewTable,
   };
 };
 

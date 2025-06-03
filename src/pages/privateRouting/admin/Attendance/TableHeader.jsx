@@ -22,62 +22,45 @@ const useTableHeader = (setOpenForm, openForm) => {
 
   const columns = [
     {
-      columnId: "taskId", // this is the unique id for a column
-      fieldName: "Task Id", // field name visible on header
+      columnId: "userId", // this is the unique id for a column
+      fieldName: "User Id", // field name visible on header
       minWidth: 100,
       primaryKey: true,
       renderCell: (item) => (
         <TableCellLayout truncate style={{ text: capitalize }}>
-          {item?.taskId || ""}
+          {item?.userId || ""}
         </TableCellLayout>
       ),
     },
     {
-      columnId: "projectName", // this is the unique id for a column
-      fieldName: "Project Name", // field name visible on header
+      columnId: "userName", // this is the unique id for a column
+      fieldName: "Worker", // field name visible on header
       minWidth: 120,
       primaryKey: true,
       renderCell: (item) => (
         <TableCellLayout truncate style={{ text: capitalize }}>
-          {item?.projectName &&
-            utilController?.formatTextToCapitalize(item?.projectName)}
+          {item?.userName &&
+            utilController?.formatTextToCapitalize(item?.userName)}
         </TableCellLayout>
       ),
     },
 
     {
-      columnId: "workerDetails", // this is the unique id for a column
-      fieldName: "Worker Name", // field name visible on header
+      columnId: "attendanceDate", // this is the unique id for a column
+      fieldName: "Date", // field name visible on header
       minWidth: 200,
 
       renderCell: (item) => {
         // const fullName = `${item?.fname} ${item?.lname}`;
         return (
           <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-            <Avatar name={item?.workerDetails} color="colorful" size={24} />{" "}
-            {item?.workerDetails}
+            {item?.attendanceDate}
           </TableCellLayout>
         );
       },
     },
     {
-      columnId: "workerMobileNumber", // this is the unique id for a column
-      fieldName: "Mobile Number", // field name visible on header
-      minWidth: 200,
-
-      renderCell: (item) => (
-        // what should be rendered on the cell
-        <TableCellLayout truncate>
-          <Tooltip content={item?.workerMobileNumber}>
-            <Text truncate wrap={false} className={styles.text}>
-              {item?.workerMobileNumber}
-            </Text>
-          </Tooltip>
-        </TableCellLayout>
-      ),
-    },
-    {
-      columnId: "taskStatus", // this is the unique id for a column
+      columnId: "status", // this is the unique id for a column
       fieldName: "Status", // field name visible on header
       minWidth: 200,
 
@@ -85,29 +68,43 @@ const useTableHeader = (setOpenForm, openForm) => {
         // what should be rendered on the cell
         <TableCellLayout truncate>
           <Text truncate wrap={false} className={styles.text}>
-            {item?.taskStatus}
+            {item?.status}
           </Text>
         </TableCellLayout>
       ),
     },
 
     {
-      columnId: "createdAt", // this is the unique id for a column
-      fieldName: "Created On",
+      columnId: "checkIn", // this is the unique id for a column
+      fieldName: "Check-In",
       minWidth: 170,
       renderCell: (item) => (
         <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-          {utilController.getFormattedDate(item?.createdAt)}
+          {utilController.getFormattedDate(item?.checkIn)}
         </TableCellLayout>
       ),
     },
     {
-      columnId: "updatedAt", // this is the unique id for a column
-      fieldName: "Updated On",
+      columnId: "checkOut", // this is the unique id for a column
+      fieldName: "CHeck-Out",
       minWidth: 170,
       renderCell: (item) => (
         <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-          {utilController.getFormattedDate(item?.updatedAt)}
+          {utilController.getFormattedDate(item?.checkOut)}
+        </TableCellLayout>
+      ),
+    },
+    {
+      columnId: "workHours", // this is the unique id for a column
+      fieldName: "Work Hours", // field name visible on header
+      minWidth: 200,
+
+      renderCell: (item) => (
+        // what should be rendered on the cell
+        <TableCellLayout truncate>
+          <Text truncate wrap={false} className={styles.text}>
+            {item?.workHours}
+          </Text>
         </TableCellLayout>
       ),
     },

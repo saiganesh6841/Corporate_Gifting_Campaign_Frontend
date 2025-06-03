@@ -9,12 +9,17 @@ import Validation from "../../../../../utils/Validation";
 import { store } from "../../../../../main";
 
 const required = {
-  roomName: "",
-  roomLogo: "",
-  color: "",
+  projectName: "",
+  location: "",
+  clientName: "",
+  companyName: "",
+  mobileNumber: "",
+  email: "",
+  startDate: "",
+  endDate: "",
+  uploadImage: "",
 };
 
-// this is api calls happen
 const useServices = (props) => {
   const {
     query,
@@ -30,9 +35,11 @@ const useServices = (props) => {
   } = props;
 
   const { publishNotification } = useAlert();
-
-  const [roles, setRoles] = useState([]);
   const [createdByList, setCreatedByList] = useState([]);
+  const [roomList, setRoomList] = useState([]);
+  const [superVisorList, setSuperVisorList] = useState([]);
+  const [workerList, setWorkerList] = useState([]);
+
   const [tableData, setTableData] = useState({
     result: null,
     pages: 0,
@@ -44,9 +51,11 @@ const useServices = (props) => {
     message: "",
   });
 
-  // useEffect(() => {
-  //   createdByUsers();
-  // }, []);
+  useEffect(() => {
+    fetchRoomList();
+    fetchSuperVisorList();
+    fetchWorkerList();
+  }, []);
 
   useEffect(() => {
     if (!query) return;
@@ -63,7 +72,7 @@ const useServices = (props) => {
       ) {
         APIRequest.request(
           "POST",
-          ConfigAPIURL.listRooms,
+          ConfigAPIURL.listProjects,
           JSON.stringify(query)
         ).then((tableData) => {
           setTableData(tableData?.data);
@@ -79,10 +88,11 @@ const useServices = (props) => {
 
   const sendToServer = async (userForm, isEdit) => {
     const method = isEdit ? "POST" : "POST";
-    const URL = isEdit ? ConfigAPIURL.updateRoom : ConfigAPIURL.createRoom;
-
+    const URL = isEdit
+      ? ConfigAPIURL.updateProject
+      : ConfigAPIURL.createProject;
     const validationErrors = fieldsValidation(userForm, required); //userForm, requiredFields
-
+    console.log(validationErrors, "errors");
     if (validationErrors !== true) {
       setErrors(validationErrors);
       return;
@@ -137,18 +147,61 @@ const useServices = (props) => {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        `${ConfigAPIURL.getRoom}`,
+        `${ConfigAPIURL.getTask}`,
         JSON.stringify({
           recordId: recordId[0]?._id,
         })
       );
       if (response?.data?.responseCode === 109) {
-        const data = response?.data?.room;
+        const task = response?.data?.task?.[0];
         setUserForm({
-          roomId: data?.roomId || "",
-          roomName: data?.roomName || "",
-          roomLogo: data?.roomLogo || "",
-          color: data?.color || "",
+          taskId: task?.taskId,
+          projectId: task?.projectId,
+          projectName: task?.projectName,
+          floorNo: task?.floorId,
+          floor: task?.floor,
+          flatNo: task?.flatId,
+          flat: task?.flat,
+          roomName: task?.room,
+          workerId: task?.workerId,
+          room: task?.roomId,
+          worker: task?.worker,
+          taskDescription: task?.taskDescription,
+        });
+      }
+    } catch (error) {
+      publishNotification("Error while fetching user details", "error");
+    } finally {
+      store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
+    }
+  };
+
+  const getViewTable = async ({ setUserForm }) => {
+    try {
+      store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
+      const response = await APIRequest.request(
+        "POST",
+        `${ConfigAPIURL.taskView}`,
+        JSON.stringify({
+          recordId: recordId[0]?._id,
+        })
+      );
+      if (response?.data?.responseCode === 109) {
+        const task = response?.data?.task?.[0];
+        setUserForm({
+          taskId: task?.taskId,
+          projectId: task?.projectId,
+          projectName: task?.projectName,
+          floorNo: task?.floorId,
+          floor: task?.floor,
+          flatNo: task?.flatId,
+          flat: task?.flat,
+          roomName: task?.roomName,
+          workerId: task?.workerId,
+          room: task?.roomId,
+          worker: task?.worker,
+          taskDescription: task?.taskDescription,
+          images: task?.images,
         });
       }
     } catch (error) {
@@ -161,14 +214,14 @@ const useServices = (props) => {
   const deleteUser = async () => {
     const ids = recordId?.map((id) => id?._id);
     const payload = {
-      roomIds: ids,
+      taskIds: ids,
     };
 
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        ConfigAPIURL.deleteRoom,
+        ConfigAPIURL.deleteTask,
         JSON.stringify(payload)
       );
       if (response?.data?.responseCode === 109) {
@@ -206,6 +259,50 @@ const useServices = (props) => {
   //   }
   // };
 
+  const fetchRoomList = async (keyword) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.roomsProjectDropdown,
+        JSON.stringify({ keyword: keyword ?? "" })
+      );
+      if (response?.data?.responseCode === 109) {
+        setRoomList(response.data?.room);
+      }
+    } catch (error) {
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  const fetchSuperVisorList = async (keyword) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.superVisor,
+        JSON.stringify({ keyword: keyword ?? "" })
+      );
+      if (response?.data?.responseCode === 109) {
+        setSuperVisorList(response.data?.supervisor);
+      }
+    } catch (error) {
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  const fetchWorkerList = async (keyword) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.workerList,
+        JSON.stringify({ keyword: keyword ?? "" })
+      );
+      if (response?.data?.responseCode === 109) {
+        setWorkerList(response.data?.worker);
+      }
+    } catch (error) {
+      publishNotification("Error while fetching data", "error");
+    }
+  };
   return {
     tableData,
     setTableData,
@@ -213,11 +310,16 @@ const useServices = (props) => {
     loading,
     sendToServer,
     deleteUser,
-    roles,
-    setRoles,
     errors,
     setErrors,
     createdByList,
+    roomList,
+    getViewTable,
+    fetchRoomList,
+    superVisorList,
+    fetchSuperVisorList,
+    fetchWorkerList,
+    workerList,
   };
 };
 

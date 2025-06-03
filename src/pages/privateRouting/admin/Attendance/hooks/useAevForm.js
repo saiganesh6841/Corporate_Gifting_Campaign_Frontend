@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { taskDetails } from "../constants/constant";
+import { userDetails } from "../constants/constant";
 
 const useAevForm = ({ openForm, services }) => {
-  const [userForm, setUserForm] = useState(taskDetails);
+  const [userForm, setUserForm] = useState(userDetails);
 
   React.useEffect(() => {
     if (openForm?.isSaveForm) {
@@ -18,18 +18,15 @@ const useAevForm = ({ openForm, services }) => {
 
   useEffect(() => {
     // gettting details of row
-    if (openForm?.divType === "edit") {
+    if (openForm?.divType === "edit" || openForm.divType === "view") {
       services?.getEditTable({ setUserForm });
-    }
-    if (openForm.divType === "view") {
-      services?.getViewTable({ setUserForm });
     }
   }, [openForm?.divType]);
 
   return {
     userForm,
     setUserForm,
-    initialUserForm: taskDetails,
+    initialUserForm: userDetails,
   };
 };
 

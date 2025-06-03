@@ -54,7 +54,9 @@
     "FAQsCategory":"FAQs Category",
     "tasks":"Task",
     "room":"Room",
-    "scheduleTime":"Schedule Time"
+    "scheduleTime":"Schedule Time",
+    "attendance":"Attendence",
+    "progressTimeline":"Progress Timeline"
   }
   
 }

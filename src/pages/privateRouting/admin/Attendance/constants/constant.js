@@ -23,19 +23,25 @@ export const form = {
   discription: "",
 };
 
-export const taskDetails = {
-  projectId: "",
-  floorNo: "",
-  flatNo: "",
-  room: "",
-  workerId: "",
-  task: [
-    {
-      taskNo: 1,
-      taskDescription: "",
-    },
-  ],
+export const userDetails = {
+  fullName: "",
+  active: true,
+  userType: "admin",
+  dob: null,
+  gender: "male",
+  email: "",
+  mobileNumber: null,
+  password: "",
+  permission: "",
+  profileImage: "",
 };
-export const inactiveLabels = ["restore"];
-// export const inactiveLabels = ["view", "restore", "export"];
-export const activeLabels = ["restore"];
+
+export const inactiveLabels = [
+  "view",
+  "edit",
+  "restore",
+  "create",
+  "delete",
+  "export",
+];
+export const activeLabels = ["view", "edit", "create", "delete", "restore"];

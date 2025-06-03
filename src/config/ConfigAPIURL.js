@@ -40,6 +40,32 @@ class ConfigAPIURL {
   static createRoom = this.baseUrl + "/admin/room/create";
   static updateRoom = this.baseUrl + "/admin/room/update";
   static deleteRoom = this.baseUrl + "/admin/room/delete";
+
+  //tasks
+  static deleteTask = this.baseUrl + "/admin/task/delete";
+  static listTasks = this.baseUrl + "/admin/task/getAll";
+  static createTask = this.baseUrl + "/admin/task/create";
+  static updateTask = this.baseUrl + "/admin/task/update";
+  static getTask = this.baseUrl + "/admin/task/get";
+  static taskView = this.baseUrl + "/admin/task/view";
+
+  //attendance
+  static listAttendance = this.baseUrl + "/admin/attendence/list";
+
+  //dropdown
+  static projectDropdown = this.baseUrl + "/admin/dropdown/project";
+  static workersDropdown = this.baseUrl + "/admin/dropdown/workers";
+  static flatDropdown = this.baseUrl + "/admin/dropdown/flats";
+  static floorsDropdown = this.baseUrl + "/admin/dropdown/floors";
+  static roomDropdown = this.baseUrl + "/admin/dropdown/rooms";
+
+  //projects
+  static createProject = this.baseUrl + "/admin/project/create";
+  static roomsProjectDropdown = this.baseUrl + "/admin/project/dropdown/room";
+  static superVisor = this.baseUrl + "/admin/project/dropdown/supervisor";
+  static workerList = this.baseUrl + "/admin/project/dropdown/worker";
+  static updateProject = this.baseUrl + "/admin/project/update";
+  static listProjects = this.baseUrl + "/admin/project/list";
 }
 
 export default ConfigAPIURL;
