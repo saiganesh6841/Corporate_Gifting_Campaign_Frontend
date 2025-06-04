@@ -36,27 +36,27 @@ const useServices = ({ graphFiltersData, pieChartFiltersData }) => {
       ""
     );
     if (response?.data?.responseCode === 109) {
-      setStatisticsData(response?.data?.data);
+      setStatisticsData(response?.data?.result);
     }
   };
 
-  const structureGraphData = (timeType, apiData) => {
-    if (timeType === "month" || timeType === "week") {
-      const data = apiData?.map((curr) => {
-        const value =
-          timeType === "month"
-            ? getMonthName(curr?.month)
-            : `Week ${curr?.week} , ${getMonthName(curr?.month)}`;
-        return {
-          ...curr,
-          [timeType]: value,
-        };
-      });
-      setGraphData(data);
-    } else {
-      setGraphData(apiData);
-    }
-  };
+  // const structureGraphData = (timeType, apiData, graphType) => {
+  //   if (timeType === "month" || timeType === "week") {
+  //     const data = apiData?.[graphType]?.map((curr) => {
+  //       const value =
+  //         timeType === "month"
+  //           ? getMonthName(curr?.month)
+  //           : `Week ${curr?.week} , ${getMonthName(curr?.month)}`;
+  //       return {
+  //         ...curr,
+  //         [timeType]: value,
+  //       };
+  //     });
+  //     setGraphData(data);
+  //   } else {
+  //     setGraphData(apiData);
+  //   }
+  // };
 
   const structurePieChartData = (pieChartResult) => {
     const data = pieChartResult.map((curr, i) => ({
@@ -70,13 +70,10 @@ const useServices = ({ graphFiltersData, pieChartFiltersData }) => {
   };
 
   const getGraphData = async () => {
-    const response = await APIRequest.request(
-      "POST",
-      ConfigAPIURL.getGraphData,
-      JSON.stringify({ ...graphFiltersData })
-    );
+    const url = `${ConfigAPIURL.getGraphData}?dateType=${graphFiltersData?.dateType}&startDate=${graphFiltersData?.startDate}&endDate=${graphFiltersData?.endDate}&graphType=${graphFiltersData?.module}`;
+    const response = await APIRequest.request("GET", url);
     if (response?.data?.responseCode === 109) {
-      structureGraphData(graphFiltersData?.dateType, response?.data?.result);
+      setGraphData(response?.data?.result?.[graphFiltersData?.module]);
     }
   };
 

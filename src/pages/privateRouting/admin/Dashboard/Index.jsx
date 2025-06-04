@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Separator } from "@fluentui/react";
 import { FluentProvider, teamsLightTheme } from "@fluentui/react-components";
@@ -17,29 +17,12 @@ import StatisticsCard from "./components/StatisticsCard";
 import useServices from "./hooks/useServices";
 import { useStyles } from "./styles/style";
 import LocalStorage from "../../../../config/LocalStorage";
-
-const statsConstData = [
-  {
-    color: "linear-gradient(to right, #005CEA, #12B1DE)",
-    label: "Users",
-    icon: <PeopleTeam24Filled style={{ color: "#ffff" }} />,
-  },
-  {
-    color: "linear-gradient(to right, #F84E6B, #F67086)",
-    label: "Plans",
-    icon: <DocumentOnePage24Filled style={{ color: "#ffff" }} />,
-  },
-  {
-    color: "linear-gradient(to right, #F66B2F, #EFA55F)",
-    label: "Subscriptions",
-    icon: <Cart24Filled style={{ color: "#ffff" }} />,
-  },
-]; //constant
+import AreaGraph from "./components/AreaGraph";
 
 const graphFilter = {
-  dateType: "week", //year , day , month , week
-  module: "users", // orders
-  startDate: null,
+  dateType: "month", //year , day , month , week
+  module: "projects", // orders
+  startDate: 1746084408,
   endDate: Math.floor(new Date().setHours(23, 59, 0, 0) / 1000),
 }; //constant
 
@@ -58,6 +41,38 @@ function Dashboard(props) {
   });
 
   const services = useServices({ graphFiltersData, pieChartFiltersData });
+  const [statsConstData, setStatsConstData] = useState([]);
+
+  useEffect(() => {
+    if (services?.statisticsData) {
+      setStatsConstData([
+        {
+          color: "#582538",
+          label: "Total Projects",
+          icon: <PeopleTeam24Filled style={{ color: "#ffff" }} />,
+          count: services?.statisticsData?.totalProjects,
+        },
+        {
+          color: "#007F0A",
+          label: "Completed Projects",
+          icon: <DocumentOnePage24Filled style={{ color: "#ffff" }} />,
+          count: services?.statisticsData?.completedProjects,
+        },
+        {
+          color: "#CA9700",
+          label: "In Progress",
+          icon: <Cart24Filled style={{ color: "#ffff" }} />,
+          count: services?.statisticsData?.inProgress,
+        },
+        {
+          color: "#0078D4",
+          label: "Total Users ",
+          icon: <Cart24Filled style={{ color: "#ffff" }} />,
+          count: services?.statisticsData?.totalUsers,
+        },
+      ]);
+    }
+  }, [services?.statisticsData]);
 
   return (
     <div
@@ -67,23 +82,23 @@ function Dashboard(props) {
       }}
     >
       <Header classes={classes} text="Dashboard" />
-
+      <Box className={classes.statastics}>
+        {statsConstData?.length > 0 &&
+          statsConstData.map((data, i) => (
+            <StatisticsCard
+              key={i}
+              classes={classes}
+              background={data.color}
+              Icon={data.icon}
+              label={data.label}
+              totalNumber={data.count || "0"}
+            />
+          ))}
+      </Box>
       <div className={classes.spaceBetween}>
         <FluentProvider theme={teamsLightTheme}>
           {/* main dashboard  */}
 
-          <Box className={classes.statastics}>
-            {services?.statisticsData?.map((data, i) => (
-              <StatisticsCard
-                classes={classes}
-                background={statsConstData?.[i]?.color}
-                Icon={statsConstData?.[i]?.icon}
-                label={statsConstData?.[i]?.label}
-                totalNumber={data?.Counts || "0"}
-                newlyAddedCount={data?.newlyCreatedCount || "0"}
-              />
-            ))}
-          </Box>
           <Box className={classes.mainDashboardContainer}>
             <Box className={classes.dashBoardStatAndGraphContainer}>
               <Box
@@ -97,9 +112,8 @@ function Dashboard(props) {
                 />
               </Box>
 
-              {/* bar graph */}
-              <BarGraph
-                color={theme?.palette?.primary?.main}
+              {/* area graph */}
+              <AreaGraph
                 services={services}
                 graphFiltersData={graphFiltersData}
               />
