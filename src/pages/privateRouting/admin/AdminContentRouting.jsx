@@ -15,6 +15,7 @@ const Task = React.lazy(() => import("./Task/index"));
 const ScheduleTime = React.lazy(() => import("./ScheduleTime/index"));
 const Attendance = React.lazy(() => import("./Attendance/index"));
 const Projects = React.lazy(() => import("./Projects/index"));
+const ProgressTimeline = React.lazy(() => import("./ProgressTimeline/index"));
 // const Settings = React.lazy(() => import("./Settings"));
 // const taskManagement = React.lazy(() => import("./task-management")); // Will add later
 
@@ -32,6 +33,7 @@ function AdminContentRouting() {
         <Route path="rooms" element={<Room />} />
         {/* <Route path="scheduleTime" element={<ScheduleTime />} /> */}
         <Route path="projects" element={<Projects />} />
+        <Route path="progressTimeline" element={<ProgressTimeline />} />
 
         <Route path="attendance" element={<Attendance />} />
 

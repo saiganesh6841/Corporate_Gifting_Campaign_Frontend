@@ -29,9 +29,8 @@ import ViewColumn from "../../../../components/ViewColumn/Index";
 import ConfirmationModal from "../../../../components/ConfirmationModal/Index";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
-import ViewTask from "./components/ViewTask";
 
-function Task() {
+function ProgressTimeline() {
   const classes = useStyles();
   const theme = useTheme();
   const [query, setQuery] = useState({ ...queryBody });
@@ -127,7 +126,7 @@ function Task() {
   console.log(isDeleteOpen, "data");
   return (
     <div className={classes.root}>
-      <Header classes={classes} text="Task" />
+      <Header classes={classes} text="Progress Timeline" />
 
       <div
         style={{
@@ -137,123 +136,12 @@ function Task() {
           borderRadius: "10px",
         }}
       >
-        <Toolbar
+        <AEVForm
           classes={classes}
-          tableButtons={query?.active ? activeTableButton : inactiveTableButton}
-          buttonList={buttonListFiltered(buttonList)}
-          buttonFunctions={{ ...tableFunctions }}
-          themeColor={theme?.palette?.primary?.main}
-          setRecordId={setRecordId}
-          setQuery={setQuery}
-          resetRecords={resetRecords}
+          services={services}
+          openForm={openForm}
+          setOpenForm={setOpenForm}
         />
-
-        <FluentProvider theme={teamsLightTheme}>
-          <Stack
-            style={{
-              marginTop: "1rem",
-              boxShadow: " rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-              borderRadius: "15px",
-            }}
-            className="tablegrid"
-          >
-            <TableComponent
-              items={services?.tableData?.rows || []}
-              columns={columns}
-              multiselect={true}
-              viewColumn={viewColumn}
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-              updateRecord={clickRecordAction}
-              rowAction={handlerowAction}
-              loading={services?.loading}
-              handleBulkSelection={handleBulkSelection}
-            />
-          </Stack>
-          <Pagination
-            query={query}
-            setQuery={setQuery}
-            tableData={services?.tableData}
-          />
-          <PanelConfirmation
-            isNoFooter={openForm?.divType === "column"}
-            isOpen={openForm?.isOpen}
-            title={openForm?.title}
-            width={openForm?.width}
-            hasCloseButton={openForm?.hasCloseButton}
-            dismissPanel={resetForm}
-            onRenderFooterContent={() => (
-              <OnRenderFooterContent
-                field1={{
-                  text: openForm?.divType === "view" ? "" : "Submit",
-                  handle: () => {
-                    setOpenForm({
-                      ...openForm,
-                      isSaveForm: true,
-                    });
-                  },
-                }}
-                field2={{
-                  text: openForm?.divType === "filter" ? "Reset" : "Cancel",
-                  handle:
-                    openForm?.divType === "filter" ? resetQueryBody : resetForm,
-                }}
-              />
-            )}
-          >
-            {(openForm?.divType === "add" || openForm?.divType === "edit") && (
-              <AEVForm
-                classes={classes}
-                services={services}
-                openForm={openForm}
-                setOpenForm={setOpenForm}
-              />
-            )}
-
-            {openForm?.divType === "view" && (
-              <ViewTask
-                classes={classes}
-                services={services}
-                openForm={openForm}
-                setOpenForm={setOpenForm}
-              />
-            )}
-            {openForm?.divType === "filter" && (
-              <CustomFilter
-                query={query}
-                setQuery={setQuery}
-                openForm={openForm}
-                resetForm={resetForm}
-                resetQueryBody={resetQueryBody}
-                inventory={true}
-                orders={true}
-              />
-            )}
-            {openForm?.divType === "column" && (
-              <ViewColumn
-                filteredColumn={viewColumn}
-                openForm={openForm}
-                resetForm={resetForm}
-                setViewColumn={setViewColumn}
-                filterColumn={filterColumn(columns)}
-              />
-            )}
-          </PanelConfirmation>
-          <ConfirmationModal
-            isOpen={isDeleteOpen}
-            onDismissModal={dismissDelete}
-            title={
-              recordId?.length > 1
-                ? `${isDeleteOpen ? "Delete" : "Restore"} Users`
-                : `${isDeleteOpen ? "Delete" : "Restore"} User`
-            }
-            content={`Are you sure you want to ${
-              isDeleteOpen ? "delete" : "restore"
-            } selected ${recordId?.length > 1 ? "Users" : "User"}?`}
-            Button={"Delete"}
-            onClick={isDeleteOpen && services?.deleteUser}
-          />
-        </FluentProvider>
       </div>
     </div>
   );
@@ -275,5 +163,5 @@ const mapDispachToProps = (dispatch) => {
 };
 // export default User;
 export default withTranslation("translations")(
-  connect(mapStateToProps, mapDispachToProps)(Task)
+  connect(mapStateToProps, mapDispachToProps)(ProgressTimeline)
 );

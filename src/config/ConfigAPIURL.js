@@ -61,6 +61,9 @@ class ConfigAPIURL {
   static floorsDropdown = this.baseUrl + "/admin/dropdown/floors";
   static roomDropdown = this.baseUrl + "/admin/dropdown/rooms";
 
+  //progress timeline
+  static getProgressTimeline = this.baseUrl + "/admin/progress/get";
+
   //projects
   static roomsProjectDropdown = this.baseUrl + "/admin/project/dropdown/room";
   static superVisor = this.baseUrl + "/admin/project/dropdown/supervisor";
