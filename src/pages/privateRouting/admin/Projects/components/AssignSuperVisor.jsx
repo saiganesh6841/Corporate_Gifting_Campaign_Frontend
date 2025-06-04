@@ -10,7 +10,13 @@ import {
   PresenceOffline16Regular,
 } from "@fluentui/react-icons";
 
-const AssignSuperVisor = ({ classes, services, userForm, setUserForm }) => {
+const AssignSuperVisor = ({
+  classes,
+  services,
+  userForm,
+  setUserForm,
+  errors,
+}) => {
   const [searchText, setSearchText] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const handleSelect = (sup) => {
@@ -18,6 +24,7 @@ const AssignSuperVisor = ({ classes, services, userForm, setUserForm }) => {
       ...prev,
       assignedSupervisor: sup?._id,
     }));
+    delete errors["assignedSupervisor"];
   };
   const handleRemove = () => {
     setUserForm((prev) => ({
@@ -114,6 +121,11 @@ const AssignSuperVisor = ({ classes, services, userForm, setUserForm }) => {
               </>
             )}
           </Stack>
+          {errors?.assignedSupervisor && (
+            <span style={{ color: "red", fontSize: "12px" }}>
+              {errors?.assignedSupervisor}
+            </span>
+          )}
           {selectedSupervisor && (
             <Box
               sx={{

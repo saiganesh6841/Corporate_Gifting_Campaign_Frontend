@@ -67,7 +67,7 @@ function User() {
     setRecordId([]);
   };
 
-  const columns = useTableHeader(setOpenForm, openForm);
+  const { columns } = useTableHeader(setOpenForm, openForm);
   const {
     viewColumn,
     setViewColumn,
@@ -123,7 +123,7 @@ function User() {
     setQuery({ ...queryBody });
     // setOpenForm({ ...form });
   };
-  console.log(isDeleteOpen, "data");
+  console.log(query, "query");
   return (
     <div className={classes.root}>
       <Header classes={classes} text="Projects" />
@@ -200,12 +200,16 @@ function User() {
               />
             )}
           >
-            {(openForm?.divType === "add" || openForm?.divType === "edit") && (
+            {(openForm?.divType === "add" ||
+              openForm?.divType === "edit" ||
+              openForm?.divType === "view") && (
               <AEVForm
                 classes={classes}
                 services={services}
                 openForm={openForm}
                 setOpenForm={setOpenForm}
+                setQuery={setQuery}
+                query={query}
               />
             )}
           </PanelConfirmation>

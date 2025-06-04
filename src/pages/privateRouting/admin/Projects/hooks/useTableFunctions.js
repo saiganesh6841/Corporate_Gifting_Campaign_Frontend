@@ -86,7 +86,7 @@ const useTableFunctions = ({
           isOpen: true,
           divType: "view",
           title: "View Project",
-          width: 900,
+          width: 1000,
           hasCloseButton: false,
           rowDetails: recordId,
         };

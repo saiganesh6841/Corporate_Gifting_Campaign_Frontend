@@ -9,7 +9,7 @@ import {
   PresenceOffline16Regular,
 } from "@fluentui/react-icons";
 
-const AssignWorker = ({ classes, services, userForm, setUserForm }) => {
+const AssignWorker = ({ classes, services, userForm, setUserForm, errors }) => {
   const [searchText, setSearchText] = useState("");
   const [showDetails, setShowDetails] = useState(false);
 
@@ -26,6 +26,7 @@ const AssignWorker = ({ classes, services, userForm, setUserForm }) => {
         assignedWorkers: [...(prev.assignedWorkers || []), sup._id],
       }));
     }
+    delete errors["assignedSupervisor"];
   };
 
   const handleRemove = (idToRemove) => {
@@ -138,7 +139,11 @@ const AssignWorker = ({ classes, services, userForm, setUserForm }) => {
             </>
           )}
         </Stack>
-
+        {errors?.assignedWorkers && (
+          <span style={{ color: "red", fontSize: "12px" }}>
+            {errors?.assignedWorkers}
+          </span>
+        )}
         {selectedWorkers?.length > 0 && (
           <Box
             sx={{

@@ -84,7 +84,8 @@ const Toolbar = ({
   children,
   themeColor,
   setQuery,
-  resetRecords,
+  resetRecords,showSearch
+
 }) => {
   const classes = useStyles();
   iconStyleProps["primaryFill"] = themeColor;
@@ -126,7 +127,9 @@ const Toolbar = ({
   // Debounced search handler
   const handleSearch = useCallback(
     debounce((e, newValue) => {
-      resetRecords(); //reset the selection before searching
+      
+      if(!showSearch) resetRecords();
+      //reset the selection before searching
       setQuery((prev) => ({
         ...prev,
         keyword: newValue,
@@ -190,7 +193,7 @@ const Toolbar = ({
             alignItems="center"
             gap=".8rem"
           >
-            <Stack
+            {!showSearch && <Stack
               onClick={buttonFunctions?.viewFilter}
               flexDirection="row"
               alignItems="center"
@@ -201,7 +204,8 @@ const Toolbar = ({
               <Typography style={{ fontWeight: 400, color: "black" }}>
                 {"Filter"}
               </Typography>
-            </Stack>
+            </Stack>}
+            
 
             <Stack width="200px">
               <SearchBar
@@ -212,13 +216,15 @@ const Toolbar = ({
               />
             </Stack>
 
-            <ColumnTriple24Regular
+
+                {!showSearch && <ColumnTriple24Regular
               onClick={() =>
                 buttonFunctions?.editColumn && buttonFunctions?.editColumn()
               }
               style={{ cursor: "pointer" }}
               {...iconStyleProps}
-            />
+            />}
+            
             {children}
           </Stack>
         </Stack>

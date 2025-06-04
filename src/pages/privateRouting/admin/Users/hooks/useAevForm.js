@@ -1,18 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { userDetails } from "../constants/constant";
-// const form = {
-//   userId: "",
-//   userType: "admin",
-//   fullName: "",
-//   email: "",
-//   mobileNo: null,
-//   permission: null,
-//   permissionName: "",
-//   password: "",
-//   dob: null,
-//   gender: null,
-//   profileImage: "",
-// };
 
 const useAevForm = ({ openForm, services }) => {
   const [userForm, setUserForm] = useState(userDetails);

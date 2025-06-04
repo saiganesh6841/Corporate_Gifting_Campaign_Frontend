@@ -1,10 +1,15 @@
-const RoomLogo = ({ color, roomLogo }) => {
+import Typography from "../Text/Typogarphy";
+
+const RoomLogo = ({ color, roomLogo, roomName, onClick }) => {
   return (
-    <>
+    <div
+      style={{ textAlign: "center", cursor: onClick ? "pointer" : "default" }}
+      onClick={onClick}
+    >
       <div
         style={{
           padding: "16px",
-          borderRadius: "8px",
+          borderRadius: "20px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -28,7 +33,10 @@ const RoomLogo = ({ color, roomLogo }) => {
           <span style={{ color: "#fff" }}>No Logo</span>
         )}
       </div>
-    </>
+      <Typography variant="subHeading" style={{ textAlign: "center" }}>
+        {roomName}
+      </Typography>
+    </div>
   );
 };
 export default RoomLogo;

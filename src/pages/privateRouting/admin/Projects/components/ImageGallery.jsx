@@ -41,7 +41,7 @@ const ImageSelectionGallery = ({ Images }) => {
 
       {/* Image Cards */}
       <Grid container spacing={2}>
-        {Images?.map((url, index) => (
+        {imageUrls?.map((url, index) => (
           <Grid item xs={6} sm={3} key={index}>
             <Box
               sx={{
@@ -52,11 +52,12 @@ const ImageSelectionGallery = ({ Images }) => {
               }}
             >
               <img
-                src={url.url}
+                src={url}
                 alt={`Design ${index + 1}`}
                 style={{
-                  width: "100%",
-                  height: "auto",
+                  width: "183px",
+                  height: "183px",
+                  objectFit: "fill",
                   display: "block",
                   borderRadius: "12px",
                 }}
@@ -68,7 +69,7 @@ const ImageSelectionGallery = ({ Images }) => {
                   position: "absolute",
                   top: 8,
                   right: 8,
-                  padding: "6px",
+                  padding: "4px",
                   backgroundColor: "#fff",
                   borderRadius: "20%",
                   "&:hover": {

@@ -54,42 +54,11 @@ const ProjectDetails = ({
                 id="projectName"
                 className={"input__Style"}
                 size={"large"}
-                placeholder="Enter your full name"
+                placeholder="Enter project name"
                 value={userForm?.projectName || ""}
                 onChange={(e) => handleChange(e, "projectName")}
                 disabled={openForm?.divType === "view"}
               />
-            </Field>
-          </Grid>
-          <Grid item xs={4} className={classes.label}>
-            <Field label="Active">
-              <Dropdown
-                className={` input__Style`}
-                value={userForm?.active}
-                size="large"
-                style={{ textTransform: "capitalize" }}
-                // onOptionSelect={(e, data) => {
-                //   setFilter({
-                //     ...filter,
-                //     active: data?.optionValue === "Yes" ? true : false,
-                //   });
-                // }}
-              >
-                <Option
-                  style={{ textTransform: "capitalize" }}
-                  text="Yes"
-                  value="Yes"
-                >
-                  Yes
-                </Option>
-                <Option
-                  style={{ textTransform: "capitalize" }}
-                  text="No"
-                  value="No"
-                >
-                  No
-                </Option>
-              </Dropdown>
             </Field>
           </Grid>
 
@@ -107,7 +76,7 @@ const ProjectDetails = ({
                 id="location"
                 className={"input__Style"}
                 size={"large"}
-                placeholder="Enter your full name"
+                placeholder="Enter Location"
                 value={userForm?.location || ""}
                 onChange={(e) => handleChange(e, "location")}
                 disabled={openForm?.divType === "view"}
@@ -128,7 +97,7 @@ const ProjectDetails = ({
                 id="clientName"
                 className={"input__Style"}
                 size={"large"}
-                placeholder="Enter your full name"
+                placeholder="Enter Client Name"
                 value={userForm?.clientName || ""}
                 onChange={(e) => handleChange(e, "clientName")}
                 disabled={openForm?.divType === "view"}
@@ -149,7 +118,7 @@ const ProjectDetails = ({
                 id="companyName"
                 className={"input__Style"}
                 size={"large"}
-                placeholder="Enter your full name"
+                placeholder="Enter your company name"
                 value={userForm?.companyName || ""}
                 onChange={(e) => handleChange(e, "companyName")}
                 disabled={openForm?.divType === "view"}
@@ -162,7 +131,7 @@ const ProjectDetails = ({
               className={classes.label}
               label="Mobile Number"
               required
-              validationMessage={errors?.mobileNo}
+              validationMessage={errors?.mobileNumber}
               htmlFor="mobileNo"
             >
               <Input
@@ -224,6 +193,7 @@ const ProjectDetails = ({
               label="Start Date"
               validationMessage={errors?.startDate}
               htmlFor="startDate"
+              required
             >
               <DatePickerComponent
                 className={` input__Style`}
@@ -233,10 +203,11 @@ const ProjectDetails = ({
                     ? new Date(userForm.startDate * 1000)
                     : null
                 }
-                handleChange={(e) =>
-                  setUserForm({ ...userForm, startDate: new Date(e) / 1000 })
-                }
-                maxDate={new Date()}
+                handleChange={(e) => {
+                  setUserForm({ ...userForm, startDate: new Date(e) / 1000 });
+                  delete errors["startDate"];
+                }}
+                // maxDate={new Date(userForm?.endDate * 1000)}
                 disabled={openForm?.divType === "view"}
               />
             </Field>
@@ -247,17 +218,19 @@ const ProjectDetails = ({
               label="End Date"
               validationMessage={errors?.endDate}
               htmlFor="endDate"
+              required
             >
               <DatePickerComponent
                 className={` input__Style`}
+                minDate={new Date(userForm?.startDate * 1000)}
                 size="large"
                 value={
                   userForm?.endDate ? new Date(userForm.endDate * 1000) : null
                 }
-                handleChange={(e) =>
-                  setUserForm({ ...userForm, endDate: new Date(e) / 1000 })
-                }
-                maxDate={new Date()}
+                handleChange={(e) => {
+                  setUserForm({ ...userForm, endDate: new Date(e) / 1000 });
+                  delete errors["endDate"];
+                }}
                 disabled={openForm?.divType === "view"}
               />
             </Field>

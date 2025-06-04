@@ -5,9 +5,6 @@ export const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
   },
-  spaceBetween: {
-    // margin: `0 ${theme.spacing(2)}`,
-  },
   label: {
     fontWeight: 600,
     // fontSize: theme.fonts.heading,
@@ -85,5 +82,28 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     gap: "6px",
+  },
+  spaceBetween: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  imageCount: {
+    position: "absolute",
+    bottom: "5px",
+    right: "-5px",
+    backgroundColor: "#e6cfd0",
+    color: theme.palette.primary.main,
+    padding: "4px 7px",
+    fontSize: "14px",
+    fontWeight: 600,
+    border: "5px solid #fff",
+    borderRadius: "10px 2px 11px 2px",
+  },
+  boxShow: {
+    backgroundColor: theme.palette.primary.light,
+    padding: "6px",
+    borderRadius: "6px",
+    margin: "4px 0px",
   },
 }));

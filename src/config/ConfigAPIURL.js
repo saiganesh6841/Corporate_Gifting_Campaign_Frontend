@@ -60,12 +60,16 @@ class ConfigAPIURL {
   static roomDropdown = this.baseUrl + "/admin/dropdown/rooms";
 
   //projects
-  static createProject = this.baseUrl + "/admin/project/create";
   static roomsProjectDropdown = this.baseUrl + "/admin/project/dropdown/room";
   static superVisor = this.baseUrl + "/admin/project/dropdown/supervisor";
   static workerList = this.baseUrl + "/admin/project/dropdown/worker";
+  static createProject = this.baseUrl + "/admin/project/create";
   static updateProject = this.baseUrl + "/admin/project/update";
   static listProjects = this.baseUrl + "/admin/project/list";
+  static getProject = this.baseUrl + "/admin/project/get";
+  static projectView = this.baseUrl + "/admin/project/view";
+  static ProjectTable = this.baseUrl + "/admin/project/worker";
+  static viewRoomImages = this.baseUrl + "/admin/project/roomView";
 }
 
 export default ConfigAPIURL;

@@ -42,7 +42,7 @@ export const LIGHT = createTheme(BASE_THEME, {
 
   subHeading: {
     fontSize: "14px",
-    fontWeight: 400,
+    fontWeight: 500,
     lineHeight: "19px",
   },
   content: {

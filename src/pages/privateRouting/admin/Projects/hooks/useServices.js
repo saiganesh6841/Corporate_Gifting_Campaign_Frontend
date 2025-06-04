@@ -18,6 +18,8 @@ const required = {
   startDate: "",
   endDate: "",
   uploadImage: "",
+  assignedSupervisor: "",
+  assignedWorkers: [],
 };
 
 const useServices = (props) => {
@@ -39,6 +41,11 @@ const useServices = (props) => {
   const [roomList, setRoomList] = useState([]);
   const [superVisorList, setSuperVisorList] = useState([]);
   const [workerList, setWorkerList] = useState([]);
+  const [workerData, setWorkerData] = useState(null);
+  const [floorList, setFloorList] = useState([]);
+  const [flatList, setFlatList] = useState([]);
+  const [roomData, setRoomData] = useState([]);
+  const [viewRoomData, setViewRoomData] = useState([]);
 
   const [tableData, setTableData] = useState({
     result: null,
@@ -61,6 +68,13 @@ const useServices = (props) => {
     if (!query) return;
     tableQuery(query);
   }, [query, LocalStorage?.adminButtonPermission]);
+
+  useEffect(() => {
+    // if (!query) return;
+    if (openForm?.divType === "view") {
+      workerTable(query);
+    }
+  }, [query, openForm]);
 
   const tableQuery = (query) => {
     try {
@@ -91,8 +105,19 @@ const useServices = (props) => {
     const URL = isEdit
       ? ConfigAPIURL.updateProject
       : ConfigAPIURL.createProject;
+    console.log(userForm?.assignedWorkers?.length < 1, "error");
     const validationErrors = fieldsValidation(userForm, required); //userForm, requiredFields
-    console.log(validationErrors, "errors");
+    if (userForm?.mobileNumber?.length < 10) {
+      errors["mobileNumber"] = "Mobile number must be at least 10 characters";
+      // return;
+    }
+    if (userForm?.assignedWorkers?.length < 1) {
+      setErrors((prev) => ({
+        ...prev,
+        assignedWorkers: "Assigned Worker is required",
+      }));
+      // return;
+    }
     if (validationErrors !== true) {
       setErrors(validationErrors);
       return;
@@ -147,26 +172,26 @@ const useServices = (props) => {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        `${ConfigAPIURL.getTask}`,
+        `${ConfigAPIURL.getProject}`,
         JSON.stringify({
           recordId: recordId[0]?._id,
         })
       );
       if (response?.data?.responseCode === 109) {
-        const task = response?.data?.task?.[0];
+        const project = response?.data?.project?.[0];
         setUserForm({
-          taskId: task?.taskId,
-          projectId: task?.projectId,
-          projectName: task?.projectName,
-          floorNo: task?.floorId,
-          floor: task?.floor,
-          flatNo: task?.flatId,
-          flat: task?.flat,
-          roomName: task?.room,
-          workerId: task?.workerId,
-          room: task?.roomId,
-          worker: task?.worker,
-          taskDescription: task?.taskDescription,
+          projectId: project?.projectId,
+          projectName: project?.projectName,
+          clientName: project?.clientName,
+          location: project?.location,
+          companyName: project?.companyName,
+          startDate: project?.startDate,
+          endDate: project?.endDate,
+          mobileNumber: project?.clientPhoneNo,
+          email: project?.clientEmail,
+          assignedSupervisor: project?.assignedSupervisor,
+          assignedWorkers: project?.assignedWorkers,
+          details: project?.floorDetails,
         });
       }
     } catch (error) {
@@ -181,27 +206,30 @@ const useServices = (props) => {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        `${ConfigAPIURL.taskView}`,
+        `${ConfigAPIURL.projectView}`,
         JSON.stringify({
           recordId: recordId[0]?._id,
         })
       );
       if (response?.data?.responseCode === 109) {
-        const task = response?.data?.task?.[0];
+        const project = response?.data?.project?.[0];
         setUserForm({
-          taskId: task?.taskId,
-          projectId: task?.projectId,
-          projectName: task?.projectName,
-          floorNo: task?.floorId,
-          floor: task?.floor,
-          flatNo: task?.flatId,
-          flat: task?.flat,
-          roomName: task?.roomName,
-          workerId: task?.workerId,
-          room: task?.roomId,
-          worker: task?.worker,
-          taskDescription: task?.taskDescription,
-          images: task?.images,
+          projectId: project?.projectId,
+          projectName: project?.projectName,
+          clientName: project?.clientName,
+          location: project?.location,
+          companyName: project?.companyName,
+          startDate: project?.startDate,
+          endDate: project?.endDate,
+          mobileNumber: project?.clientPhoneNo,
+          email: project?.clientEmail,
+          assignedSupervisor: project?.assignedSupervisor,
+          assignedWorkers: project?.assignedWorkers,
+          uploadImage: project?.uploadImage,
+          supervisorName: project?.supervisorName,
+          supervisorMobile: project?.supervisorMobile,
+          supervisorImage: project?.supervisorImage,
+          status: project?.status,
         });
       }
     } catch (error) {
@@ -236,28 +264,6 @@ const useServices = (props) => {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
     }
   };
-
-  // const createdByUsers = async () => {
-  //   try {
-  //     setLoading({ ...loading, isOpen: true, type: "filter" });
-
-  //     const response = await APIRequest.request(
-  //       "POST",
-  //       ConfigAPIURL.userCreatedByList,
-  //       ""
-  //     );
-  //     if (response?.data?.responseCode === 109) {
-  //       setCreatedByList(response.data?.result);
-  //     }
-  //   } catch (error) {
-  //     publishNotification(
-  //       "Error while fetching Created By users list",
-  //       "error"
-  //     );
-  //   } finally {
-  //     setLoading({ ...loading, isOpen: false, type: "" });
-  //   }
-  // };
 
   const fetchRoomList = async (keyword) => {
     try {
@@ -303,6 +309,64 @@ const useServices = (props) => {
       publishNotification("Error while fetching data", "error");
     }
   };
+
+  const workerTable = async (query) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.ProjectTable,
+        JSON.stringify({ recordId: recordId[0]?._id, ...query })
+      );
+      if (response?.data?.responseCode === 109) {
+        setWorkerData(response.data);
+      }
+    } catch (error) {
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  const fetchDropdownData = async (url, setState, payload = {}) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        url,
+        JSON.stringify(payload)
+      );
+      if (response?.data?.responseCode === 109) {
+        setState(response.data?.result);
+      }
+    } catch (error) {
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  // Pass projectId for floorDropdown
+  const floorsDropdown = () =>
+    fetchDropdownData(ConfigAPIURL.floorsDropdown, setFloorList, {
+      projectId: recordId[0]?._id,
+    });
+
+  // Pass projectId and floorId for flatDropdown
+  const flatDropdown = (floorId) =>
+    fetchDropdownData(ConfigAPIURL.flatDropdown, setFlatList, {
+      projectId: recordId[0]?._id,
+      floorId,
+    });
+
+  // Pass projectId, floorId, flatId for roomDropdown
+  const roomDropdown = (floorId, flatId) =>
+    fetchDropdownData(ConfigAPIURL.roomDropdown, setRoomData, {
+      projectId: recordId[0]?._id,
+      floorId,
+      flatId,
+    });
+
+  const viewRoomImageData = (flatId, roomId, date) =>
+    fetchDropdownData(ConfigAPIURL.viewRoomImages, setViewRoomData, {
+      flatId,
+      roomId,
+      date,
+    });
   return {
     tableData,
     setTableData,
@@ -320,6 +384,17 @@ const useServices = (props) => {
     fetchSuperVisorList,
     fetchWorkerList,
     workerList,
+    workerData,
+    workerTable,
+    floorsDropdown,
+    flatDropdown,
+    roomDropdown,
+    roomData,
+    floorList,
+    flatList,
+    setRoomData,
+    viewRoomData,
+    viewRoomImageData,
   };
 };
 

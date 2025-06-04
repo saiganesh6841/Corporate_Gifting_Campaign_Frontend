@@ -55,7 +55,9 @@
   .fui-checkbox .f35ds98  {
     background-color:  green;
   }
-  
+  .persona-avatar img {
+    border-radius: 50% !important;
+  }
 
 
 

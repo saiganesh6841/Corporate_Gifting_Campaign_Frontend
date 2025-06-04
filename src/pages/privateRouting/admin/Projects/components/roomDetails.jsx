@@ -11,7 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import PrimaryBtn from "../../../../../components/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack } from "@fluentui/react";
 import { Field, Input } from "@fluentui/react-components";
 import {
@@ -36,12 +36,13 @@ const availableRooms = [
 
 const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
   const [floorNoInput, setFloorNoInput] = useState("");
-  const [selectedTab, setSelectedTab] = useState("");
+  const [selectedTab, setSelectedTab] = useState(0);
   const [flatNoInput, setFlatNoInput] = useState("");
   const handleChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
   const [selectedFloorIndex, setSelectedFloorIndex] = useState(0);
+
   const handleAddFloor = () => {
     const floorNo = Number(floorNoInput);
     if (!floorNo || isNaN(floorNo)) return;
@@ -169,7 +170,10 @@ const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
                   }}
                   title={`Delete Floor ${val.floorNo}`}
                   variant={selectedFloorIndex === ind ? "primary" : "outlined"}
-                  onClick={() => setSelectedFloorIndex(ind)}
+                  onClick={() => {
+                    setSelectedFloorIndex(ind);
+                    setSelectedTab(0);
+                  }}
                 >
                   {`Floor ${val.floorNo}`}{" "}
                   <Delete20Filled
@@ -274,6 +278,12 @@ const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
                     alignItems: "center",
                     gap: "6px",
                   }}
+                  disabled={
+                    !flatNoInput ||
+                    userForm.details?.[selectedFloorIndex]?.roomDetails?.some(
+                      (flat) => flat.flatNo === Number(flatNoInput)
+                    )
+                  }
                 >
                   <AddCircle24Regular />
                   Add Flat
@@ -283,17 +293,18 @@ const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
           )}
         </Grid>
         <hr style={{ width: "100%", opacity: 0.3 }} />
-        <Grid item xs={12}>
-          <div
-            style={{
-              display: "flex",
-              gap: "12px",
-              overflowX: "auto",
-              padding: "8px 0",
-              scrollbarWidth: "none",
-            }}
-          >
-            {userForm.details?.[selectedFloorIndex]?.roomDetails?.[
+        {userForm.details?.[selectedFloorIndex]?.roomDetails?.[selectedTab] && (
+          <Grid item xs={12}>
+            <div
+              style={{
+                display: "flex",
+                gap: "12px",
+                overflowX: "auto",
+                padding: "8px 0",
+                scrollbarWidth: "none",
+              }}
+            >
+              {/* {userForm.details?.[selectedFloorIndex]?.roomDetails?.[
               selectedTab
             ]?.rooms.map((roomId) => {
               const room = services.roomList.find((r) => r._id === roomId);
@@ -305,73 +316,98 @@ const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
                   roomLogo={room.roomLogo}
                 />
               );
-            })}
-          </div>
-          <Field className={classes.label} label="Add Room" />{" "}
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 1,
-              alignItems: "center",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "8px",
-            }}
-          >
-            {userForm.details?.[selectedFloorIndex]?.roomDetails?.[
-              selectedTab
-            ]?.rooms.map((roomId) => {
-              const room = services.roomList.find((r) => r._id === roomId);
-              if (!room) return null;
-              return (
-                <Chip
-                  key={room._id}
-                  label={room.roomName}
-                  onDelete={() => handleRoomDelete(room._id)}
-                  sx={{ backgroundColor: "#511C1C", color: "#fff" }}
-                  deleteIcon={
-                    <PresenceOffline16Regular style={{ color: "#fff" }} />
-                  }
-                />
-              );
-            })}
+            })} */}
+              {userForm.details?.[selectedFloorIndex]?.roomDetails?.[
+                selectedTab
+              ]?.rooms.map((room) => {
+                const roomData =
+                  typeof room === "string"
+                    ? services.roomList.find((r) => r._id === room)
+                    : room.roomDetails;
 
-            <TextField
-              variant="standard"
-              value={inputValue}
-              onChange={(e) => {
-                const val = e.target.value;
-                setInputValue(val);
-                services?.fetchRoomList(val);
+                if (!roomData) return null;
+
+                return (
+                  <RoomLogo
+                    key={roomData._id}
+                    color={roomData.color}
+                    roomLogo={roomData.roomLogo}
+                    roomName={roomData?.roomName}
+                  />
+                );
+              })}
+            </div>
+            <Field className={classes.label} label="Add Room" />{" "}
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 1,
+                alignItems: "center",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                padding: "8px",
               }}
-              placeholder="Type to add..."
-              InputProps={{ disableUnderline: true }}
-              sx={{ minWidth: 100, flexGrow: 1 }}
-            />
-          </Box>
-          {inputValue && (
-            <Paper sx={{ mt: 1, borderRadius: "8px", overflow: "hidden" }}>
-              <List disablePadding>
-                {services?.roomList?.length > 0 ? (
-                  services?.roomList.map((room) => (
-                    <ListItem
-                      key={room._id}
-                      button
-                      onClick={() => handleSelect(room)}
-                    >
-                      <ListItemText primary={room.roomName} />
+            >
+              {userForm.details?.[selectedFloorIndex]?.roomDetails?.[
+                selectedTab
+              ]?.rooms.map((room) => {
+                const roomData =
+                  typeof room === "string"
+                    ? services.roomList.find((r) => r._id === room)
+                    : room.roomDetails;
+
+                if (!roomData) return null;
+
+                return (
+                  <Chip
+                    key={roomData._id}
+                    label={roomData.roomName}
+                    onDelete={() => handleRoomDelete(roomData._id)}
+                    sx={{ backgroundColor: "#511C1C", color: "#fff" }}
+                    deleteIcon={
+                      <PresenceOffline16Regular style={{ color: "#fff" }} />
+                    }
+                  />
+                );
+              })}
+
+              <TextField
+                variant="standard"
+                value={inputValue}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setInputValue(val);
+                  services?.fetchRoomList(val);
+                }}
+                placeholder="Type to add..."
+                InputProps={{ disableUnderline: true }}
+                sx={{ minWidth: 100, flexGrow: 1 }}
+              />
+            </Box>
+            {inputValue && (
+              <Paper sx={{ mt: 1, borderRadius: "8px", overflow: "hidden" }}>
+                <List disablePadding>
+                  {services?.roomList?.length > 0 ? (
+                    services?.roomList.map((room) => (
+                      <ListItem
+                        key={room._id}
+                        button
+                        onClick={() => handleSelect(room)}
+                      >
+                        <ListItemText primary={room.roomName} />
+                      </ListItem>
+                    ))
+                  ) : (
+                    <ListItem>
+                      <ListItemText primary="No Data Found" />
                     </ListItem>
-                  ))
-                ) : (
-                  <ListItem>
-                    <ListItemText primary="No Data Found" />
-                  </ListItem>
-                )}
-              </List>
-            </Paper>
-          )}
-        </Grid>
+                  )}
+                </List>
+              </Paper>
+            )}
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

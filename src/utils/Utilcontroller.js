@@ -45,6 +45,15 @@ const utilController = {
     };
     return date.toLocaleDateString("en-US", options);
   },
+  getDate: (epochdate) => {
+    const date = new Date(epochdate * 1000);
+    const options = {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+  },
   downloadUrl: (Image) => {
     const link = document.createElement("a");
     link.href = Image;

@@ -39,6 +39,7 @@ function BasicDetails({
     delete errors[name];
   };
 
+  console.log(errors, "errors");
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -55,6 +56,7 @@ function BasicDetails({
             logoUrl={userForm?.uploadImage}
             onUpload={(url) => setUserForm({ ...userForm, uploadImage: url })}
             error={errors}
+            name="uploadImage"
           />
         </Stack>
       </Grid>
@@ -84,6 +86,7 @@ function BasicDetails({
           services={services}
           userForm={userForm}
           setUserForm={setUserForm}
+          errors={errors}
         />
       </Grid>
       <Grid item xs={5}>
@@ -92,6 +95,7 @@ function BasicDetails({
           services={services}
           userForm={userForm}
           setUserForm={setUserForm}
+          errors={errors}
         />
       </Grid>
     </Grid>

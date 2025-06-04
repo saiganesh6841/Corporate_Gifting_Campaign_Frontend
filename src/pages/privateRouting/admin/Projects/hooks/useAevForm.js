@@ -22,6 +22,8 @@ const useAevForm = ({ openForm, services }) => {
       services?.getEditTable({ setUserForm });
     }
     if (openForm.divType === "view") {
+      // services?.workerTable();
+      services?.setRoomData([]);
       services?.getViewTable({ setUserForm });
     }
   }, [openForm?.divType]);

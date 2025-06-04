@@ -5,24 +5,24 @@ import React, { useState } from "react";
 import BasicDetails from "./BasicDetails";
 import useAevForm from "../hooks/useAevForm";
 import Typography from "../../../../../components/Text/Typogarphy";
+import ProjectDetails from "./ProjectDetails";
+import ProjectView from "./ProjectView";
 
-const tabListValues = [
-  {
-    value: "basic",
-    label: "Basic Details",
-  },
-];
-
-const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
+const AEVForm = ({
+  openForm,
+  setOpenForm,
+  classes,
+  services,
+  setQuery,
+  query,
+}) => {
   const theme = useTheme();
-  const [tabList, setTabList] = useState("basic");
 
   const { userForm, setUserForm } = useAevForm({
     openForm,
     services,
     setOpenForm,
   });
-
   return (
     <>
       <FluentProvider theme={teamsLightTheme}>
@@ -33,7 +33,7 @@ const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
             marginTop: "12px",
           }}
         >
-          {tabList === "basic" && (
+          {(openForm?.divType === "add" || openForm?.divType === "edit") && (
             <BasicDetails
               {...{
                 classes,
@@ -43,6 +43,17 @@ const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
                 errors: services?.errors,
                 services,
               }}
+            />
+          )}
+
+          {openForm?.divType === "view" && (
+            <ProjectView
+              classes={classes}
+              openForm={openForm}
+              userForm={userForm}
+              services={services}
+              setQuery={setQuery}
+              query={query}
             />
           )}
         </Grid>

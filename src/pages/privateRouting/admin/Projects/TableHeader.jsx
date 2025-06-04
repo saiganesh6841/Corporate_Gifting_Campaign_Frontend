@@ -8,6 +8,7 @@ import {
 import { capitalize } from "@mui/material";
 import * as React from "react";
 import utilController from "../../../../utils/Utilcontroller";
+import { getStatusStyles } from "../../../../utils/StatusColor";
 
 const useStyles = makeStyles({
   text: {
@@ -98,12 +99,17 @@ const useTableHeader = (setOpenForm, openForm) => {
     {
       columnId: "status", // this is the unique id for a column
       fieldName: "Status", // field name visible on header
-      minWidth: 200,
+      minWidth: 130,
 
       renderCell: (item) => (
         // what should be rendered on the cell
         <TableCellLayout truncate>
-          <Text truncate wrap={false} className={styles.text}>
+          <Text
+            truncate
+            wrap={false}
+            className={styles.text}
+            style={getStatusStyles(item?.status)}
+          >
             {item?.status}
           </Text>
         </TableCellLayout>
@@ -131,7 +137,74 @@ const useTableHeader = (setOpenForm, openForm) => {
     //   ),
     // },
   ];
-  return columns;
+
+  const workerColumns = [
+    {
+      columnId: "userId", // this is the unique id for a column
+      fieldName: "User Id", // field name visible on header
+      minWidth: 100,
+      primaryKey: true,
+      renderCell: (item) => (
+        <TableCellLayout truncate style={{ text: capitalize }}>
+          {item?.userId || ""}
+        </TableCellLayout>
+      ),
+    },
+    {
+      columnId: "name", // this is the unique id for a column
+      fieldName: "Name", // field name visible on header
+      minWidth: 120,
+      primaryKey: true,
+      renderCell: (item) => (
+        <TableCellLayout truncate style={{ text: capitalize }}>
+          {item?.name && utilController?.formatTextToCapitalize(item?.name)}
+        </TableCellLayout>
+      ),
+    },
+
+    {
+      columnId: "mobileNumber", // this is the unique id for a column
+      fieldName: "Mobile No", // field name visible on header
+      minWidth: 200,
+
+      renderCell: (item) => {
+        // const fullName = `${item?.fname} ${item?.lname}`;
+        return (
+          <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+            {item?.mobileNumber}
+          </TableCellLayout>
+        );
+      },
+    },
+    {
+      columnId: "email", // this is the unique id for a column
+      fieldName: "Email", // field name visible on header
+      minWidth: 200,
+
+      renderCell: (item) => {
+        // const fullName = `${item?.fname} ${item?.lname}`;
+        return (
+          <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+            {item?.email}
+          </TableCellLayout>
+        );
+      },
+    },
+    {
+      columnId: "createdAt", // this is the unique id for a column
+      fieldName: "Created On",
+      minWidth: 170,
+      renderCell: (item) => (
+        <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+          {utilController.getFormattedDate(item?.createdAt)}
+        </TableCellLayout>
+      ),
+    },
+  ];
+  return {
+    columns,
+    workerColumns,
+  };
 };
 
 export default useTableHeader;

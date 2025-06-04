@@ -1,6 +1,5 @@
 export const queryBody = {
   active: true,
-  userType: "All",
   page: 0,
   pageSize: 10,
   keyword: "",
@@ -34,6 +33,8 @@ export const projectDetails = {
   startDate: "",
   endDate: "",
   uploadImage: "",
+  assignedSupervisor: "",
+  assignedWorkers: [],
   // task: [
   //   {
   //     taskNo: 1,

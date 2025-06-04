@@ -22,6 +22,7 @@ const MessageInputBar = ({
         onChange={onInputChange}
         placeholder={placeholder}
         style={{ width: "100%" }}
+        className="input__Style"
         // styles={{
         //   root: { flexGrow: 1 },
         //   field: { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
