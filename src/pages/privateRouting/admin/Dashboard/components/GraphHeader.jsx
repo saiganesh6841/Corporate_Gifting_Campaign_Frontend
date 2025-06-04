@@ -5,8 +5,9 @@ import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { onFormatDate } from "../utils/util";
 import Typography from "../../../../../components/Text/Typogarphy";
 const moduleOptionsList = {
+  projects: "Projects",
   users: "Users",
-  subscription: "Subscription",
+  tasks: "Tasks",
 };
 const timeData = {
   day: "Day",
@@ -48,7 +49,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
         </Dropdown>
       </Grid>
 
-      <Grid item xs={4}>
+      <Grid item xs={4} sx={{marginLeft:"140px"}}>
         <DatePicker
           maxDate={new Date(graphFiltersData?.endDate * 1000)}
           formatDate={onFormatDate}
@@ -93,13 +94,13 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
           }}
           placeholder="End Date"
         />
-      </Grid>
-      <Grid item xs={2}>
+        {/* </Grid> */}
+        {/* <Grid item xs={2}> */}
         <Dropdown
           size="large"
           placeholder="Time"
           className="time-select"
-          style={{ minWidth: "unset", width: "150px" }}
+          style={{ minWidth: "unset", width: "150px", marginLeft:"5px" }}
           value={timeData[graphFiltersData?.dateType]}
           onOptionSelect={(e, data) => {
             setGraphFiltersData((p) => ({

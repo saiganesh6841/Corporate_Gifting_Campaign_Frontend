@@ -49,31 +49,35 @@ export const useStyles = makeStyles((theme) => ({
     padding: "16px",
   },
   statisticsCardContainer: {
-    width: "32%",
-    // height: "130px",
+    width: "23%",
+    height: "110px",
     borderRadius: "8px",
-    background: "#fff",
+    backgroundColor: "#ffff",
+    // border:"1px solid "
     padding: "8px 16px",
   },
   statastics: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    marginLeft:"12px",
+    marginRight:"12px"
   },
   iconContainer: {
     width: "45px",
     height: "45px",
-    backgroundColor: "#FFFFFF1A",
+    // backgroundColor: "#FFFFFF1A",
     borderRadius: "50%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxShadow: "0px 9.2px 22.34px 0px #2D511C1A",
+    // boxShadow: "0px 9.2px 22.34px 0px #2D511C1A",
   },
   topBar: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    padding:"10px"
   },
 
   tooltipContainer: {

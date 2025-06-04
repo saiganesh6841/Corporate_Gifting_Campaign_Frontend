@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { PeopleTeam24Filled } from "@fluentui/react-icons";
 import { FluentProvider, teamsLightTheme } from "@fluentui/react-components";
 import Typography from "../../../../../components/Text/Typogarphy";
+import { FontSizes } from "@fluentui/react";
 
 function StatisticsCard({
   classes,
@@ -15,26 +16,35 @@ function StatisticsCard({
     <Box className={classes.statisticsCardContainer}>
       <Box className={classes.topBar}>
         <Typography
+          variant="title"
           style={{
-            textTransform: "uppercase",
-            color: "#fff",
+            color: background,
+            fontWeight: 700,
+            fontSize:"36px"
           }}
-          variant="subHeading"
         >
-          TOTAL {label}
+          {totalNumber}
         </Typography>
-        <Box className={classes.iconContainer}>{Icon}</Box>
+        <Box
+          className={classes.iconContainer}
+          sx={{ backgroundColor: background, opacity: 0.5 }}
+        >
+          {Icon}
+        </Box>
       </Box>
+
       <Typography
-        variant="title"
         style={{
-          color: "#ffff",
-          fontWeight: "700",
+          textTransform: "uppercase",
+          color: background,
+          fontSize:"16px",
+          fontWeight:500
         }}
+        variant="subHeading"
       >
-        {totalNumber}
+        {label}
       </Typography>
-      <Typography
+      {/* <Typography
         variant="content"
         style={{
           color: "#ffff",
@@ -44,7 +54,7 @@ function StatisticsCard({
         }}
       >
         {newlyAddedCount} New {label} Added
-      </Typography>
+      </Typography> */}
     </Box>
   );
 }
