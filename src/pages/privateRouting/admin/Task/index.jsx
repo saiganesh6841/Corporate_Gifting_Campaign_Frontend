@@ -218,27 +218,27 @@ function User() {
                 setOpenForm={setOpenForm}
               />
             )}
+            {openForm?.divType === "filter" && (
+              <CustomFilter
+                query={query}
+                setQuery={setQuery}
+                openForm={openForm}
+                resetForm={resetForm}
+                resetQueryBody={resetQueryBody}
+                inventory={true}
+                orders={true}
+              />
+            )}
+            {openForm?.divType === "column" && (
+              <ViewColumn
+                filteredColumn={viewColumn}
+                openForm={openForm}
+                resetForm={resetForm}
+                setViewColumn={setViewColumn}
+                filterColumn={filterColumn(columns)}
+              />
+            )}
           </PanelConfirmation>
-          {openForm?.divType === "filter" && (
-            <CustomFilter
-              query={query}
-              setQuery={setQuery}
-              openForm={openForm}
-              resetForm={resetForm}
-              resetQueryBody={resetQueryBody}
-              inventory={true}
-              orders={true}
-            />
-          )}
-          {openForm?.divType === "column" && (
-            <ViewColumn
-              filteredColumn={viewColumn}
-              openForm={openForm}
-              resetForm={resetForm}
-              setViewColumn={setViewColumn}
-              filterColumn={filterColumn(columns)}
-            />
-          )}
           <ConfirmationModal
             isOpen={isDeleteOpen}
             onDismissModal={dismissDelete}

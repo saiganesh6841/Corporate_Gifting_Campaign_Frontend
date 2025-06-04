@@ -72,6 +72,8 @@ class ConfigAPIURL {
   static projectView = this.baseUrl + "/admin/project/view";
   static ProjectTable = this.baseUrl + "/admin/project/worker";
   static viewRoomImages = this.baseUrl + "/admin/project/roomView";
+  static deleteProject = this.baseUrl + "/admin/project/delete";
+  static roomImageDetails = this.baseUrl + "/admin/project/roomImageDetails";
 }
 
 export default ConfigAPIURL;

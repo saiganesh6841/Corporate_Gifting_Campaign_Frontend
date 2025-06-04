@@ -18,6 +18,7 @@ import RoomDetails from "./roomDetails";
 import AssignSuperVisor from "./AssignSuperVisor";
 import AssignWorker from "./AssignWorker";
 import LogoUploader from "../../../../../components/LogoUploader/LogoUploader";
+import ProjectInformation from "./Information";
 
 function BasicDetails({
   classes,
@@ -39,7 +40,7 @@ function BasicDetails({
     delete errors[name];
   };
 
-  console.log(errors, "errors");
+  console.log(userForm, "userForm");
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -61,6 +62,16 @@ function BasicDetails({
         </Stack>
       </Grid>
 
+      {openForm?.divType === "edit" && (
+        <Grid item xs={12}>
+          <ProjectInformation
+            classes={classes}
+            userForm={userForm}
+            setUserForm={setUserForm}
+            disabled={openForm?.divType === "view"}
+          />
+        </Grid>
+      )}
       <Grid item xs={12}>
         <ProjectDetails
           userForm={userForm}

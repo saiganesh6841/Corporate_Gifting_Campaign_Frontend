@@ -39,6 +39,8 @@ const ProjectView = ({
   const dismiss = () => {
     setIsOpen(false);
   };
+  const [selectedRoomId, setSelectedRoomId] = useState("");
+
   const [data, setData] = useState({
     floorNo: "",
     floorId: "",
@@ -54,13 +56,23 @@ const ProjectView = ({
 
   const handleRoomClick = (roomId) => {
     setIsOpen(true);
-    services?.viewRoomImageData(data?.flatId, roomId);
+    handleRoomSelect(roomId);
   };
+
+  const handleRoomSelect = (roomId, timestamp) => {
+    setSelectedRoomId(roomId);
+    services?.viewRoomImageData(data?.flatId, roomId, timestamp);
+  };
+
   return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <ProjectInformation classes={classes} userForm={userForm} />
+          <ProjectInformation
+            classes={classes}
+            userForm={userForm}
+            disabled={openForm?.divType === "view"}
+          />
         </Grid>
         <Grid item xs={12}>
           <Box className="box_container" sx={{ padding: "1rem" }}>
@@ -194,6 +206,9 @@ const ProjectView = ({
           classes={classes}
           openForm={openForm}
           services={services}
+          roomData={services?.roomData}
+          selectedRoomId={selectedRoomId}
+          handleRoomSelect={handleRoomSelect}
         />
       </PanelConfirmation>
     </>

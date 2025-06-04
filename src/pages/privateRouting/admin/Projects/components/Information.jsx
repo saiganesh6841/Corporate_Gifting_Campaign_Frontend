@@ -1,10 +1,11 @@
-import { Persona } from "@fluentui/react-components";
+import { Dropdown, Option, Persona } from "@fluentui/react-components";
 import { Box } from "@mui/material";
 import { getStatusStyles } from "../../../../../utils/StatusColor";
 import Typography from "../../../../../components/Text/Typogarphy";
 import utilController from "../../../../../utils/Utilcontroller";
+import CustomDropdown from "../../../../../components/CustomDropdown/Index";
 
-const ProjectInformation = ({ classes, userForm }) => {
+const ProjectInformation = ({ classes, userForm, setUserForm, disabled }) => {
   return (
     <>
       <Box className="box_container" sx={{ padding: "1rem" }}>
@@ -18,7 +19,19 @@ const ProjectInformation = ({ classes, userForm }) => {
               },
             }}
           />
-          <Box sx={getStatusStyles("pending")}>{userForm?.status}</Box>
+          {/* <Box sx={getStatusStyles("pending")}>{userForm?.status}</Box> */}
+          <Box>
+            <CustomDropdown
+              initialStatus={userForm?.status}
+              disabled={disabled}
+              onChange={(newStatus) => {
+                setUserForm((prev) => ({
+                  ...prev,
+                  status: newStatus,
+                }));
+              }}
+            />
+          </Box>
         </Box>
         <hr style={{ width: "100%", color: "#CCCCCC", opacity: 0.5 }} />
         <Box className={classes.spaceBetween} sx={{ marginBottom: "4px" }}>
