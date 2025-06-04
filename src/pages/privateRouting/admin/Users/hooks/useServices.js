@@ -21,8 +21,7 @@ const customerRequiredDetails = {
   userType: "",
   fullName: "",
   email: "",
-  mobileNo: "",
-  permission: "",
+  mobileNumber: "",
 };
 // this is api calls happen
 const useServices = (props) => {

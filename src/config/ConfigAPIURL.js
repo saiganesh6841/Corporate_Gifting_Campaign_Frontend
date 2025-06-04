@@ -76,6 +76,8 @@ class ConfigAPIURL {
   // dashboard
   static getGraphData = this.baseUrl + "/admin/dashboard/graph";
   static getDashBoardCounts = this.baseUrl + "/admin/dashboard/count";
+  static deleteProject = this.baseUrl + "/admin/project/delete";
+  static roomImageDetails = this.baseUrl + "/admin/project/roomImageDetails";
 }
 
 export default ConfigAPIURL;

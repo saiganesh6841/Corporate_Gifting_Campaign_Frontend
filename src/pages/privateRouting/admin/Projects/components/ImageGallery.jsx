@@ -3,13 +3,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import PrimaryBtn from "../../../../../components/button";
 import { ArrowDownloadFilled } from "@fluentui/react-icons";
 import { useState } from "react";
-
-const imageUrls = [
-  "https://images.pexels.com/photos/6772668/pexels-photo-6772668.jpeg?cs=srgb&dl=pexels-gaspar-zaldo-6772668.jpg&fm=jpg",
-  "https://images.pexels.com/photos/6772668/pexels-photo-6772668.jpeg?cs=srgb&dl=pexels-gaspar-zaldo-6772668.jpg&fm=jpg",
-  "https://images.pexels.com/photos/6772668/pexels-photo-6772668.jpeg?cs=srgb&dl=pexels-gaspar-zaldo-6772668.jpg&fm=jpg",
-  "https://images.pexels.com/photos/6772668/pexels-photo-6772668.jpeg?cs=srgb&dl=pexels-gaspar-zaldo-6772668.jpg&fm=jpg",
-];
+import { downloadImages } from "../../../../../utils/download";
 
 const ImageSelectionGallery = ({ Images }) => {
   const [selected, setSelected] = useState([]);
@@ -19,6 +13,8 @@ const ImageSelectionGallery = ({ Images }) => {
       prev.includes(url) ? prev.filter((u) => u !== url) : [...prev, url]
     );
   };
+
+  console.log(selected, "selected");
 
   return (
     <Box className="box_container" sx={{ padding: "1rem" }}>
@@ -31,7 +27,7 @@ const ImageSelectionGallery = ({ Images }) => {
             alignItems: "center",
             gap: "10px",
           }}
-          //   onClick={handleDownload}
+          onClick={() => downloadImages(selected)}
           disabled={selected.length === 0}
         >
           <ArrowDownloadFilled />
@@ -41,7 +37,7 @@ const ImageSelectionGallery = ({ Images }) => {
 
       {/* Image Cards */}
       <Grid container spacing={2}>
-        {imageUrls?.map((url, index) => (
+        {Images?.map((url, index) => (
           <Grid item xs={6} sm={3} key={index}>
             <Box
               sx={{
@@ -52,7 +48,7 @@ const ImageSelectionGallery = ({ Images }) => {
               }}
             >
               <img
-                src={url}
+                src={url?.url}
                 alt={`Design ${index + 1}`}
                 style={{
                   width: "183px",
@@ -63,8 +59,8 @@ const ImageSelectionGallery = ({ Images }) => {
                 }}
               />
               <Checkbox
-                checked={selected.includes(url)}
-                onChange={() => toggleSelect(url)}
+                checked={selected.includes(url?.url)}
+                onChange={() => toggleSelect(url?.url)}
                 sx={{
                   position: "absolute",
                   top: 8,

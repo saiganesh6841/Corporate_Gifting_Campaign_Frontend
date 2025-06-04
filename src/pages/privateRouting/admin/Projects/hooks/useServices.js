@@ -46,6 +46,7 @@ const useServices = (props) => {
   const [flatList, setFlatList] = useState([]);
   const [roomData, setRoomData] = useState([]);
   const [viewRoomData, setViewRoomData] = useState([]);
+  const [roomImageDetailsData, setRoomImageDetails] = useState([]);
 
   const [tableData, setTableData] = useState({
     result: null,
@@ -179,6 +180,7 @@ const useServices = (props) => {
       );
       if (response?.data?.responseCode === 109) {
         const project = response?.data?.project?.[0];
+        console.log(project, "userForm");
         setUserForm({
           projectId: project?.projectId,
           projectName: project?.projectName,
@@ -192,6 +194,14 @@ const useServices = (props) => {
           assignedSupervisor: project?.assignedSupervisor,
           assignedWorkers: project?.assignedWorkers,
           details: project?.floorDetails,
+          //
+          // assignedSupervisor: project?.assignedSupervisor,
+          // assignedWorkers: project?.assignedWorkers,
+          uploadImage: project?.uploadImage,
+          supervisorName: project?.supervisorName,
+          supervisorMobile: project?.supervisorMobile,
+          supervisorImage: project?.supervisorImage,
+          status: project?.status,
         });
       }
     } catch (error) {
@@ -367,6 +377,10 @@ const useServices = (props) => {
       roomId,
       date,
     });
+  const roomImageDetails = (entryId) =>
+    fetchDropdownData(ConfigAPIURL.roomImageDetails, setViewRoomData, {
+      entryId,
+    });
   return {
     tableData,
     setTableData,
@@ -395,6 +409,7 @@ const useServices = (props) => {
     setRoomData,
     viewRoomData,
     viewRoomImageData,
+    roomImageDetails,
   };
 };
 
