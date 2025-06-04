@@ -21,7 +21,6 @@
     "@mui/material": "^5.17.1",
     "@mui/styles": "^5.2.3",
     "@mui/x-date-pickers": "^8.4.0",
-    "@mui/x-date-pickers-pro": "^8.4.0",
     "dayjs": "^1.11.13",
     "deep-clone": "^4.0.0",
     "export-to-csv": "^0.2.2",

@@ -1,6 +1,8 @@
 class ConfigAPIURL {
   // Base URL For Live & Staging
-  static baseUrl = import.meta.env.VITE_DEV_PAY_DEF_BASE_URL;
+  static baseUrl =
+    import.meta.env.VITE_PAY_DEF_BASE_URL ||
+    import.meta.env.VITE_DEV_PAY_DEF_BASE_URL;
 
   //List of Pay Defination APIs and request method type
   static sessionValidation = this.baseUrl + "/admin/islogin"; //get

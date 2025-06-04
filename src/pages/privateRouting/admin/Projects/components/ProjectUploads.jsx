@@ -7,15 +7,43 @@ import { PanelConfirmation } from "../../../../../components/confirmationpanel/I
 import ImageSelectionGallery from "./ImageGallery";
 import UploadModal from "./UploadModal";
 import DefaultButton from "../../../../../components/DefaultButton/Index";
+import { Calendar20Regular, Calendar24Regular } from "@fluentui/react-icons";
+import { useTheme } from "@mui/styles";
 
 const ProjectUpload = ({ classes, openForm, services }) => {
+  const theme = useTheme();
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const dismissUpload = () => {
     setIsUploadOpen(false);
   };
+  const pastWeekDates = Array.from({ length: 8 }, (_, i) =>
+    subDays(new Date(), i)
+  );
+
   return (
     <>
       <Grid container spacing={2} marginTop="20px">
+        <Grid item xs={12}>
+          <Box className="box_container" sx={{ padding: "10px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "6px",
+                overflow: "auto",
+                scrollbarWidth: "none",
+              }}
+            >
+              <DefaultButton variant="outlined" style={{ width: "60px" }}>
+                <Calendar20Regular color={theme.palette.primary.main} />
+              </DefaultButton>
+              {[1, 2, 3, 4, 5, 6, 7, 8]?.map((val) => (
+                <DefaultButton variant="primary" style={{ minWidth: "150px" }}>
+                  Living Room
+                </DefaultButton>
+              ))}
+            </Box>
+          </Box>
+        </Grid>
         <Grid item xs={12}>
           <Box className="box_container" sx={{ padding: "10px" }}>
             <Box
