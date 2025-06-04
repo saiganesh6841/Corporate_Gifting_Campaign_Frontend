@@ -23,17 +23,6 @@ import {
 } from "@fluentui/react-icons";
 import RoomLogo from "../../../../../components/RoomLogo/Index";
 
-const availableRooms = [
-  "Living room",
-  "Dining Area",
-  "Guest Bedroom",
-  "Kids bedroom",
-  "Kitchen",
-  "Master Bedroom",
-  "Study Room",
-  "Balcony",
-];
-
 const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
   const [floorNoInput, setFloorNoInput] = useState("");
   const [selectedTab, setSelectedTab] = useState(0);
@@ -233,17 +222,7 @@ const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
                       key={ind}
                       value={ind}
                       label={
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            maxWidth: "120px",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
+                        <div className={classes.flatTab}>
                           {`Flat ${flat?.flatNo}`}
                           <Delete20Filled
                             onClick={(e) => {
@@ -295,28 +274,7 @@ const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
         <hr style={{ width: "100%", opacity: 0.3 }} />
         {userForm.details?.[selectedFloorIndex]?.roomDetails?.[selectedTab] && (
           <Grid item xs={12}>
-            <div
-              style={{
-                display: "flex",
-                gap: "12px",
-                overflowX: "auto",
-                padding: "8px 0",
-                scrollbarWidth: "none",
-              }}
-            >
-              {/* {userForm.details?.[selectedFloorIndex]?.roomDetails?.[
-              selectedTab
-            ]?.rooms.map((roomId) => {
-              const room = services.roomList.find((r) => r._id === roomId);
-              if (!room) return null;
-              return (
-                <RoomLogo
-                  key={roomId}
-                  color={room.color}
-                  roomLogo={room.roomLogo}
-                />
-              );
-            })} */}
+            <div className={classes.showRoomLogo}>
               {userForm.details?.[selectedFloorIndex]?.roomDetails?.[
                 selectedTab
               ]?.rooms.map((room) => {
@@ -338,17 +296,7 @@ const RoomDetails = ({ userForm, setUserForm, classes, services }) => {
               })}
             </div>
             <Field className={classes.label} label="Add Room" />{" "}
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 1,
-                alignItems: "center",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "8px",
-              }}
-            >
+            <Box className={classes.roomBox}>
               {userForm.details?.[selectedFloorIndex]?.roomDetails?.[
                 selectedTab
               ]?.rooms.map((room) => {

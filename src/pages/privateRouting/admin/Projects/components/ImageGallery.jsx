@@ -1,11 +1,10 @@
 import { Box, Grid, IconButton, Checkbox, Button } from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
 import PrimaryBtn from "../../../../../components/button";
 import { ArrowDownloadFilled } from "@fluentui/react-icons";
 import { useState } from "react";
 import { downloadImages } from "../../../../../utils/download";
 
-const ImageSelectionGallery = ({ Images }) => {
+const ImageSelectionGallery = ({ classes, Images }) => {
   const [selected, setSelected] = useState([]);
 
   const toggleSelect = (url) => {
@@ -18,7 +17,6 @@ const ImageSelectionGallery = ({ Images }) => {
 
   return (
     <Box className="box_container" sx={{ padding: "1rem" }}>
-      {/* Download Button */}
       <Box sx={{ display: "flex", justifyContent: "end", padding: "10px" }}>
         <PrimaryBtn
           style={{
@@ -39,39 +37,16 @@ const ImageSelectionGallery = ({ Images }) => {
       <Grid container spacing={2}>
         {Images?.map((url, index) => (
           <Grid item xs={6} sm={3} key={index}>
-            <Box
-              sx={{
-                position: "relative",
-                borderRadius: "12px",
-                overflow: "hidden",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-              }}
-            >
+            <Box className={classes.fitImage}>
               <img
                 src={url?.url}
                 alt={`Design ${index + 1}`}
-                style={{
-                  width: "183px",
-                  height: "183px",
-                  objectFit: "fill",
-                  display: "block",
-                  borderRadius: "12px",
-                }}
+                className={classes.imageSize}
               />
               <Checkbox
                 checked={selected.includes(url?.url)}
                 onChange={() => toggleSelect(url?.url)}
-                sx={{
-                  position: "absolute",
-                  top: 8,
-                  right: 8,
-                  padding: "4px",
-                  backgroundColor: "#fff",
-                  borderRadius: "20%",
-                  "&:hover": {
-                    backgroundColor: "#fff", // Prevent hover background change
-                  },
-                }}
+                className={classes.imageCheckbox}
               />
             </Box>
           </Grid>

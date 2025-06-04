@@ -42,23 +42,8 @@ const AssignSuperVisor = ({
         <Stack tokens={{ childrenGap: 8, padding: "1rem" }}>
           <Typography variant="heading">Assign SuperVisor</Typography>
 
-          <Stack
-            styles={{
-              root: {
-                border: "1px solid #ccc",
-                borderRadius: 6,
-                padding: 8,
-                width: "100%",
-              },
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+          <Stack className={classes.projectUserBorder}>
+            <Box className={classes.spaceBetween}>
               <Field label="SuperVisors" className={classes.label} />
               {showDetails ? (
                 <ChevronDown24Regular
@@ -82,6 +67,7 @@ const AssignSuperVisor = ({
                     setSearchText(e.target.value || "");
                     services?.fetchSuperVisorList(e.target.value);
                   }}
+                  className="input__style"
                 />
                 <Stack tokens={{ childrenGap: 4 }}>
                   {services?.superVisorList?.length > 0 ? (
@@ -127,16 +113,7 @@ const AssignSuperVisor = ({
             </span>
           )}
           {selectedSupervisor && (
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 1,
-                alignItems: "center",
-                borderRadius: "8px",
-                padding: "8px",
-              }}
-            >
+            <Box className="projectList_Chip">
               <Chip
                 label={selectedSupervisor.fullName}
                 onDelete={handleRemove}

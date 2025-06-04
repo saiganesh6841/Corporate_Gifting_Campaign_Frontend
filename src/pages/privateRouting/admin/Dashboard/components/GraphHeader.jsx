@@ -49,7 +49,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
         </Dropdown>
       </Grid>
 
-      <Grid item xs={4} sx={{marginLeft:"140px"}}>
+      <Grid item xs={6}>
         <DatePicker
           maxDate={new Date(graphFiltersData?.endDate * 1000)}
           formatDate={onFormatDate}
@@ -100,7 +100,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
           size="large"
           placeholder="Time"
           className="time-select"
-          style={{ minWidth: "unset", width: "150px", marginLeft:"5px" }}
+          style={{ minWidth: "unset", width: "150px", marginLeft: "5px" }}
           value={timeData[graphFiltersData?.dateType]}
           onOptionSelect={(e, data) => {
             setGraphFiltersData((p) => ({

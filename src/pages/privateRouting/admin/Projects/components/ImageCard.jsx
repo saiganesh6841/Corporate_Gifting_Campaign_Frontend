@@ -28,14 +28,7 @@ const ImageCard = ({ classes, data }) => {
             <span>{data?.chatCount}</span>
           </Stack>
         </Box>
-        <Box
-          sx={{
-            position: "relative",
-            overflow: "hidden",
-            borderRadius: "6px",
-            margin: "4px 0px",
-          }}
-        >
+        <Box className={classes.imageShow}>
           <img
             src={data?.roomImages?.[0]?.url}
             height="170px"

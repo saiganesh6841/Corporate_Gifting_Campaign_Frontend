@@ -6,6 +6,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  ResponsiveContainer,
 } from "recharts";
 import Typography from "../../../../../components/Text/Typogarphy";
 
@@ -96,7 +97,7 @@ const CustomTooltip = (props) => {
         boxShadow: "0px 8px 22px 0px rgba(0, 0, 0, 0.07)",
         background: "#410E0E1A",
         borderRadius: "10px",
-        padding: "5px 14px"
+        padding: "5px 14px",
       }}
     >
       {graphFiltersData?.dateType === "day" && (
@@ -142,36 +143,46 @@ const AreaGraph = ({ services, graphFiltersData }) => {
       : "year";
 
   return (
-    <AreaChart width={1320} height={370} data={services?.graphData}>
-      <defs>
-        <linearGradient id="gradientColor" x1="0%" y1="100%" x2="0%" y2="0%">
-          <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="40%" stopColor="#561E1E" />
-        </linearGradient>
-      </defs>
+    <div style={{ width: "100%", height: 370 }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={services?.graphData}>
+          <defs>
+            <linearGradient
+              id="gradientColor"
+              x1="0%"
+              y1="100%"
+              x2="0%"
+              y2="0%"
+            >
+              <stop offset="0%" stopColor="#FFFFFF" />
+              <stop offset="40%" stopColor="#561E1E" />
+            </linearGradient>
+          </defs>
 
-      <CartesianGrid vertical={false} horizontal={true} />
-      <XAxis dataKey={xAxisKey} />
-      <YAxis />
-      <Tooltip
-        content={<CustomTooltip graphFiltersData={graphFiltersData} />}
-      />
-      <Area
-        type="monotone"
-        dataKey={
-          graphFiltersData?.module === "projects"
-            ? "totalProjects"
-            : graphFiltersData?.module === "users"
-            ? "totalUsers"
-            : "totalTask"
-        }
-        stroke="#561E1E"
-        fill="url(#gradientColor)"
-        strokeWidth={"3px"}
-        fillOpacity={0.04}
-        dot={{ r: 5, fill: "#FFFF", stroke: "#561E1E", strokeWidth: 4 }}
-      />
-    </AreaChart>
+          <CartesianGrid vertical={false} horizontal={true} />
+          <XAxis dataKey={xAxisKey} />
+          <YAxis />
+          <Tooltip
+            content={<CustomTooltip graphFiltersData={graphFiltersData} />}
+          />
+          <Area
+            type="monotone"
+            dataKey={
+              graphFiltersData?.module === "projects"
+                ? "totalProjects"
+                : graphFiltersData?.module === "users"
+                ? "totalUsers"
+                : "totalTask"
+            }
+            stroke="#561E1E"
+            fill="url(#gradientColor)"
+            strokeWidth={"3px"}
+            fillOpacity={0.04}
+            dot={{ r: 5, fill: "#FFFF", stroke: "#561E1E", strokeWidth: 4 }}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

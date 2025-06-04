@@ -58,6 +58,14 @@
   .persona-avatar img {
     border-radius: 50% !important;
   }
+  .projectList_Chip{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1;
+    align-items: center;
+    border-radius: 8px;
+    padding: 8px;
+  }
 
 
 

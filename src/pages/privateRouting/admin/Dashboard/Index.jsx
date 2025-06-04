@@ -22,7 +22,7 @@ import AreaGraph from "./components/AreaGraph";
 const graphFilter = {
   dateType: "month", //year , day , month , week
   module: "projects", // orders
-  startDate: 1746084408,
+  startDate: 1746085108,
   endDate: Math.floor(new Date().setHours(23, 59, 0, 0) / 1000),
 }; //constant
 

@@ -45,23 +45,8 @@ const AssignWorker = ({ classes, services, userForm, setUserForm, errors }) => {
       <Stack tokens={{ childrenGap: 8, padding: "1rem" }}>
         <Typography variant="heading">Assign Workers</Typography>
 
-        <Stack
-          styles={{
-            root: {
-              border: "1px solid #ccc",
-              borderRadius: 6,
-              padding: 8,
-              width: "100%",
-            },
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+        <Stack className={classes.projectUserBorder}>
+          <Box className={classes.spaceBetween}>
             <Field label="Workers" className={classes.label} />
             {showDetails ? (
               <ChevronDown24Regular
@@ -86,6 +71,7 @@ const AssignWorker = ({ classes, services, userForm, setUserForm, errors }) => {
                   setSearchText(value);
                   services?.fetchWorkerList(value);
                 }}
+                className="input__style"
               />
 
               <Stack tokens={{ childrenGap: 4 }}>
@@ -100,31 +86,18 @@ const AssignWorker = ({ classes, services, userForm, setUserForm, errors }) => {
                         horizontal
                         verticalAlign="center"
                         onClick={() => handleToggleSelect(sup)}
+                        className={classes.workerSelectStyle}
                         styles={{
                           root: {
-                            padding: "6px 8px",
-                            cursor: "pointer",
-                            justifyContent: "space-between",
                             backgroundColor: isSelected
                               ? "#e6f4ea"
                               : "transparent",
-                            borderRadius: 4,
                           },
                         }}
                       >
                         <Typography variant="heading">
                           {sup.fullName}
                         </Typography>
-                        {/* {isSelected && (
-                          <Box
-                            sx={{
-                              width: 10,
-                              height: 10,
-                              borderRadius: "50%",
-                              backgroundColor: "limegreen",
-                            }}
-                          />
-                        )} */}
                         <Checkbox
                           checked={isSelected}
                           className="fui-checkbox"
@@ -145,16 +118,7 @@ const AssignWorker = ({ classes, services, userForm, setUserForm, errors }) => {
           </span>
         )}
         {selectedWorkers?.length > 0 && (
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 1,
-              alignItems: "center",
-              borderRadius: "8px",
-              padding: "8px",
-            }}
-          >
+          <Box className="projectList_Chip">
             {selectedWorkers.map((sup) => (
               <Chip
                 key={sup._id}

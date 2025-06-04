@@ -102,18 +102,7 @@ const ProjectUpload = ({
                 />
               </DefaultButton>
               {isCalendarOpen && (
-                <Box
-                  ref={calendarRef}
-                  sx={{
-                    position: "absolute",
-                    top: "50px",
-                    zIndex: 1000,
-                    backgroundColor: "white",
-                    boxShadow:
-                      "0 4px 8px rgba(0,0,0,0.15), 0 0 5px rgba(0,0,0,0.1)",
-                    borderRadius: "8px",
-                  }}
-                >
+                <Box ref={calendarRef} className={classes.calendarShow}>
                   <Calendar
                     showMonthPickerAsOverlay
                     highlightSelectedMonth
@@ -130,13 +119,6 @@ const ProjectUpload = ({
                     // onSelectDate={onSelectDate}
                     // value={selectedDate}
                   />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      p: 1,
-                    }}
-                  ></Box>
                 </Box>
               )}
 
@@ -241,7 +223,7 @@ const ProjectUpload = ({
           />
         )}
       >
-        <UploadModal roomImages={roomImages} />
+        <UploadModal roomImages={roomImages} classes={classes} />
       </PanelConfirmation>
     </>
   );
