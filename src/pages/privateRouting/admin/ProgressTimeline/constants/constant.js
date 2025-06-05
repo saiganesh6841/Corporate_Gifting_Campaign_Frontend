@@ -31,6 +31,7 @@ export const taskDetails = {
   workerId: "",
   startDate: "",
   endDate: "",
+  page: 1,
 };
 export const inactiveLabels = ["restore"];
 // export const inactiveLabels = ["view", "restore", "export"];

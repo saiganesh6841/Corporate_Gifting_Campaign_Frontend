@@ -58,7 +58,12 @@ function BasicDetails({
       style={{ padding: "10px", alignItems: "center" }}
     >
       <Grid item xs={2}>
-        <Typography variant="title">Uploads</Typography>
+        <Typography variant="title">
+          Uploads{" "}
+          <span style={{ color: "gray" }}>
+            ({services?.progressData?.filterRecords ?? 0})
+          </span>
+        </Typography>
       </Grid>
 
       <Grid item xs={10}>
@@ -86,6 +91,10 @@ function BasicDetails({
                       projectName: selectedItem.projectName,
                       floorNo: "",
                       floor: "",
+                      flatNo: "",
+                      flat: "",
+                      room: "",
+                      roomName: "",
                     }));
                   }
                 }}
@@ -116,11 +125,16 @@ function BasicDetails({
                 style={{ width: "100px", minWidth: "unset" }}
                 onClick={() => services?.floorsDropdown(userForm?.projectId)}
                 value={userForm?.floor}
+                disabled={!userForm?.projectId}
                 onOptionSelect={(e, data) => {
                   setUserForm((prev) => ({
                     ...prev,
                     floorNo: data.optionValue,
                     floor: data?.optionText,
+                    flatNo: "",
+                    flat: "",
+                    room: "",
+                    roomName: "",
                   }));
                 }}
               >
@@ -144,6 +158,7 @@ function BasicDetails({
                 className={` input__Style`}
                 size="medium"
                 style={{ width: "100px", minWidth: "unset" }}
+                disabled={!userForm?.floorNo}
                 onClick={() =>
                   services?.flatDropdown(userForm?.projectId, userForm?.floorNo)
                 }
@@ -153,6 +168,8 @@ function BasicDetails({
                     ...prev,
                     flatNo: data.optionValue,
                     flat: data?.optionText,
+                    room: "",
+                    roomName: "",
                   }));
                 }}
               >
@@ -182,6 +199,7 @@ function BasicDetails({
                     userForm?.flatNo
                   )
                 }
+                disabled={!userForm?.flatNo}
                 style={{ width: "200px", minWidth: "unset" }}
                 value={userForm?.roomName}
                 onOptionSelect={(e, data) => {

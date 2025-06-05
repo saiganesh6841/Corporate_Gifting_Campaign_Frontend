@@ -6,6 +6,7 @@ import BasicDetails from "./BasicDetails";
 import useAevForm from "../hooks/useAevForm";
 import Typography from "../../../../../components/Text/Typogarphy";
 import ProjectBar from "./ProjectBar";
+import ShowProgress from "./ShowProgress";
 
 const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
   const theme = useTheme();
@@ -39,6 +40,16 @@ const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
               services,
             }}
           />
+
+          <hr style={{ width: "100%" }} />
+          <Box sx={{ overflow: "scroll" }} className="hide-y-scrollbar">
+            <ShowProgress
+              classes={classes}
+              progressData={services?.progressData}
+              setUserForm={setUserForm}
+              userForm={userForm}
+            />
+          </Box>
         </Grid>
       </FluentProvider>
     </>

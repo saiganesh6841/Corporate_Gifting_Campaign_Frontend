@@ -132,7 +132,7 @@ function ProgressTimeline() {
         style={{
           backgroundColor: "#FFFFFF",
           padding: "14px",
-          height: "70vh",
+          // height: "70vh",
           borderRadius: "10px",
         }}
       >

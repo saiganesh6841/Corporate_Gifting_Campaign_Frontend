@@ -46,7 +46,7 @@ const useServices = (props) => {
   const [flatList, setFlatList] = useState([]);
   const [roomData, setRoomData] = useState([]);
   const [viewRoomData, setViewRoomData] = useState([]);
-  const [roomImageDetailsData, setRoomImageDetails] = useState([]);
+  const [roomImageDetailsData, setRoomImageDetailsData] = useState([]);
 
   const [tableData, setTableData] = useState({
     result: null,
@@ -378,9 +378,25 @@ const useServices = (props) => {
       date,
     });
   const roomImageDetails = (entryId) =>
-    fetchDropdownData(ConfigAPIURL.roomImageDetails, setViewRoomData, {
+    fetchDropdownData(ConfigAPIURL.roomImageDetails, setRoomImageDetailsData, {
       entryId,
     });
+
+  const deleteRoomImage = async (entryId, imageUrl) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.deleteImage,
+        JSON.stringify({ entryId: entryId, imageUrl })
+      );
+      if (response?.data?.responseCode === 109) {
+        roomImageDetails(entryId);
+      }
+    } catch (error) {
+      console.log(error);
+      publishNotification("Error while fetching data", "error");
+    }
+  };
   return {
     tableData,
     setTableData,
@@ -410,6 +426,9 @@ const useServices = (props) => {
     viewRoomData,
     viewRoomImageData,
     roomImageDetails,
+    roomImageDetailsData,
+    setRoomImageDetailsData,
+    deleteRoomImage,
   };
 };
 

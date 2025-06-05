@@ -28,11 +28,11 @@ const ProjectUpload = ({
 }) => {
   const theme = useTheme();
   const [isUploadOpen, setIsUploadOpen] = useState(false);
-  const [roomImages, setRoomImages] = useState([]);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const dismissUpload = () => {
     setIsUploadOpen(false);
-    setRoomImages([]);
+    handleRoomSelect(selectedRoomId);
+    services?.setRoomImageDetailsData([]);
   };
   const calendarRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -40,9 +40,9 @@ const ProjectUpload = ({
     subDays(new Date(), i)
   );
 
-  const handleUpload = (data) => {
+  const handleUpload = (id) => {
     setIsUploadOpen(true);
-    setRoomImages(data);
+    services?.roomImageDetails(id);
   };
 
   return (
@@ -198,7 +198,7 @@ const ProjectUpload = ({
                 sm={6}
                 md={4}
                 key={val}
-                onClick={() => handleUpload(val?.roomImages)}
+                onClick={() => handleUpload(val?._id)}
               >
                 <ImageCard classes={classes} data={val} />
               </Grid>
@@ -223,7 +223,12 @@ const ProjectUpload = ({
           />
         )}
       >
-        <UploadModal roomImages={roomImages} classes={classes} />
+        <UploadModal
+          roomImages={services?.roomImageDetailsData?.[0]?.roomImages}
+          classes={classes}
+          id={services?.roomImageDetailsData?.[0]?._id}
+          deleteRoomImage={services?.deleteRoomImage}
+        />
       </PanelConfirmation>
     </>
   );

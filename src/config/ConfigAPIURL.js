@@ -75,13 +75,13 @@ class ConfigAPIURL {
   static projectView = this.baseUrl + "/admin/project/view";
   static ProjectTable = this.baseUrl + "/admin/project/worker";
   static viewRoomImages = this.baseUrl + "/admin/project/roomView";
+  static deleteProject = this.baseUrl + "/admin/project/delete";
+  static roomImageDetails = this.baseUrl + "/admin/project/roomImageDetails";
+  static deleteImage = this.baseUrl + "/admin/project/deleteImage";
 
   // dashboard
   static getGraphData = this.baseUrl + "/admin/dashboard/graph";
   static getDashBoardCounts = this.baseUrl + "/admin/dashboard/count";
-  
-  static deleteProject = this.baseUrl + "/admin/project/delete";
-  static roomImageDetails = this.baseUrl + "/admin/project/roomImageDetails";
 }
 
 export default ConfigAPIURL;

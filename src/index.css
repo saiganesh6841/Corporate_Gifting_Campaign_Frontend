@@ -66,6 +66,25 @@
     border-radius: 8px;
     padding: 8px;
   }
+  .scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  .scroll-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .hide-y-scrollbar {
+    overflow-y: scroll;         /* allow scrolling */
+    scrollbar-width: none;      /* Firefox */
+  }
+  
+  .hide-y-scrollbar::-webkit-scrollbar {
+    display: none;              /* Chrome, Safari */
+  }
+  
+  
+  
+  
 
 
 

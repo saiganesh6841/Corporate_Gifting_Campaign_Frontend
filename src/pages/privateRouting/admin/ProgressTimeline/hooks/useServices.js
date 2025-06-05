@@ -33,7 +33,11 @@ const useServices = (props) => {
 
   const { publishNotification } = useAlert();
   const [createdByList, setCreatedByList] = useState([]);
-  const [progressData, setProgressData] = useState([]);
+  const [progressData, setProgressData] = useState({
+    pages: null,
+    rows: [],
+    filterRecords: 0,
+  });
   const [projectList, setProjectList] = useState([]);
   const [floorList, setFloorList] = useState([]);
   const [flatList, setFlatList] = useState([]);
@@ -44,6 +48,7 @@ const useServices = (props) => {
     result: null,
     pages: 0,
     filterRecords: 0,
+    createdOn: null,
   });
 
   const [loading, setLoading] = useState({
@@ -95,11 +100,20 @@ const useServices = (props) => {
           flatId: userForm?.flatNo,
           startDate: userForm?.startDate ?? "",
           endDate: userForm?.endDate ?? "",
+          page: userForm?.page ?? 1,
+          pageSize: 10,
         })
       );
       if (response?.data?.responseCode === 109) {
-        const data = response?.data?.progressTimeLine;
-        setProgressData(data);
+        setProgressData((p) => ({
+          pages: response?.data?.pages,
+          filterRecords: response?.data?.filterRecords,
+          createdOn: response?.data?.createdOn,
+          rows:
+            query?.page === 0
+              ? [...(response?.data?.progressTimeLine || [])]
+              : [...(p?.rows || []), ...response?.data?.progressTimeLine],
+        }));
       }
     } catch (error) {
       publishNotification("Error while fetching user details", "error");
