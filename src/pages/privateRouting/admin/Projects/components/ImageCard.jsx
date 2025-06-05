@@ -9,7 +9,10 @@ const ImageCard = ({ classes, data }) => {
   console.log(data, "data");
   return (
     <>
-      <Box className="box_container" sx={{ padding: "10px" }}>
+      <Box
+        className="box_container"
+        sx={{ padding: "10px", cursor: "pointer" }}
+      >
         <Box className={`${classes.spaceBetween} ${classes.boxShow}`}>
           <Persona
             name={data?.workerName}

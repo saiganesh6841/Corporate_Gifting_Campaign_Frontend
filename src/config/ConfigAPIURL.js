@@ -50,6 +50,7 @@ class ConfigAPIURL {
   static updateTask = this.baseUrl + "/admin/task/update";
   static getTask = this.baseUrl + "/admin/task/get";
   static taskView = this.baseUrl + "/admin/task/view";
+  static taskLisMessages = this.baseUrl + "/admin/task/message/list";
 
   //attendance
   static listAttendance = this.baseUrl + "/admin/attendence/list";
@@ -78,6 +79,8 @@ class ConfigAPIURL {
   static deleteProject = this.baseUrl + "/admin/project/delete";
   static roomImageDetails = this.baseUrl + "/admin/project/roomImageDetails";
   static deleteImage = this.baseUrl + "/admin/project/deleteImage";
+  static listMessages = this.baseUrl + "/admin/project/message/list";
+  static addMessage = this.baseUrl + "/admin/project/message";
 
   // dashboard
   static getGraphData = this.baseUrl + "/admin/dashboard/graph";

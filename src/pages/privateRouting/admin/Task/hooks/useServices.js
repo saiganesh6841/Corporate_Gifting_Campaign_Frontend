@@ -38,6 +38,7 @@ const useServices = (props) => {
   const [flatList, setFlatList] = useState([]);
   const [roomList, setRoomList] = useState([]);
   const [workerList, setWorkerList] = useState([]);
+  const [listMessages, setListMessages] = useState([]);
 
   const [tableData, setTableData] = useState({
     result: null,
@@ -197,6 +198,7 @@ const useServices = (props) => {
           worker: task?.worker,
           taskDescription: task?.taskDescription,
           images: task?.images,
+          entryId: task?.entryId,
         });
       }
     } catch (error) {
@@ -297,6 +299,38 @@ const useServices = (props) => {
       projectId,
     });
 
+  const messagesList = async (entryId) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.taskLisMessages,
+        JSON.stringify({ entryId: entryId })
+      );
+      if (response?.data?.responseCode === 109) {
+        setListMessages(response?.data?.messages);
+      }
+    } catch (error) {
+      console.log(error);
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  const addMessage = async (entryId, message) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.addMessage,
+        JSON.stringify({ entryId: entryId, message })
+      );
+      if (response?.data?.responseCode === 109) {
+        await messagesList(entryId);
+      }
+    } catch (error) {
+      console.log(error);
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
   return {
     tableData,
     setTableData,
@@ -318,6 +352,9 @@ const useServices = (props) => {
     flatDropdown,
     floorsDropdown,
     getViewTable,
+    addMessage,
+    messagesList,
+    listMessages,
   };
 };
 

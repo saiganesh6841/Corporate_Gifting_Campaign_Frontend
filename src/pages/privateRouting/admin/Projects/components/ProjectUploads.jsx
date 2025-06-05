@@ -228,6 +228,7 @@ const ProjectUpload = ({
           classes={classes}
           id={services?.roomImageDetailsData?.[0]?._id}
           deleteRoomImage={services?.deleteRoomImage}
+          services={services}
         />
       </PanelConfirmation>
     </>

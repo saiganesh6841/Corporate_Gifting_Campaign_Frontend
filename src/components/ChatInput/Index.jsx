@@ -9,6 +9,7 @@ const MessageInputBar = ({
   inputValue,
   onInputChange,
   onSend,
+  onKeyPress,
   inputStyles = {},
 }) => {
   return (
@@ -21,6 +22,7 @@ const MessageInputBar = ({
         value={inputValue}
         onChange={onInputChange}
         placeholder={placeholder}
+        onKeyDown={onKeyPress}
         style={{ width: "100%" }}
         className="input__Style"
         // styles={{

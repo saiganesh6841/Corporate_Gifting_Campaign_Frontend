@@ -11,6 +11,8 @@ import SupervisorDetails from "./SupervisorBox";
 import ImageSelectionGallery from "./ImageGallery";
 import MessageInputBar from "../../../../../components/ChatInput/Index";
 import useAevForm from "../hooks/useAevForm";
+import { useEffect, useState } from "react";
+import ChatMessages from "../../../../../components/ChatMessages/Index";
 
 const ViewTask = ({ openForm, setOpenForm, classes, services }) => {
   const { userForm, setUserForm } = useAevForm({
@@ -18,6 +20,33 @@ const ViewTask = ({ openForm, setOpenForm, classes, services }) => {
     services,
     setOpenForm,
   });
+  const [inputValue, setInputValue] = useState("");
+  useEffect(() => {
+    if (userForm?.entryId) {
+      services?.messagesList(userForm?.entryId);
+    }
+  }, [userForm?.entryId]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleSend = () => {
+    const trimmedMessage = inputValue.trim();
+    if (!trimmedMessage) return;
+    services?.addMessage(userForm?.entryId, trimmedMessage);
+    setInputValue("");
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSend();
+    }
+  };
   return (
     <FluentProvider theme={teamsLightTheme}>
       <Grid
@@ -39,7 +68,17 @@ const ViewTask = ({ openForm, setOpenForm, classes, services }) => {
         </Grid>
         <Grid item xs={12}>
           <Box className="box_container" sx={{ padding: "1rem" }}>
-            <MessageInputBar />
+            <ChatMessages messages={services?.listMessages} />
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box className="box_container" sx={{ padding: "1rem" }}>
+            <MessageInputBar
+              inputValue={inputValue}
+              onInputChange={handleInputChange}
+              onSend={handleSend}
+              onKeyPress={handleKeyPress}
+            />
           </Box>
         </Grid>
       </Grid>

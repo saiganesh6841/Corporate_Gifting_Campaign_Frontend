@@ -47,7 +47,7 @@ const useServices = (props) => {
   const [roomData, setRoomData] = useState([]);
   const [viewRoomData, setViewRoomData] = useState([]);
   const [roomImageDetailsData, setRoomImageDetailsData] = useState([]);
-
+  const [listMessages, setListMessages] = useState([]);
   const [tableData, setTableData] = useState({
     result: null,
     pages: 0,
@@ -397,6 +397,38 @@ const useServices = (props) => {
       publishNotification("Error while fetching data", "error");
     }
   };
+
+  const messagesList = async (entryId) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.listMessages,
+        JSON.stringify({ entryId: entryId })
+      );
+      if (response?.data?.responseCode === 109) {
+        setListMessages(response?.data?.messages);
+      }
+    } catch (error) {
+      console.log(error);
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  const addMessage = async (entryId, message) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.addMessage,
+        JSON.stringify({ entryId: entryId, message })
+      );
+      if (response?.data?.responseCode === 109) {
+        await messagesList(entryId);
+      }
+    } catch (error) {
+      console.log(error);
+      publishNotification("Error while fetching data", "error");
+    }
+  };
   return {
     tableData,
     setTableData,
@@ -429,6 +461,9 @@ const useServices = (props) => {
     roomImageDetailsData,
     setRoomImageDetailsData,
     deleteRoomImage,
+    messagesList,
+    listMessages,
+    addMessage,
   };
 };
 
