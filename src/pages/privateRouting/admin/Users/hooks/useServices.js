@@ -115,8 +115,8 @@ const useServices = (props) => {
       }
     }
 
-    if (userForm?.mobileNo?.length < 10) {
-      errors["mobileNo"] = "Mobile number must be at least 10 characters";
+    if (userForm?.mobileNumber?.length < 10) {
+      errors["mobileNumber"] = "Mobile number must be at least 10 characters";
       return;
     }
 

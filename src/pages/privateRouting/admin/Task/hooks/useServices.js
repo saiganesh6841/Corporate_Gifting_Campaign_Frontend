@@ -53,6 +53,7 @@ const useServices = (props) => {
 
   useEffect(() => {
     projectDropdown();
+    // projectByTasks();
   }, []);
 
   useEffect(() => {
@@ -89,10 +90,32 @@ const useServices = (props) => {
     const URL = isEdit ? ConfigAPIURL.updateTask : ConfigAPIURL.createTask;
     const validationErrors = fieldsValidation(userForm, required); //userForm, requiredFields
 
-    if (validationErrors !== true) {
-      setErrors(validationErrors);
+    const customErrors = {};
+
+    const taskErrors = userForm.task?.map((t, index) =>
+      !t.taskDescription?.trim() ? "Task description is required" : null
+    );
+
+    // Check if any task has an error
+    const hasTaskErrors = taskErrors?.some((e) => e !== null);
+    if (hasTaskErrors) {
+      customErrors.task = taskErrors;
+    }
+
+    const hasValidationErrors =
+      validationErrors !== true || Object.keys(customErrors).length > 0;
+
+    if (hasValidationErrors) {
+      setErrors({
+        ...(validationErrors !== true ? validationErrors : {}),
+        ...customErrors,
+      });
       return;
     }
+    // if (validationErrors !== true) {
+    //   setErrors(validationErrors);
+    //   return;
+    // }
 
     const payload = isEdit
       ? {
@@ -195,10 +218,12 @@ const useServices = (props) => {
           roomName: task?.roomName,
           workerId: task?.workerId,
           room: task?.roomId,
-          worker: task?.worker,
+          worker: task?.workerName,
+          workerImage: task?.workerImage,
           taskDescription: task?.taskDescription,
           images: task?.images,
           entryId: task?.entryId,
+          createdAt: task?.createdAt,
         });
       }
     } catch (error) {
@@ -234,27 +259,27 @@ const useServices = (props) => {
     }
   };
 
-  // const createdByUsers = async () => {
-  //   try {
-  //     setLoading({ ...loading, isOpen: true, type: "filter" });
+  const projectByTasks = async (keyword) => {
+    try {
+      setLoading({ ...loading, isOpen: true, type: "filter" });
 
-  //     const response = await APIRequest.request(
-  //       "POST",
-  //       ConfigAPIURL.userCreatedByList,
-  //       ""
-  //     );
-  //     if (response?.data?.responseCode === 109) {
-  //       setCreatedByList(response.data?.result);
-  //     }
-  //   } catch (error) {
-  //     publishNotification(
-  //       "Error while fetching Created By users list",
-  //       "error"
-  //     );
-  //   } finally {
-  //     setLoading({ ...loading, isOpen: false, type: "" });
-  //   }
-  // };
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.taskProjectDropdown,
+        JSON.stringify({ keyword: keyword ?? "" })
+      );
+      if (response?.data?.responseCode === 109) {
+        setCreatedByList(response.data?.result);
+      }
+    } catch (error) {
+      publishNotification(
+        "Error while fetching Created By users list",
+        "error"
+      );
+    } finally {
+      setLoading({ ...loading, isOpen: false, type: "" });
+    }
+  };
 
   const fetchDropdownData = async (url, setState, payload = {}) => {
     try {
@@ -355,6 +380,7 @@ const useServices = (props) => {
     addMessage,
     messagesList,
     listMessages,
+    projectByTasks,
   };
 };
 

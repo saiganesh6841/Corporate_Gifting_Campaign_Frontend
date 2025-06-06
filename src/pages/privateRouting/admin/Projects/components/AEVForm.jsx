@@ -18,11 +18,13 @@ const AEVForm = ({
 }) => {
   const theme = useTheme();
 
-  const { userForm, setUserForm } = useAevForm({
-    openForm,
-    services,
-    setOpenForm,
-  });
+  const { userForm, setUserForm, editDeleteFloor, editDeleteFlat } = useAevForm(
+    {
+      openForm,
+      services,
+      setOpenForm,
+    }
+  );
   return (
     <>
       <FluentProvider theme={teamsLightTheme}>
@@ -42,6 +44,8 @@ const AEVForm = ({
                 openForm,
                 errors: services?.errors,
                 services,
+                editDeleteFloor,
+                editDeleteFlat,
               }}
             />
           )}

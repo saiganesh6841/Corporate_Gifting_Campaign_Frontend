@@ -17,6 +17,10 @@ import {
   CollectionsAdd24Filled,
   ClockBill24Filled,
   ClockBill24Regular,
+  DocumentBulletList24Regular,
+  DocumentBulletList24Filled,
+  ClipboardClock24Filled,
+  ClipboardClock24Regular,
 } from "@fluentui/react-icons";
 
 class SideBarMenu {
@@ -56,8 +60,8 @@ class SideBarMenu {
       urlEndWith: "projects",
       className: "",
       permissionLevel: "Projects",
-      regularIcon: <PeopleTeam24Regular />,
-      filledIcon: <PeopleTeam24Filled style={{ color: "#C98383" }} />,
+      regularIcon: <DocumentBulletList24Regular />,
+      filledIcon: <DocumentBulletList24Filled style={{ color: "#C98383" }} />,
       eventKey: "projects",
       subMenu: [],
     },
@@ -69,8 +73,8 @@ class SideBarMenu {
       urlEndWith: "progressTimeline",
       className: "",
       permissionLevel: "Progress Timeline",
-      regularIcon: <PeopleTeam24Regular />,
-      filledIcon: <PeopleTeam24Filled style={{ color: "#C98383" }} />,
+      regularIcon: <ClipboardClock24Regular />,
+      filledIcon: <ClipboardClock24Filled style={{ color: "#C98383" }} />,
       eventKey: "progressTimeline",
       subMenu: [],
     },

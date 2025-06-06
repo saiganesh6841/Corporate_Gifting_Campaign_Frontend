@@ -219,8 +219,7 @@ function Project() {
                 openForm={openForm}
                 resetForm={resetForm}
                 resetQueryBody={resetQueryBody}
-                inventory={true}
-                orders={true}
+                showStatus={true}
               />
             )}
             {openForm?.divType === "column" && (

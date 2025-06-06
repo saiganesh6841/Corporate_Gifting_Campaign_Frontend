@@ -21,6 +21,10 @@ export const getStatusStyles = (status) => {
       backgroundColor = "#fdecea"; // light red
       color = "#d93025";
       break;
+    case "inprogress":
+      backgroundColor = "#D0E7FF"; // light red
+      color = "#0078d4";
+      break;
     default:
       backgroundColor = "#e0e0e0";
       color = "#000";

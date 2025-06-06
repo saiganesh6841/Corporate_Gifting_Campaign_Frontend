@@ -1,6 +1,7 @@
 import { PersonaSize, Stack } from "@fluentui/react";
 import { Label, Persona, Text } from "@fluentui/react-components";
 import { Box } from "@mui/material";
+import utilController from "../../../../../utils/Utilcontroller";
 
 const TaskDetails = ({ userForm }) => {
   return (
@@ -14,8 +15,11 @@ const TaskDetails = ({ userForm }) => {
           <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <Persona
               text="Sahil Nora"
-              size={PersonaSize.size40}
-              imageUrl="https://via.placeholder.com/40"
+              avatar={{
+                image: {
+                  src: userForm?.workerImage,
+                },
+              }}
             />
             <Text>{userForm?.worker}</Text>
           </Box>
@@ -59,7 +63,7 @@ const TaskDetails = ({ userForm }) => {
         <Stack horizontal horizontalAlign="space-between">
           <Stack>
             <Label>Date</Label>
-            <Text>Apr 15, 2023</Text>
+            <Text>{utilController?.getFormattedDate(userForm.createdAt)}</Text>
           </Stack>
           <Stack>
             <Label>Send By</Label>

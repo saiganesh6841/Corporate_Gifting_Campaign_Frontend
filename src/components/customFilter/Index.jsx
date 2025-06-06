@@ -12,7 +12,21 @@ import { DatePicker } from "@fluentui/react-datepicker-compat";
 import React, { useEffect, useState } from "react";
 import Typography from "../Text/Typogarphy";
 
-const CustomFilter = ({ query, setQuery, openForm, resetForm, children }) => {
+const userTypes = ["admin", "worker", "supervisor"];
+const statusList = ["pending", "inprogress", "completed", "cancelled"];
+
+const CustomFilter = ({
+  query,
+  setQuery,
+  openForm,
+  resetForm,
+  children,
+  users,
+  showStatus,
+  tasks,
+  createdByList,
+  createdByProject,
+}) => {
   const [filter, setFilter] = useState({});
   //using in the expense management filter page
 
@@ -24,6 +38,8 @@ const CustomFilter = ({ query, setQuery, openForm, resetForm, children }) => {
       userType: query?.userType,
       createdByName: query?.createdByName,
       createdByKeyword: query?.createdByKeyword,
+      status: query?.status,
+      projectKeyword: query?.projectKeyword,
     });
   }, [query]);
 
@@ -81,6 +97,101 @@ const CustomFilter = ({ query, setQuery, openForm, resetForm, children }) => {
             </Option>
           </Dropdown>
         </Field>
+
+        {users && (
+          <Field label="User Type">
+            <Dropdown
+              className={` input__Style`}
+              key={`dropdown-${filter?.userType}`}
+              value={filter?.userType}
+              size="large"
+              style={{ textTransform: "capitalize" }}
+              onOptionSelect={(e, data) => {
+                setFilter({
+                  ...filter,
+                  userType: data?.optionValue,
+                });
+              }}
+            >
+              {userTypes?.map((val, ind) => (
+                <Option
+                  style={{ textTransform: "capitalize" }}
+                  text="Yes"
+                  value={val}
+                >
+                  {val}
+                </Option>
+              ))}
+            </Dropdown>
+          </Field>
+        )}
+
+        {tasks && (
+          <Field label="Projects">
+            <Combobox
+              className={` input__Style`}
+              value={filter?.projectKeyword}
+              size="large"
+              style={{ textTransform: "capitalize" }}
+              onChange={(e) => {
+                setFilter({
+                  ...filter,
+                  projectKeyword: e.target.value,
+                });
+                createdByProject(e.target.value);
+              }}
+              onOptionSelect={(e, data) => {
+                setFilter({
+                  ...filter,
+                  projectKeyword: data?.optionValue,
+                });
+              }}
+            >
+              {createdByList?.length > 0 ? (
+                createdByList?.map((val, ind) => (
+                  <Option
+                    style={{ textTransform: "capitalize" }}
+                    value={val?.name}
+                  >
+                    {val?.name}
+                  </Option>
+                ))
+              ) : (
+                <Option disabled style={{ textAlign: "center" }}>
+                  No Data Found
+                </Option>
+              )}
+            </Combobox>
+          </Field>
+        )}
+
+        {showStatus && (
+          <Field label="Status">
+            <Dropdown
+              className={` input__Style`}
+              key={`dropdown-${filter?.status}`}
+              value={filter?.status}
+              size="large"
+              style={{ textTransform: "capitalize" }}
+              onOptionSelect={(e, data) => {
+                setFilter({
+                  ...filter,
+                  status: data?.optionValue,
+                });
+              }}
+            >
+              {statusList?.map((val, ind) => (
+                <Option
+                  style={{ textTransform: "capitalize" }}
+                  text="Yes"
+                  value={val}
+                >
+                  {val}
+                </Option>
+              ))}
+            </Dropdown>
+          </Field>
+        )}
 
         <Field label="Start Date">
           <DatePicker

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { taskDetails } from "../constants/constant";
 
 const useAevForm = ({ openForm, services }) => {
-  const [userForm, setUserForm] = useState(taskDetails);
+  const [userForm, setUserForm] = useState({
+    ...taskDetails,
+    task: [{ taskDescription: "" }],
+  });
 
   React.useEffect(() => {
     if (openForm?.isSaveForm) {

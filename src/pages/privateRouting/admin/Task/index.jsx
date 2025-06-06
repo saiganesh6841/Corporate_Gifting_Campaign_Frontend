@@ -225,8 +225,10 @@ function Task() {
                 openForm={openForm}
                 resetForm={resetForm}
                 resetQueryBody={resetQueryBody}
-                inventory={true}
-                orders={true}
+                showStatus={true}
+                tasks={true}
+                createdByList={services?.createdByList}
+                createdByProject={services?.projectByTasks}
               />
             )}
             {openForm?.divType === "column" && (
@@ -244,12 +246,12 @@ function Task() {
             onDismissModal={dismissDelete}
             title={
               recordId?.length > 1
-                ? `${isDeleteOpen ? "Delete" : "Restore"} Users`
-                : `${isDeleteOpen ? "Delete" : "Restore"} User`
+                ? `${isDeleteOpen ? "Delete" : "Restore"} Tasks`
+                : `${isDeleteOpen ? "Delete" : "Restore"} Task`
             }
             content={`Are you sure you want to ${
               isDeleteOpen ? "delete" : "restore"
-            } selected ${recordId?.length > 1 ? "Users" : "User"}?`}
+            } selected ${recordId?.length > 1 ? "Tasks" : "task"}?`}
             Button={"Delete"}
             onClick={isDeleteOpen && services?.deleteUser}
           />

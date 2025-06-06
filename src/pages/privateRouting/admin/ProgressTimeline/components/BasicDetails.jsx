@@ -76,7 +76,7 @@ function BasicDetails({
               validationMessage={errors?.userType}
             >
               <Combobox
-                className={` input__Style`}
+                className={` input__Style  progress_combobox`}
                 size="medium"
                 style={{ width: "150px", minWidth: "unset" }}
                 value={userForm?.projectName}
@@ -120,7 +120,7 @@ function BasicDetails({
               validationMessage={errors?.userType}
             >
               <Combobox
-                className={` input__Style`}
+                className={` input__Style progress_combobox`}
                 size="medium"
                 style={{ width: "100px", minWidth: "unset" }}
                 onClick={() => services?.floorsDropdown(userForm?.projectId)}
@@ -155,7 +155,7 @@ function BasicDetails({
               validationMessage={errors?.userType}
             >
               <Combobox
-                className={` input__Style`}
+                className={` input__Style progress_combobox`}
                 size="medium"
                 style={{ width: "100px", minWidth: "unset" }}
                 disabled={!userForm?.floorNo}
@@ -190,7 +190,7 @@ function BasicDetails({
               validationMessage={errors?.userType}
             >
               <Combobox
-                className={` input__Style`}
+                className={` input__Style progress_combobox`}
                 size="medium"
                 onClick={() =>
                   services?.roomDropdown(

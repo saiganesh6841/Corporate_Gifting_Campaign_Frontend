@@ -128,6 +128,31 @@ const useServices = (props) => {
       ? {
           ...userForm,
           recordId: recordId[0]?._id,
+          // details: userForm?.details?.map((floor) => ({
+          //   floorNo: floor.floorNo,
+          //   floorId: floor.floorId || floor.floor_id,
+          //   roomDetails: floor.roomDetails?.map((flat) => ({
+          //     flatNo: flat.flatNo,
+          //     flat_id: flat.flat_id,
+          //     rooms: flat.rooms?.map((room) => room?.roomDetails?._id),
+          //   })),
+          // })),
+          details: userForm?.details?.map((floor) => ({
+            floorNo: floor.floorNo,
+            floorId: floor.floorId || floor.floor_id,
+            roomDetails: floor.roomDetails?.map((flat) => ({
+              flatNo: flat.flatNo,
+              flat_id: flat.flat_id,
+              rooms: flat.rooms
+                ?.map(
+                  (room) =>
+                    typeof room === "string"
+                      ? room // new room added
+                      : room?.roomDetails?._id // existing room from DB
+                )
+                .filter(Boolean), // ✅ removes null, undefined, false, 0, ''
+            })),
+          })),
         }
       : { ...userForm };
 
@@ -194,6 +219,7 @@ const useServices = (props) => {
           assignedSupervisor: project?.assignedSupervisor,
           assignedWorkers: project?.assignedWorkers,
           details: project?.floorDetails,
+          recordId: project?.proId,
           //
           // assignedSupervisor: project?.assignedSupervisor,
           // assignedWorkers: project?.assignedWorkers,
@@ -429,6 +455,41 @@ const useServices = (props) => {
       publishNotification("Error while fetching data", "error");
     }
   };
+
+  const deleteFlat = async (projectId, flatId) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.deleteFlat,
+        JSON.stringify({ projectId: projectId, flatId: flatId })
+      );
+      if (response?.data?.responseCode === 109) {
+        console.log(response?.data);
+        publishNotification("Flat deleted successfully", "success");
+      }
+    } catch (error) {
+      console.log(error);
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  const deleteFloor = async (projectId, floorId) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.deleteFloor,
+        JSON.stringify({ projectId: projectId, floorId: floorId })
+      );
+      if (response?.data?.responseCode === 109) {
+        console.log(response?.data);
+        publishNotification("Flat deleted successfully", "success");
+      }
+    } catch (error) {
+      console.log(error);
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
   return {
     tableData,
     setTableData,
@@ -464,6 +525,8 @@ const useServices = (props) => {
     messagesList,
     listMessages,
     addMessage,
+    deleteFloor,
+    deleteFlat,
   };
 };
 

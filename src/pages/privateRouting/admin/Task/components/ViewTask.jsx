@@ -63,14 +63,20 @@ const ViewTask = ({ openForm, setOpenForm, classes, services }) => {
         <Grid item xs={6}>
           <SupervisorDetails />
         </Grid>
-        <Grid item xs={12}>
-          <ImageSelectionGallery Images={userForm?.images} />
-        </Grid>
-        <Grid item xs={12}>
-          <Box className="box_container" sx={{ padding: "1rem" }}>
-            <ChatMessages messages={services?.listMessages} />
-          </Box>
-        </Grid>
+        {userForm?.images?.length > 0 && (
+          <Grid item xs={12}>
+            <ImageSelectionGallery Images={userForm?.images} />
+          </Grid>
+        )}
+
+        {services?.listMessages?.length > 0 && (
+          <Grid item xs={12}>
+            <Box className="box_container" sx={{ padding: "1rem" }}>
+              <ChatMessages messages={services?.listMessages} />
+            </Box>
+          </Grid>
+        )}
+
         <Grid item xs={12}>
           <Box className="box_container" sx={{ padding: "1rem" }}>
             <MessageInputBar

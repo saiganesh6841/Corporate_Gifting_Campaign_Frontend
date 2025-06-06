@@ -81,6 +81,9 @@
   .hide-y-scrollbar::-webkit-scrollbar {
     display: none;              /* Chrome, Safari */
   }
+  .progress_combobox .fvc9v3g svg{
+display: none;
+  }
   
   
   

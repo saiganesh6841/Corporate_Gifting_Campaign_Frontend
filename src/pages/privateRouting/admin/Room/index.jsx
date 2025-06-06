@@ -28,6 +28,7 @@ import ViewColumn from "../../../../components/ViewColumn/Index";
 import ConfirmationModal from "../../../../components/ConfirmationModal/Index";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
+import DialogModal from "../../../../components/Dialog/Index";
 
 function Room() {
   const classes = useStyles();
@@ -35,7 +36,8 @@ function Room() {
   const [query, setQuery] = useState({ ...queryBody });
   const [openForm, setOpenForm] = useState({ ...form });
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalData, setModalData] = useState({ logo: "", color: "" });
   const [errors, setErrors] = useState({});
   // active and inactive buttons function
   const inactiveTableButton = tableButtons.filter((item) =>
@@ -66,7 +68,12 @@ function Room() {
     setRecordId([]);
   };
 
-  const columns = useTableHeader(setOpenForm, openForm);
+  const columns = useTableHeader(
+    setOpenForm,
+    openForm,
+    setIsOpen,
+    setModalData
+  );
   const {
     viewColumn,
     setViewColumn,
@@ -122,7 +129,6 @@ function Room() {
     setQuery({ ...queryBody });
     // setOpenForm({ ...form });
   };
-  console.log(isDeleteOpen, "data");
   return (
     <div className={classes.root}>
       <Header classes={classes} text="Room" />
@@ -244,6 +250,32 @@ function Room() {
             Button={"Delete"}
             onClick={isDeleteOpen && services?.deleteUser}
           />
+
+          <DialogModal
+            isOpen={isOpen}
+            onDismissModal={() => setIsOpen(false)}
+            title="Preview"
+            width="180px"
+          >
+            <div
+              className={classes.imagePreview}
+              style={{ backgroundColor: modalData?.color || "red" }}
+            >
+              {modalData?.logo ? (
+                <img
+                  src={modalData?.logo}
+                  alt="Logo Preview"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+              ) : (
+                <span style={{ color: "#fff" }}>No Logo</span>
+              )}
+            </div>
+          </DialogModal>
         </FluentProvider>
       </div>
     </div>

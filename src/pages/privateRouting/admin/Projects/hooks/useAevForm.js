@@ -28,10 +28,22 @@ const useAevForm = ({ openForm, services }) => {
     }
   }, [openForm?.divType]);
 
+  const editDeleteFloor = async (projectId, floorId) => {
+    await services?.deleteFloor(projectId, floorId);
+    await services?.getEditTable({ setUserForm });
+  };
+
+  const editDeleteFlat = async (projectId, flatId) => {
+    await services?.deleteFlat(projectId, flatId);
+    await services?.getEditTable({ setUserForm });
+  };
+
   return {
     userForm,
     setUserForm,
     initialUserForm: projectDetails,
+    editDeleteFloor,
+    editDeleteFlat,
   };
 };
 

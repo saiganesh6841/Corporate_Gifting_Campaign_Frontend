@@ -34,12 +34,18 @@ const useTableFunctions = ({
       // const email = item?.email?.props.content;
       // const createdBy = item?.createdBy[2];
       // // const department = item?.department?.props.content;
-      // item["name"] = itemNameCopy[2];
-      // item["operatedBy"] = operatedByCopy[2];
-      // item["email"] = email;
-      // item["createdBy"] = createdBy;
-      // item["mobilenumber"] = item?.mobilenumber?.props.content;
-      // item["department"] = department;
+      item["User Type"] = item?.userId;
+      item["Full Name"] = item?.fullName?.[2];
+      item["Email"] = item?.email?.props?.content;
+      item["Mobile No"] = item?.mobileNumber?.props?.content;
+      item["Created By"] = item?.createdBy?.[2];
+      item["Operated By"] = item?.operatedBy?.[2];
+
+      item["User Id"] = item?.userId;
+      item["Gender"] = item?.gender;
+      item["Date Of Birth"] = item?.dob;
+      item["Created On"] = item?.createdAt;
+      item["Updated On"] = item?.updatedAt;
     });
 
     const options = {
@@ -116,7 +122,7 @@ const useTableFunctions = ({
           isOpen: true,
           divType: "edit",
           title: "Edit user",
-          width: 900,
+          width: 700,
           hasCloseButton: false,
           rowDetails: recordId,
         };

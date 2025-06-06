@@ -30,13 +30,21 @@ function BasicDetails({
       ...prev,
       task: updatedTasks,
     }));
+    delete errors?.task?.[index];
   };
 
   const handleAddTask = () => {
-    setUserForm((prev) => ({
-      ...prev,
-      task: [...(prev.task || []), { taskNo: null, taskDescription: "" }],
-    }));
+    // setUserForm((prev) => ({
+    //   ...prev,
+    //   task: [...(prev.task || []), { taskNo: null, taskDescription: "" }],
+    // }));
+    const lastTask = userForm.task?.[userForm.task.length - 1];
+    if (!lastTask || lastTask.taskDescription.trim() !== "") {
+      setUserForm((prev) => ({
+        ...prev,
+        task: [...(prev.task || []), { taskNo: null, taskDescription: "" }],
+      }));
+    }
   };
 
   const handleRemoveTask = (index) => {
@@ -48,7 +56,7 @@ function BasicDetails({
   };
 
   const isEdit = openForm?.divType === "edit";
-  console.log(userForm?.taskDescription, "isEdit");
+  console.log(errors, userForm, "isEdit");
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -59,12 +67,15 @@ function BasicDetails({
                 className={classes.label}
                 label="Select Project"
                 required
-                validationMessage={errors?.userType}
+                validationMessage={
+                  errors?.projectId ? "Project field is required" : ""
+                }
               >
                 <Combobox
                   className={` input__Style`}
                   size="medium"
                   value={userForm?.projectName}
+                  placeholder="Select the project"
                   onOptionSelect={(e, data) => {
                     const selectedItem = services?.projectList?.find(
                       (item) => item._id === data.optionValue
@@ -78,6 +89,7 @@ function BasicDetails({
                         floor: "",
                       }));
                     }
+                    delete errors?.projectId;
                   }}
                 >
                   {services?.projectList?.map((item) => (
@@ -98,20 +110,23 @@ function BasicDetails({
                 className={classes.label}
                 label="Select Floor"
                 required
-                validationMessage={errors?.userType}
+                validationMessage={errors?.floorNo}
               >
                 <Combobox
                   className={` input__Style`}
                   size="medium"
                   onClick={() => services?.floorsDropdown(userForm?.projectId)}
                   value={userForm?.floor}
+                  placeholder="Select the floor"
                   onOptionSelect={(e, data) => {
                     setUserForm((prev) => ({
                       ...prev,
                       floorNo: data.optionValue,
                       floor: data?.optionText,
                     }));
+                    delete errors?.floorNo;
                   }}
+                  disabled={!userForm?.projectId}
                 >
                   {services?.floorList?.map((item) => (
                     <Option
@@ -131,11 +146,12 @@ function BasicDetails({
                 className={classes.label}
                 label="Select Flat"
                 required
-                validationMessage={errors?.userType}
+                validationMessage={errors?.flatNo}
               >
                 <Combobox
                   className={` input__Style`}
                   size="medium"
+                  placeholder="Select the flat"
                   onClick={() =>
                     services?.flatDropdown(
                       userForm?.projectId,
@@ -149,7 +165,9 @@ function BasicDetails({
                       flatNo: data.optionValue,
                       flat: data?.optionText,
                     }));
+                    delete errors?.flatNo;
                   }}
+                  disabled={!userForm?.projectId || !userForm?.floorNo}
                 >
                   {services?.flatList?.map((item) => (
                     <Option key={item?._id} value={item?._id} text={item?.flat}>
@@ -164,11 +182,12 @@ function BasicDetails({
                 className={classes.label}
                 label="Select Room"
                 required
-                validationMessage={errors?.userType}
+                validationMessage={errors?.room}
               >
                 <Combobox
                   className={` input__Style`}
                   size="medium"
+                  placeholder="Select the room"
                   onClick={() =>
                     services?.roomDropdown(
                       userForm?.projectId,
@@ -183,7 +202,13 @@ function BasicDetails({
                       room: data.optionValue,
                       roomName: data?.optionText,
                     }));
+                    delete errors?.room;
                   }}
+                  disabled={
+                    !userForm?.projectId ||
+                    !userForm?.floorNo ||
+                    !userForm?.flatNo
+                  }
                 >
                   {services?.roomList?.map((item) => (
                     <Option
@@ -203,11 +228,12 @@ function BasicDetails({
                 className={classes.label}
                 label="Select Worker"
                 required
-                validationMessage={errors?.userType}
+                validationMessage={errors?.workerId}
               >
                 <Combobox
                   className={` input__Style`}
                   size="medium"
+                  placeholder="Select the worker"
                   onClick={() => services?.workerDropdown(userForm?.projectId)}
                   value={userForm?.worker}
                   onOptionSelect={(e, data) => {
@@ -216,7 +242,9 @@ function BasicDetails({
                       workerId: data.optionValue,
                       worker: data?.optionText,
                     }));
+                    delete errors?.workerId;
                   }}
+                  disabled={!userForm?.projectId}
                 >
                   {services?.workerList?.map((item) => (
                     <Option
@@ -311,7 +339,7 @@ function BasicDetails({
                     {/* Input Field */}
                     <Input
                       fullWidth
-                      placeholder="ABC"
+                      placeholder="Enter the description"
                       value={task.taskDescription}
                       onChange={(e) => handleTaskChange(index, e.target.value)}
                       style={{ flexGrow: 1 }}
@@ -331,6 +359,17 @@ function BasicDetails({
                       />
                     </Box>
                   </Stack>
+                  {errors?.task?.[index] && (
+                    <div
+                      style={{
+                        color: "#bc2f32",
+                        marginTop: 4,
+                        fontSize: "12px",
+                      }}
+                    >
+                      {errors.task[index]}
+                    </div>
+                  )}
                 </Grid>
               ))
             )}

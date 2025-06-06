@@ -8,6 +8,7 @@ export const queryBody = {
   startDate: null,
   endDate: Math.floor(new Date().setHours(23, 59, 0, 0) / 1000),
   createdByKeyword: "",
+  status: "",
 };
 
 export const form = {

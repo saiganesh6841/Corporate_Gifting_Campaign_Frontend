@@ -4,7 +4,7 @@ import React from "react";
 export const useStyles = makeStyles((theme) => ({
   primary: {
     background: theme.palette.primary.main,
-    borderRadius: "2px",
+    borderRadius: "6px",
     padding: "8px 20px",
     transition: "all 0.15s linear",
     border: "none",
@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
 
   outlined: {
     background: "#fff",
-    borderRadius: "2px",
+    borderRadius: "6px",
     padding: "8px 20px",
     transition: "all 0.15s linear",
     border: "1px solid #ccc",

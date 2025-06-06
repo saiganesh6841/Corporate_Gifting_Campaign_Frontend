@@ -115,27 +115,26 @@ const useTableHeader = (setOpenForm, openForm) => {
         </TableCellLayout>
       ),
     },
-
-    // {
-    //   columnId: "createdAt", // this is the unique id for a column
-    //   fieldName: "Created On",
-    //   minWidth: 170,
-    //   renderCell: (item) => (
-    //     <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-    //       {utilController.getFormattedDate(item?.createdAt)}
-    //     </TableCellLayout>
-    //   ),
-    // },
-    // {
-    //   columnId: "updatedAt", // this is the unique id for a column
-    //   fieldName: "Updated On",
-    //   minWidth: 170,
-    //   renderCell: (item) => (
-    //     <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-    //       {utilController.getFormattedDate(item?.updatedAt)}
-    //     </TableCellLayout>
-    //   ),
-    // },
+    {
+      columnId: "createdAt", // this is the unique id for a column
+      fieldName: "Created On",
+      minWidth: 170,
+      renderCell: (item) => (
+        <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+          {utilController.getFormattedDate(item?.createdAt)}
+        </TableCellLayout>
+      ),
+    },
+    {
+      columnId: "updatedAt", // this is the unique id for a column
+      fieldName: "Updated On",
+      minWidth: 170,
+      renderCell: (item) => (
+        <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+          {utilController.getFormattedDate(item?.updatedAt)}
+        </TableCellLayout>
+      ),
+    },
   ];
 
   const workerColumns = [

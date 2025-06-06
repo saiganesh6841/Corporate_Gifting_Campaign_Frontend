@@ -8,6 +8,7 @@ import {
 import { capitalize } from "@mui/material";
 import * as React from "react";
 import utilController from "../../../../utils/Utilcontroller";
+import { getStatusStyles } from "../../../../utils/StatusColor";
 
 const useStyles = makeStyles({
   text: {
@@ -27,9 +28,11 @@ const useTableHeader = (setOpenForm, openForm) => {
       minWidth: 100,
       primaryKey: true,
       renderCell: (item) => (
-        <TableCellLayout truncate style={{ text: capitalize }}>
-          {item?.taskId || ""}
-        </TableCellLayout>
+        <Tooltip content={item?.taskId}>
+          <TableCellLayout truncate style={{ text: capitalize }}>
+            {item?.taskId || ""}
+          </TableCellLayout>
+        </Tooltip>
       ),
     },
     {
@@ -63,7 +66,7 @@ const useTableHeader = (setOpenForm, openForm) => {
     {
       columnId: "workerMobileNumber", // this is the unique id for a column
       fieldName: "Mobile Number", // field name visible on header
-      minWidth: 200,
+      minWidth: 150,
 
       renderCell: (item) => (
         // what should be rendered on the cell
@@ -79,15 +82,33 @@ const useTableHeader = (setOpenForm, openForm) => {
     {
       columnId: "taskStatus", // this is the unique id for a column
       fieldName: "Status", // field name visible on header
-      minWidth: 200,
+      minWidth: 120,
 
       renderCell: (item) => (
         // what should be rendered on the cell
         <TableCellLayout truncate>
-          <Text truncate wrap={false} className={styles.text}>
+          <Text
+            truncate
+            wrap={false}
+            className={styles.text}
+            style={getStatusStyles(item?.taskStatus)}
+          >
             {item?.taskStatus}
           </Text>
         </TableCellLayout>
+      ),
+    },
+    {
+      columnId: "createdBy", // this is the unique id for a column
+      fieldName: "Created By", // field name visible on header
+      minWidth: 100,
+      primaryKey: true,
+      renderCell: (item) => (
+        <Tooltip content={item?.createdBy}>
+          <TableCellLayout truncate style={{ text: capitalize }}>
+            {item?.createdBy || ""}
+          </TableCellLayout>
+        </Tooltip>
       ),
     },
 

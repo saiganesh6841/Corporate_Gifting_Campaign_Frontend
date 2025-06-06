@@ -21,17 +21,13 @@ const useTableFunctions = ({
     console.log(data, "data");
 
     data.forEach((item, ind) => {
-      const itemNameCopy = item?.name;
-      const operatedByCopy = item?.operatedBy;
-      const email = item?.email?.props.content;
-      const createdBy = item?.createdBy[2];
-      // const department = item?.department?.props.content;
-      item["name"] = itemNameCopy[2];
-      item["operatedBy"] = operatedByCopy[2];
-      item["email"] = email;
-      item["createdBy"] = createdBy;
-      item["mobilenumber"] = item?.mobilenumber?.props.content;
-      // item["department"] = department;
+      item["Worker"] = item?.userName;
+      item["User Id"] = item?.userId;
+      item["Date"] = item?.attendanceDate;
+      item["Status"] = item?.status;
+      item["Work Hours"] = item?.workHours?.props?.children;
+      item["Check-Out"] = item?.checkOut;
+      item["Check-In"] = item?.checkIn;
     });
 
     const options = {

@@ -28,6 +28,8 @@ function BasicDetails({
   roles,
   errors,
   services,
+  editDeleteFloor,
+  editDeleteFlat,
 }) {
   const theme = useTheme();
   const handleChange = (event, name) => {
@@ -88,6 +90,9 @@ function BasicDetails({
           setUserForm={setUserForm}
           classes={classes}
           services={services}
+          openForm={openForm}
+          editDeleteFloor={editDeleteFloor}
+          editDeleteFlat={editDeleteFlat}
         />
       </Grid>
 

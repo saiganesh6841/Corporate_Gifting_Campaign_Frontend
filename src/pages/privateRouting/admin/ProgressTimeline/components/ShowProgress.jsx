@@ -282,8 +282,8 @@ const ShowProgress = ({
 
   if (!data || data.length === 0) {
     return (
-      <div className={classes.container}>
-        <Typography variant="subHeading">No Data Found</Typography>
+      <div style={{ textAlign: "center" }}>
+        <Typography variant="heading">No Data Found</Typography>
       </div>
     );
   }
@@ -325,7 +325,12 @@ const ShowProgress = ({
               <div key={item._id || index} className={classes.itemWrapper}>
                 {isTop && (
                   <div className={classes.contentTop}>
-                    <ImageCoursel classes={classes} images={item?.roomImages} />
+                    {item?.roomImages?.length > 0 && (
+                      <ImageCoursel
+                        classes={classes}
+                        images={item?.roomImages}
+                      />
+                    )}
                     <Typography variant="subHeading">
                       Note: {item.notes}
                     </Typography>
@@ -351,7 +356,12 @@ const ShowProgress = ({
                     <Typography variant="content">
                       Note: {item.notes}
                     </Typography>
-                    <ImageCoursel classes={classes} images={item?.roomImages} />
+                    {item?.roomImages?.length > 0 && (
+                      <ImageCoursel
+                        classes={classes}
+                        images={item?.roomImages}
+                      />
+                    )}
                   </div>
                 )}
               </div>

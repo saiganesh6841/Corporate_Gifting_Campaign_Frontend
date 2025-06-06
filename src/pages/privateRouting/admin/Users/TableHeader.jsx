@@ -53,7 +53,7 @@ const useTableHeader = (setOpenForm, openForm) => {
     //   ),
     // },
     {
-      columnId: "name", // this is the unique id for a column
+      columnId: "fullName", // this is the unique id for a column
       fieldName: "Full Name", // field name visible on header
       minWidth: 200,
 
@@ -100,41 +100,6 @@ const useTableHeader = (setOpenForm, openForm) => {
       ),
     },
 
-    // {
-    //   columnId: "department", // this is the unique id for a column
-    //   fieldName: "Department",
-    //   minWidth: 150,
-    //   renderCell: (item) => {
-    //     const department = utilController?.formatTextToCapitalize(
-    //       item?.department
-    //     );
-
-    //     return (
-    //       <TableCellLayout truncate>
-    //         <Tooltip content={department}>
-    //           <Text
-    //             truncate
-    //             wrap={false}
-    //             className={styles.text}
-    //             style={{ width: "130px" }}
-    //           >
-    //             {department}
-    //           </Text>
-    //         </Tooltip>
-    //       </TableCellLayout>
-    //     );
-    //   },
-    // },
-    // {
-    //   columnId: "permission.name", // this is the unique id for a column
-    //   fieldName: "Role",
-    //   minWidth: 150,
-    //   renderCell: (item) => (
-    //     <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-    //       {item?.permission?.name}
-    //     </TableCellLayout>
-    //   ),
-    // },
     {
       columnId: "createdBy", // this is the unique id for a column
       fieldName: "Created By", // field name visible on header
@@ -146,14 +111,8 @@ const useTableHeader = (setOpenForm, openForm) => {
         // }`;
         return (
           <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-            <Avatar
-              name={item?.createdBy?.fullName}
-              color="colorful"
-              size={24}
-            />{" "}
-            {item?.createdBy?.fullName === undefined
-              ? " "
-              : item?.createdBy?.fullName}
+            <Avatar name={item?.createdBy} color="colorful" size={24} />{" "}
+            {item?.createdBy === undefined ? " " : item?.createdBy}
           </TableCellLayout>
         );
       },

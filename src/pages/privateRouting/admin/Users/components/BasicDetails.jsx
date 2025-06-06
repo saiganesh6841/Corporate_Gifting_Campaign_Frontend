@@ -269,7 +269,7 @@ function BasicDetails({
                 className={classes.label}
                 label="Mobile Number"
                 required
-                validationMessage={errors?.mobileNo}
+                validationMessage={errors?.mobileNumber}
                 htmlFor="mobileNo"
               >
                 <Input
@@ -288,6 +288,16 @@ function BasicDetails({
                     });
                     delete errors["mobileNumber"];
                   }}
+                  onBlur={() => {
+                    if (userForm?.mobileNumber) {
+                      if (userForm.mobileNumber.length < 10) {
+                        errors["mobileNumber"] =
+                          "Mobile number must be at least 10 digits";
+                      } else {
+                        delete errors["mobileNumber"];
+                      }
+                    }
+                  }}
                   disabled={
                     userForm?.userType === "customer" &&
                     openForm?.divType === "view"
@@ -296,49 +306,53 @@ function BasicDetails({
               </Field>
             </Grid>
 
-            <Grid item xs={6}>
-              <Field
-                className={classes.label}
-                label="Role"
-                required
-                validationMessage={
-                  errors?.permission ? "Role field is required" : ""
-                }
-                htmlFor="permission"
-              >
-                <Combobox
-                  id="permission"
-                  className={`input__Style`}
-                  size="medium"
-                  placeholder="Select Role"
-                  value={userForm?.permissionName || ""}
-                  onClick={() => {
-                    fetchRoles();
-                  }}
-                  disabled={
-                    openForm?.divType === "view" || userForm?.isSuperAdmin
+            {userForm?.userType !== "worker" && (
+              <Grid item xs={6}>
+                <Field
+                  className={classes.label}
+                  label="Role"
+                  required
+                  validationMessage={
+                    errors?.permission ? "Role field is required" : ""
                   }
+                  htmlFor="permission"
                 >
-                  {roles?.map((option) => (
-                    <Option
-                      key={option._id}
-                      onClick={() => {
-                        setUserForm({
-                          ...userForm,
-                          permissionName: option?.name,
-                          permission: option?._id,
-                        });
-                        delete errors["permission"];
-                      }}
-                    >
-                      <p style={{ textTransform: "capitalize", margin: "4px" }}>
-                        {option.name}
-                      </p>
-                    </Option>
-                  ))}
-                </Combobox>
-              </Field>
-            </Grid>
+                  <Combobox
+                    id="permission"
+                    className={`input__Style`}
+                    size="medium"
+                    placeholder="Select Role"
+                    value={userForm?.permissionName || ""}
+                    onClick={() => {
+                      fetchRoles();
+                    }}
+                    disabled={
+                      openForm?.divType === "view" || userForm?.isSuperAdmin
+                    }
+                  >
+                    {roles?.map((option) => (
+                      <Option
+                        key={option._id}
+                        onClick={() => {
+                          setUserForm({
+                            ...userForm,
+                            permissionName: option?.name,
+                            permission: option?._id,
+                          });
+                          delete errors["permission"];
+                        }}
+                      >
+                        <p
+                          style={{ textTransform: "capitalize", margin: "4px" }}
+                        >
+                          {option.name}
+                        </p>
+                      </Option>
+                    ))}
+                  </Combobox>
+                </Field>
+              </Grid>
+            )}
 
             {userForm?.userType !== "worker" && (
               <Grid item xs={6}>

@@ -9,6 +9,7 @@ export const queryBody = {
   startDate: null,
   endDate: Math.floor(new Date().setHours(23, 59, 0, 0) / 1000),
   createdByKeyword: "",
+  projectKeyword: "",
 };
 
 export const form = {
@@ -23,18 +24,15 @@ export const form = {
   discription: "",
 };
 
+const taskDescription = { taskDescription: "" };
+
 export const taskDetails = {
   projectId: "",
   floorNo: "",
   flatNo: "",
   room: "",
   workerId: "",
-  task: [
-    {
-      taskNo: 1,
-      taskDescription: "",
-    },
-  ],
+  // task: [{ ...taskDescription }],
 };
 export const inactiveLabels = ["restore"];
 // export const inactiveLabels = ["view", "restore", "export"];

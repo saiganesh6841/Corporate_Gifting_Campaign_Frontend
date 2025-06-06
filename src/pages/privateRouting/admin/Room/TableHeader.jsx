@@ -8,6 +8,7 @@ import {
 import { capitalize } from "@mui/material";
 import * as React from "react";
 import utilController from "../../../../utils/Utilcontroller";
+import { Eye20Regular, Eye24Regular } from "@fluentui/react-icons";
 
 const useStyles = makeStyles({
   text: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-const useTableHeader = (setOpenForm, openForm) => {
+const useTableHeader = (setOpenForm, openForm, setIsOpen, setModalData) => {
   const styles = useStyles();
 
   const columns = [
@@ -75,6 +76,41 @@ const useTableHeader = (setOpenForm, openForm) => {
       renderCell: (item) => (
         <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
           {utilController.getFormattedDate(item?.updatedAt)}
+        </TableCellLayout>
+      ),
+    },
+    {
+      columnId: "roomName", // this is the unique id for a column
+      fieldName: "Action", // field name visible on header
+      minWidth: 120,
+      primaryKey: true,
+      renderCell: (item) => (
+        <TableCellLayout
+          truncate
+          style={{
+            textTransform: "capitalize", // optional: adds spacing between icon and text
+          }}
+        >
+          <div
+            onClick={() => {
+              setModalData({
+                logo: item?.roomLogo,
+                color: item?.color,
+              });
+              setIsOpen(true);
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              color: "#561E1E",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            <Eye24Regular />
+            Preview
+          </div>
         </TableCellLayout>
       ),
     },
