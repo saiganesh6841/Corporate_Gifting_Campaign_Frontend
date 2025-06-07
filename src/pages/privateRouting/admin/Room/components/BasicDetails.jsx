@@ -31,6 +31,15 @@ function BasicDetails({
     delete errors[name];
   };
 
+  const handleBlur = (field) => (e) => {
+    const trimmedValue = e.target.value.trim();
+
+    setUserForm((p) => ({
+      ...p,
+      [field]: trimmedValue,
+    }));
+  };
+
   return (
     <Grid container spacing={2}>
       {userForm?.roomLogo && userForm?.roomName && userForm?.color && (
@@ -81,6 +90,7 @@ function BasicDetails({
             value={userForm?.roomName || ""}
             onChange={(e) => handleChange(e, "roomName")}
             disabled={openForm?.divType === "view"}
+            onBlur={handleBlur("roomName")}
           />
         </Field>
       </Grid>
@@ -102,6 +112,7 @@ function BasicDetails({
             value={userForm?.color || ""}
             onChange={(e) => handleChange(e, "color")}
             disabled={openForm?.divType === "view"}
+            onBlur={handleBlur("color")}
             // Remove hidden input from here (don't cover full input)
             contentAfter={
               <InputAdornment position="end" style={{ position: "relative" }}>

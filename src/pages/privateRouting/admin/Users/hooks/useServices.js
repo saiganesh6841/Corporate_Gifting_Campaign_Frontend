@@ -94,6 +94,8 @@ const useServices = (props) => {
   };
 
   const sendToServer = async (userForm, isEdit) => {
+    publishNotification("hello we are checking", "error");
+    return;
     const method = isEdit ? "POST" : "POST";
     const URL = isEdit ? ConfigAPIURL.userUpdate : ConfigAPIURL.createUser;
 

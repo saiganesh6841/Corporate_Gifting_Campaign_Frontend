@@ -83,6 +83,15 @@ function BasicDetails({
     delete errors[name];
   };
 
+  const handleBlur = (field) => (e) => {
+    const trimmedValue = e.target.value.trim();
+
+    setUserForm((p) => ({
+      ...p,
+      [field]: trimmedValue,
+    }));
+  };
+
   console.log(roles, "roles");
   return (
     <Grid container spacing={2}>
@@ -178,6 +187,7 @@ function BasicDetails({
                   value={userForm?.fullName || ""}
                   onChange={(e) => handleChange(e, "fullName")}
                   disabled={openForm?.divType === "view"}
+                  onBlur={handleBlur("fullName")}
                 />
               </Field>
             </Grid>
@@ -377,6 +387,7 @@ function BasicDetails({
                       style={{ width: "280px" }}
                       placeholder="Enter Password"
                       type={showPassword ? "text" : "password"}
+                      onBlur={handleBlur("password")}
                       value={userForm?.password || ""}
                       onChange={(e) => handleChange(e, "password")}
                       contentAfter={

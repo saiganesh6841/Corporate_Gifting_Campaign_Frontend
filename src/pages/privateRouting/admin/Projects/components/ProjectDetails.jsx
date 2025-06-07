@@ -27,6 +27,16 @@ const ProjectDetails = ({
     });
     delete errors[name];
   };
+
+  const handleBlur = (field) => (e) => {
+    const trimmedValue = e.target.value.trim();
+
+    setUserForm((p) => ({
+      ...p,
+      [field]: trimmedValue,
+    }));
+  };
+
   return (
     <>
       <Box className="box_container">
@@ -58,6 +68,7 @@ const ProjectDetails = ({
                 value={userForm?.projectName || ""}
                 onChange={(e) => handleChange(e, "projectName")}
                 disabled={openForm?.divType === "view"}
+                onBlur={handleBlur("projectName")}
               />
             </Field>
           </Grid>
@@ -80,6 +91,7 @@ const ProjectDetails = ({
                 value={userForm?.location || ""}
                 onChange={(e) => handleChange(e, "location")}
                 disabled={openForm?.divType === "view"}
+                onBlur={handleBlur("location")}
               />
             </Field>
           </Grid>
@@ -101,6 +113,7 @@ const ProjectDetails = ({
                 value={userForm?.clientName || ""}
                 onChange={(e) => handleChange(e, "clientName")}
                 disabled={openForm?.divType === "view"}
+                onBlur={handleBlur("clientName")}
               />
             </Field>
           </Grid>
@@ -122,6 +135,7 @@ const ProjectDetails = ({
                 value={userForm?.companyName || ""}
                 onChange={(e) => handleChange(e, "companyName")}
                 disabled={openForm?.divType === "view"}
+                onBlur={handleBlur("companyName")}
               />
             </Field>
           </Grid>

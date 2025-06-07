@@ -75,6 +75,8 @@ function useServices() {
       response?.data?.responseCode === 103
     ) {
       publishNotification("Wrong Credentials / User not found", "error");
+    } else if (response?.data?.responseCode === 104) {
+      publishNotification("Incorrect Password", "error", 1000);
     } else if (response?.data?.responseCode === 116) {
       publishNotification("Password attempts exceeded", "error", 3000);
     } else if (response?.data?.responseCode === 105) {
@@ -85,6 +87,10 @@ function useServices() {
   };
 
   const verifyOTP = async () => {
+    if (otp.length < 6) {
+      publishNotification("Please Enter 6 digits OTP", "error");
+      return;
+    }
     const response = await APIRequest.request(
       "POST",
       ConfigAPIURL.verifyOtp,
@@ -99,17 +105,12 @@ function useServices() {
         localStorage.setItem("token", newToken);
         isLogin();
       } else if (response.data.responseCode === 118) {
-        // setSnakbarValues({
-        //   status: true,
-        //   severity: "error",
-        //   message: "Invalid OTP",
-        // });
+        publishNotification("Invalid OTP", "error");
       } else if (response.data.responseCode === 112) {
-        // setSnakbarValues({
-        //   status: true,
-        //   severity: "error",
-        //   message: "You don't have any permission. Please contact admin",
-        // });
+        publishNotification(
+          "You don't have any permission. Please contact admin",
+          "error"
+        );
       }
     } else {
       // setSnakbarValues({

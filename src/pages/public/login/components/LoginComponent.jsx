@@ -3,7 +3,7 @@ import CustomTextFiled from "../../../../components/loginInputFields";
 import { Link as RouterLink } from "react-router-dom";
 import { Field } from "@fluentui/react-components";
 
-const LoginFields = ({ services, classes }) => {
+const LoginFields = ({ services, classes, errors }) => {
   return (
     <div>
       <CustomTextFiled
@@ -15,9 +15,11 @@ const LoginFields = ({ services, classes }) => {
             ...p,
             email: e.target.value,
           }));
+          delete errors?.email;
         }}
         field="Email"
         required={true}
+        validationMessage={errors?.email}
       />
       <CustomTextFiled
         type={"password"}
@@ -28,9 +30,11 @@ const LoginFields = ({ services, classes }) => {
             ...p,
             password: e.target.value,
           }));
+          delete errors?.password;
         }}
         field="Password"
         required={true}
+        validationMessage={errors?.password}
       />
       <div
         className={classes.forgotPassword}

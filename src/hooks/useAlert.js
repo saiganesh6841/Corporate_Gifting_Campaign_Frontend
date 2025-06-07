@@ -7,7 +7,7 @@ const useAlert = () => {
   const publishNotification = (
     message = "",
     variant,
-    duration = 3000,
+    duration = 20000,
     anchorOrigin = {}
   ) => {
     return enqueueSnackbar(message, {

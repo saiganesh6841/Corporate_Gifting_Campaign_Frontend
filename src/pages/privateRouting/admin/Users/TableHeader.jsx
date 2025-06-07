@@ -101,6 +101,26 @@ const useTableHeader = (setOpenForm, openForm) => {
     },
 
     {
+      columnId: "dob", // this is the unique id for a column
+      fieldName: "Date Of Birth",
+      minWidth: 170,
+      renderCell: (item) => (
+        <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+          {item?.dob ?? "-"}
+        </TableCellLayout>
+      ),
+    },
+    {
+      columnId: "gender", // this is the unique id for a column
+      fieldName: "Gender",
+      minWidth: 170,
+      renderCell: (item) => (
+        <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+          {item?.gender ? item?.gender : "-"}
+        </TableCellLayout>
+      ),
+    },
+    {
       columnId: "createdBy", // this is the unique id for a column
       fieldName: "Created By", // field name visible on header
       minWidth: 200,
@@ -139,26 +159,6 @@ const useTableHeader = (setOpenForm, openForm) => {
           </TableCellLayout>
         );
       },
-    },
-    {
-      columnId: "dob", // this is the unique id for a column
-      fieldName: "Date Of Birth",
-      minWidth: 170,
-      renderCell: (item) => (
-        <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-          {item?.dob ?? "NA"}
-        </TableCellLayout>
-      ),
-    },
-    {
-      columnId: "gender", // this is the unique id for a column
-      fieldName: "Gender",
-      minWidth: 170,
-      renderCell: (item) => (
-        <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-          {item?.gender ? item?.gender : "NA"}
-        </TableCellLayout>
-      ),
     },
     {
       columnId: "createdAt", // this is the unique id for a column

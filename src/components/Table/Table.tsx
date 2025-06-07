@@ -32,6 +32,7 @@ const TableComponent = (props) => {
     downloadCsv,
     loading,
     handleBulkSelection,
+    projectView
   } = props;
 
   const [allRowsSelected, setAllRowsSelected] = React.useState(false);
@@ -142,7 +143,7 @@ const TableComponent = (props) => {
           height: "40px",
           position: "sticky",
           top: 0,
-          zIndex: 1,
+          zIndex:projectView?0 : 1,
         }}
       >
         <TableRow style={{ fontWeight: 600, backgroundColor: " #FBE4E4" }}>

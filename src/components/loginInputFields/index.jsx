@@ -20,7 +20,7 @@ function CustomTextFiled({
     <div
       style={{
         position: "relative",
-        marginBottom: "24px",
+        marginBottom: "16px",
         display: "flex",
         flexDirection: "column",
       }}
@@ -56,7 +56,7 @@ function CustomTextFiled({
               position: "absolute",
               right: "10px",
               top: "36px",
-              color: "#829CC3",
+              color: "black",
               cursor: "pointer",
             }}
             onClick={() => setIsShowPassword(false)}
@@ -66,7 +66,7 @@ function CustomTextFiled({
             sx={{
               position: "absolute",
               right: "10px",
-              color: "#829CC3",
+              color: "black",
               top: "36px",
               cursor: "pointer",
             }}

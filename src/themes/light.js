@@ -68,6 +68,15 @@ export const LIGHT = createTheme(BASE_THEME, {
       default: "#F6F3F3", // body background color
     },
   },
+  components: {
+    MuiSnackbar: {
+      styleOverrides: {
+        root: {
+          zIndex: 1401, // 🔥 Must be above drawer/dialog
+        },
+      },
+    },
+  },
   custom: {
     greenColor: "linear-gradient(120deg,rgba(126, 87, 194, 0.8), #fff )",
     orangeColor: "linear-gradient(to right, #f7971e, #ffd200)",

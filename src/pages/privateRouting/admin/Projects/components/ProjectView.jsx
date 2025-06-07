@@ -175,6 +175,7 @@ const ProjectView = ({
                 multiselect={false}
                 viewColumn={viewColumn}
                 selectedRows={[]}
+                projectView={true}
               />
             </Stack>
             <Pagination

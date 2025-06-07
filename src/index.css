@@ -84,6 +84,33 @@
   .progress_combobox .fvc9v3g svg{
 display: none;
   }
+  .MuiSnackbar-root {
+    position: relative !important; /* 👈 Enables z-index */
+    z-index: 1401 !important;      /* 👈 Must be above panel/dialog */
+  }
+  /* Ensure Notistack snackbars appear above Material-UI modals */
+.SnackbarContainer-root {
+  z-index: 9999 !important;
+}
+
+.snackbar-container {
+  z-index: 9999 !important;
+}
+
+/* If you're using Material-UI v5 */
+.notistack-SnackbarContainer {
+  z-index: 9999 !important;
+}
+
+/* Alternative: Target all snackbar related elements */
+div[class*="SnackbarContainer"] {
+  z-index: 9999 !important;
+}
+
+/* Ensure the snackbar content itself also has proper z-index */
+.SnackbarContent-root {
+  z-index: 9999 !important;
+}
   
   
   

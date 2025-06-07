@@ -37,7 +37,7 @@ const useTableFunctions = ({
       item["User Type"] = item?.userId;
       item["Full Name"] = item?.fullName?.[2];
       item["Email"] = item?.email?.props?.content;
-      item["Mobile No"] = item?.mobileNumber?.props?.content;
+      item["Mobile Number"] = item?.mobileNumber?.props?.content;
       item["Created By"] = item?.createdBy?.[2];
       item["Operated By"] = item?.operatedBy?.[2];
 

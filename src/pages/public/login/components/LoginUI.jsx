@@ -47,6 +47,8 @@ function LoginUI({ services, classes }) {
       };
     }
   }, [otpTrue, seconds, minutes]);
+
+  console.log(errors);
   return (
     <>
       <div className={classes.loginPage}>
@@ -69,7 +71,11 @@ function LoginUI({ services, classes }) {
         </Typography>
         <br />
         {!otpTrue ? (
-          <LoginFields services={services} classes={classes} />
+          <LoginFields
+            services={services}
+            classes={classes}
+            errors={services?.errors}
+          />
         ) : (
           <OtpField
             otp={services.otp}
