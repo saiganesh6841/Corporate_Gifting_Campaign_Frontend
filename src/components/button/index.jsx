@@ -46,7 +46,6 @@ export const useStyles = makeStyles((theme) => ({
 const PrimaryBtn = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  console.log(props, "style");
   const {
     onClick,
     children,
@@ -54,7 +53,6 @@ const PrimaryBtn = (props) => {
     disabled,
     variant = "primary",
   } = props;
-  console.log(style, "style");
   return (
     <button
       disabled={disabled}

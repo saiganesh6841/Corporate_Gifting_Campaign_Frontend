@@ -8,7 +8,6 @@ const formatTime = (timestamp) => {
 };
 
 const ChatMessages = ({ messages }) => {
-  console.log(messages);
   const styles = useStyles();
 
   const scrollRef = useRef(null);

@@ -20,7 +20,6 @@ function BasicDetails({
   errors,
 }) {
   const theme = useTheme();
-  // console.log(userForm,"user data")
   const handleChange = (event, name) => {
     if (!name) return;
     const { value } = event.target;
@@ -31,7 +30,6 @@ function BasicDetails({
     delete errors[name];
   };
 
-  console.log(roles, "roles");
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>

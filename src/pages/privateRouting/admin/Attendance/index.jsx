@@ -123,7 +123,6 @@ function User() {
     setQuery({ ...queryBody });
     // setOpenForm({ ...form });
   };
-  console.log(isDeleteOpen, "data");
   return (
     <div className={classes.root}>
       <Header classes={classes} text="Attendance" />

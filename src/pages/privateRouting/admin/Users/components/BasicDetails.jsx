@@ -71,8 +71,6 @@ function BasicDetails({
     setPassword(generatedPassword);
   };
 
-  // console.log(userForm,"user data")
-
   const handleChange = (event, name) => {
     if (!name) return;
     const { value } = event.target;
@@ -92,7 +90,6 @@ function BasicDetails({
     }));
   };
 
-  console.log(roles, "roles");
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>

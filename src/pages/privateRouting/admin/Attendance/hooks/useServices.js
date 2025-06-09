@@ -148,7 +148,6 @@ const useServices = (props) => {
   };
 
   const getEditTable = async ({ setUserForm }) => {
-    console.log(recordId[0], "data");
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(

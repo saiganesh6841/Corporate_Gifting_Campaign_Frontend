@@ -17,7 +17,6 @@ function UserSubscription({ classes, onRenew, subscriptionList, services }) {
 
   const { currentSubscription, historySubscription } =
     services?.userSubscriptionDetails;
-  console.log(currentSubscription, historySubscription, "subs");
   return (
     <>
       <Grid container spacing={2} className={classes.UserSubscriptionContainer}>

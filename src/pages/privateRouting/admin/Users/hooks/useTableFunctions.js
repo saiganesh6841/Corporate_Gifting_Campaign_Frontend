@@ -24,7 +24,6 @@ const useTableFunctions = ({
 
   const handleCsvExport = () => {
     const { data, headers } = downloadCsv(viewColumn);
-    // console.log(data,headers,"excel download")
 
     console.log(data, "data");
 

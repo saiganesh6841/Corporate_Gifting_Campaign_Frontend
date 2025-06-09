@@ -31,7 +31,6 @@ function LoginUI({ services, classes }) {
         if (seconds > 0) {
           setSeconds(seconds - 1);
         }
-        console.log(seconds, "seconds");
         if (seconds === 0) {
           if (minutes === 0) {
             clearInterval(interval);
@@ -48,7 +47,6 @@ function LoginUI({ services, classes }) {
     }
   }, [otpTrue, seconds, minutes]);
 
-  console.log(errors);
   return (
     <>
       <div className={classes.loginPage}>

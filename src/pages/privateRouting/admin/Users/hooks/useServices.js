@@ -94,8 +94,8 @@ const useServices = (props) => {
   };
 
   const sendToServer = async (userForm, isEdit) => {
-    publishNotification("hello we are checking", "error");
-    return;
+    // publishNotification("hello we are checking", "error");
+    // return;
     const method = isEdit ? "POST" : "POST";
     const URL = isEdit ? ConfigAPIURL.userUpdate : ConfigAPIURL.createUser;
 
@@ -173,7 +173,6 @@ const useServices = (props) => {
   };
 
   const getEditTable = async ({ setUserForm }) => {
-    console.log(recordId[0], "data");
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(

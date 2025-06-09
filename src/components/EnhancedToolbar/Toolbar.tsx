@@ -92,7 +92,7 @@ const Toolbar = ({
 
   const allrenderedButtons = useMemo(() => {
     const buttons = {};
-    if (buttonList?.length <= 4) {
+    if (buttonList?.length <= 6) {
       const renderedButtons = tableButtons?.filter((button) =>
         buttonList?.includes(button?.id)
       );

@@ -109,7 +109,7 @@ function TopBar(props) {
                   fontSize: "16px",
                 }}
               >
-                {LocalStorage?.userDetails?.email}
+                {LocalStorage?.userDetails?.name}
               </Typography>
               <Typography
                 variant="caption"
