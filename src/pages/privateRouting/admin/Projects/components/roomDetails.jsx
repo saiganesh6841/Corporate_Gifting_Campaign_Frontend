@@ -138,8 +138,10 @@ const RoomDetails = ({
   const handleDeleteFloorAndFlat = (Id) => {
     if (isDeleteFloor) {
       editDeleteFloor(userForm?.recordId, Id);
+      setSelectedFloorIndex(0);
     } else {
       editDeleteFlat(userForm?.recordId, Id);
+      setSelectedTab(0);
     }
     dismissDelete();
   };
@@ -203,6 +205,8 @@ const RoomDetails = ({
                           setIsDeleteFloor(true);
                         } else {
                           handleDeleteFloor(val.floorNo);
+                          setSelectedFloorIndex(0);
+                          setSelectedTab(0);
                         }
                       }}
                     />
@@ -270,6 +274,7 @@ const RoomDetails = ({
                                   setIsDeleteFlat(true);
                                 } else {
                                   handleDeleteFlat(flat.flatNo);
+                                  setSelectedTab(0);
                                 }
                               }}
                               style={{ cursor: "pointer" }}

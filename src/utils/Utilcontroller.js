@@ -35,6 +35,19 @@ const utilController = {
     }
     return "";
   },
+  getFormattedTime: (epochdate) => {
+    if (epochdate) {
+      const date = new Date(epochdate * 1000); // epoch in seconds
+      const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true, // set to false if you prefer 24-hour format
+      };
+      return date.toLocaleTimeString("en-US", options);
+    }
+    return "";
+  },
+
   getFormattedDate: (epochdate) => {
     const date = new Date(epochdate * 1000);
     const options = {

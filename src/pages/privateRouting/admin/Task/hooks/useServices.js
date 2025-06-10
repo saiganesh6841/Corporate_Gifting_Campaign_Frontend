@@ -224,6 +224,9 @@ const useServices = (props) => {
           images: task?.images,
           entryId: task?.entryId,
           createdAt: task?.createdAt,
+          createdByName: task?.createdByName,
+          createdImage: task?.createdImage,
+          createdUserType: task?.createdUserType,
         });
       }
     } catch (error) {

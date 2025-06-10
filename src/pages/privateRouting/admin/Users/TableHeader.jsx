@@ -126,9 +126,6 @@ const useTableHeader = (setOpenForm, openForm) => {
       minWidth: 200,
 
       renderCell: (item) => {
-        // const fullName = `${item?.createdBy?.fname || ""} ${
-        //   item?.createdBy?.lname || ""
-        // }`;
         return (
           <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
             <Avatar name={item?.createdBy} color="colorful" size={24} />{" "}
@@ -138,14 +135,11 @@ const useTableHeader = (setOpenForm, openForm) => {
       },
     },
     {
-      columnId: "operatedBy", // this is the unique id for a column
+      columnId: "updatedBy", // this is the unique id for a column
       fieldName: "Updated By", // field name visible on header
       minWidth: 200,
 
       renderCell: (item) => {
-        // const fullName = `${item?.operatedBy?.fname || ""} ${
-        //   item?.operatedBy?.lname || ""
-        // }`;
         return (
           <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
             <Avatar name={item?.updatedBy} color="colorful" size={24} />{" "}

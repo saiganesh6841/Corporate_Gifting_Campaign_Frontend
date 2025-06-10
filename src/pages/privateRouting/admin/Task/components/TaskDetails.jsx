@@ -65,10 +65,10 @@ const TaskDetails = ({ userForm }) => {
             <Label>Date</Label>
             <Text>{utilController?.getFormattedDate(userForm.createdAt)}</Text>
           </Stack>
-          <Stack>
+          {/* <Stack>
             <Label>Send By</Label>
             <Text>Martin Deo</Text>
-          </Stack>
+          </Stack> */}
         </Stack>
       </Box>
     </>

@@ -2,8 +2,10 @@ import { Stack } from "@fluentui/react";
 import { Persona } from "@fluentui/react-components";
 import { Box } from "@mui/material";
 import Typography from "../../../../../components/Text/Typogarphy";
+import { use } from "react";
+import utilController from "../../../../../utils/Utilcontroller";
 
-const SupervisorDetails = () => {
+const SupervisorDetails = ({ userForm }) => {
   return (
     <>
       <Box className="box_container" sx={{ padding: "1rem" }}>
@@ -13,23 +15,24 @@ const SupervisorDetails = () => {
           verticalAlign="center"
         >
           <Persona
-            name="Kevin Sturgis"
-            secondaryText="Available"
+            name={use?.createdByName}
+            secondaryText={userForm?.createdUserType}
             avatar={{
               image: {
-                src: "https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-react-assets/persona-male.png",
+                src: userForm?.createdImage,
               },
             }}
           />
         </Stack>
         <hr style={{ margin: "4px 0", borderColor: "#0000001A" }} />
         <Typography variant="subHeading">
-          Upload today’s progress images for the Living Room in the Luxury Villa
-          project. Ensure clarity and add comments if needed.
+          {userForm?.taskDescription}
         </Typography>
         <br />
         <br />
-        <Typography>9:00 AM</Typography>
+        <Typography>
+          {utilController?.getFormattedTime(userForm?.createdAt)}
+        </Typography>
       </Box>
     </>
   );

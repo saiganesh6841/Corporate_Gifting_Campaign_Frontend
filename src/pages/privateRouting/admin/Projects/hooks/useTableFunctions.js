@@ -30,6 +30,8 @@ const useTableFunctions = ({
       item["Status"] = item?.status?.props?.children;
       item["Created On"] = item?.createdAt;
       item["Updated On"] = item?.updatedAt;
+      item["Updated By"] = item?.updatedBy?.[2];
+      item["Created By"] = item?.createdBy?.[2];
     });
 
     const options = {

@@ -34,6 +34,8 @@ const useTableFunctions = ({
       item["Room Name"] = item?.roomName;
       item["Created On"] = item?.createdAt;
       item["Updated On"] = item?.updatedAt;
+      item["Updated By"] = item?.updatedBy?.[2];
+      item["Action"] = "-";
       // item[""] = item;
     });
 

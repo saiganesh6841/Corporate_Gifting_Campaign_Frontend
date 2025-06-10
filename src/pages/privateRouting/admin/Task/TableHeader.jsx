@@ -101,15 +101,30 @@ const useTableHeader = (setOpenForm, openForm) => {
     {
       columnId: "createdBy", // this is the unique id for a column
       fieldName: "Created By", // field name visible on header
-      minWidth: 100,
-      primaryKey: true,
-      renderCell: (item) => (
-        <Tooltip content={item?.createdBy}>
-          <TableCellLayout truncate style={{ text: capitalize }}>
-            {item?.createdBy || ""}
+      minWidth: 200,
+
+      renderCell: (item) => {
+        return (
+          <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+            <Avatar name={item?.createdBy} color="colorful" size={24} />{" "}
+            {item?.createdBy === undefined ? " " : item?.createdBy}
           </TableCellLayout>
-        </Tooltip>
-      ),
+        );
+      },
+    },
+    {
+      columnId: "updatedBy", // this is the unique id for a column
+      fieldName: "Updated By", // field name visible on header
+      minWidth: 200,
+
+      renderCell: (item) => {
+        return (
+          <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+            <Avatar name={item?.updatedBy} color="colorful" size={24} />{" "}
+            {item?.updatedBy === undefined ? " " : item?.updatedBy}
+          </TableCellLayout>
+        );
+      },
     },
 
     {

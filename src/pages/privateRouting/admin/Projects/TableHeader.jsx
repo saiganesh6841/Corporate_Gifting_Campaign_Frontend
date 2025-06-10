@@ -116,6 +116,34 @@ const useTableHeader = (setOpenForm, openForm) => {
       ),
     },
     {
+      columnId: "createdBy", // this is the unique id for a column
+      fieldName: "Created By", // field name visible on header
+      minWidth: 200,
+
+      renderCell: (item) => {
+        return (
+          <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+            <Avatar name={item?.createdBy} color="colorful" size={24} />{" "}
+            {item?.createdBy === undefined ? " " : item?.createdBy}
+          </TableCellLayout>
+        );
+      },
+    },
+    {
+      columnId: "updatedBy", // this is the unique id for a column
+      fieldName: "Updated By", // field name visible on header
+      minWidth: 200,
+
+      renderCell: (item) => {
+        return (
+          <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
+            <Avatar name={item?.updatedBy} color="colorful" size={24} />{" "}
+            {item?.updatedBy === undefined ? " " : item?.updatedBy}
+          </TableCellLayout>
+        );
+      },
+    },
+    {
       columnId: "createdAt", // this is the unique id for a column
       fieldName: "Created On",
       minWidth: 170,

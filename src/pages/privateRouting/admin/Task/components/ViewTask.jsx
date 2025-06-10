@@ -61,7 +61,7 @@ const ViewTask = ({ openForm, setOpenForm, classes, services }) => {
           <TaskDetails userForm={userForm} />
         </Grid>
         <Grid item xs={6}>
-          <SupervisorDetails />
+          <SupervisorDetails userForm={userForm} />
         </Grid>
         {userForm?.images?.length > 0 && (
           <Grid item xs={12}>
@@ -77,16 +77,18 @@ const ViewTask = ({ openForm, setOpenForm, classes, services }) => {
           </Grid>
         )}
 
-        <Grid item xs={12}>
-          <Box className="box_container" sx={{ padding: "1rem" }}>
-            <MessageInputBar
-              inputValue={inputValue}
-              onInputChange={handleInputChange}
-              onSend={handleSend}
-              onKeyPress={handleKeyPress}
-            />
-          </Box>
-        </Grid>
+        {userForm?.entryId && (
+          <Grid item xs={12}>
+            <Box className="box_container" sx={{ padding: "1rem" }}>
+              <MessageInputBar
+                inputValue={inputValue}
+                onInputChange={handleInputChange}
+                onSend={handleSend}
+                onKeyPress={handleKeyPress}
+              />
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </FluentProvider>
   );

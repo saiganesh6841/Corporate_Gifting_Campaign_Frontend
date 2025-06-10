@@ -28,7 +28,8 @@ const useTableFunctions = ({
       item["Created On"] = item?.createdAt;
       item["Updated On"] = item?.updatedAt;
       item["Mobile Number"] = item?.workerMobileNumber?.props?.content;
-      item["Created By"] = item?.createdBy?.props?.children;
+      item["Created By"] = item?.createdBy?.[2];
+      item["Updated By"] = item?.updatedBy?.[2];
     });
 
     const options = {
