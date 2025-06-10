@@ -59,6 +59,8 @@ const CustomFilter = ({
   const heading = "Custom filter";
   const paragraph = "Choose the conditions for your custom filter";
 
+  console.log(createdByList, "createdByList");
+
   return (
     <FluentProvider theme={teamsLightTheme}>
       <Stack style={{ paddingTop: "16px", gap: "16px" }}>

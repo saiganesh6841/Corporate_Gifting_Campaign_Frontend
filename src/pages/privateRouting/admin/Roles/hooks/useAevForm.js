@@ -17,7 +17,7 @@ const useAevForm = ({ openForm }) => {
       );
 
       if (response?.data?.responseCode === 109) {
-        let serverResponse = response.data.data;5ft4r
+        let serverResponse = response.data.data;
         setAddForm(serverResponse);
       }
     } catch (err) {

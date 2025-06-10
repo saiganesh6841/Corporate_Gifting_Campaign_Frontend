@@ -124,6 +124,7 @@ function Task() {
     setQuery({ ...queryBody });
     // setOpenForm({ ...form });
   };
+  console.log(services?.createdByList, "createdByList");
   return (
     <div className={classes.root}>
       <Header classes={classes} text="Task" />
@@ -165,7 +166,8 @@ function Task() {
               setSelectedRows={setSelectedRows}
               updateRecord={clickRecordAction}
               rowAction={handlerowAction}
-              loading={services?.loading}
+              // loading={services?.loading}
+              loading={services?.loading && services?.type === "query"}
               handleBulkSelection={handleBulkSelection}
             />
           </Stack>

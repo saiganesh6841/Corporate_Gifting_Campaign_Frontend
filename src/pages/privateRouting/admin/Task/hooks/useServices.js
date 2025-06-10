@@ -53,7 +53,7 @@ const useServices = (props) => {
 
   useEffect(() => {
     projectDropdown();
-    // projectByTasks();
+    projectByTasks();
   }, []);
 
   useEffect(() => {
@@ -269,7 +269,8 @@ const useServices = (props) => {
         JSON.stringify({ keyword: keyword ?? "" })
       );
       if (response?.data?.responseCode === 109) {
-        setCreatedByList(response.data?.result);
+        console.log("createdByList", response?.data?.result);
+        setCreatedByList(response?.data?.result);
       }
     } catch (error) {
       publishNotification(

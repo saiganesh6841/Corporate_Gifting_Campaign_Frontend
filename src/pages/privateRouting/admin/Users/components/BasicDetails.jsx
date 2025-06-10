@@ -330,6 +330,17 @@ function BasicDetails({
                     size="medium"
                     placeholder="Select Role"
                     value={userForm?.permissionName || ""}
+                    onOptionSelect={(_, data) => {
+                      const selectedOption = roles.find(
+                        (r) => r._id === data.optionValue
+                      );
+                      setUserForm({
+                        ...userForm,
+                        permission: selectedOption?._id,
+                        permissionName: selectedOption?.name,
+                      });
+                      delete errors["permission"];
+                    }}
                     onClick={() => {
                       fetchRoles();
                     }}
@@ -340,14 +351,8 @@ function BasicDetails({
                     {roles?.map((option) => (
                       <Option
                         key={option._id}
-                        onClick={() => {
-                          setUserForm({
-                            ...userForm,
-                            permissionName: option?.name,
-                            permission: option?._id,
-                          });
-                          delete errors["permission"];
-                        }}
+                        value={option._id}
+                        text={option?.name}
                       >
                         <p
                           style={{ textTransform: "capitalize", margin: "4px" }}

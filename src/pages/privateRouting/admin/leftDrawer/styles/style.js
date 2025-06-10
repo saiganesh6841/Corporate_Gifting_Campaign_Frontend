@@ -120,7 +120,7 @@ export const useStyles = makeStyles((theme) => ({
     gap: "10px",
     rowGap: "24px",
     marginLeft: "16px",
-    marginTop: "60px",
+    marginTop: "30px",
     paddingBottom: "30px",
     width: "100%",
   },

@@ -106,7 +106,7 @@ const useTableHeader = (setOpenForm, openForm) => {
       minWidth: 170,
       renderCell: (item) => (
         <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-          {item?.dob ?? "-"}
+          {utilController.getFormattedDate(item?.dob) ?? "-"}
         </TableCellLayout>
       ),
     },
