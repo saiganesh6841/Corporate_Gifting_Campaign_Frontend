@@ -28,7 +28,7 @@ function AdminContentRouting() {
         <Route path="users" element={<Users />} />
 
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="/security/role" element={<Role />} />
+        <Route path="security/role" element={<Role />} />
         <Route path="tasks" element={<Task />} />
         <Route path="rooms" element={<Room />} />
         {/* <Route path="scheduleTime" element={<ScheduleTime />} /> */}

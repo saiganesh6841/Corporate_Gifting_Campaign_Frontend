@@ -148,14 +148,8 @@ const useTableHeader = (setOpenForm, openForm) => {
         // }`;
         return (
           <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-            <Avatar
-              name={item?.operatedBy?.fullName}
-              color="colorful"
-              size={24}
-            />{" "}
-            {item?.operatedBy?.fullName === undefined
-              ? " "
-              : item?.operatedBy?.fullName}
+            <Avatar name={item?.updatedBy} color="colorful" size={24} />{" "}
+            {item?.updatedBy === undefined ? " " : item?.updatedBy}
           </TableCellLayout>
         );
       },
