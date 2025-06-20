@@ -26,7 +26,7 @@ const AssignWorker = ({ classes, services, userForm, setUserForm, errors }) => {
         assignedWorkers: [...(prev.assignedWorkers || []), sup._id],
       }));
     }
-    delete errors["assignedSupervisor"];
+    delete errors["assignedWorkers"];
   };
 
   const handleRemove = (idToRemove) => {

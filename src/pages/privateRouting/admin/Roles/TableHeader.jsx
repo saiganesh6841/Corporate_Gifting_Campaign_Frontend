@@ -42,6 +42,16 @@ const useTableHeader = (setOpenForm, openForm, services) => {
         </TableCellLayout>
       ),
     },
+    {
+      columnId: "updatedByUser", // this is the unique id for a column
+      fieldName: "Updated By",
+      minWidth: 150,
+      renderCell: (item) => (
+        <TableCellLayout style={{ textTransform: "capitalize" }} truncate>
+          {`${item?.updatedByUser}`}
+        </TableCellLayout>
+      ),
+    },
 
     {
       columnId: "createdAt", // this is the unique id for a column

@@ -109,6 +109,9 @@ const useServices = (props) => {
         handleClose();
         publishNotification("Role created successfully", "success");
         setErrors("");
+      } else if (response?.data?.responseCode === 114) {
+        publishNotification(response?.data?.message, "error");
+        return;
       } else {
         publishNotification("Something went wrong", "error");
       }

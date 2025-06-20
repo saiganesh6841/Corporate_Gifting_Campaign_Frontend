@@ -115,24 +115,44 @@ const RoomDetails = ({
     });
   };
 
+  // const handleSelect = (room) => {
+  //   // Get currently selected floor and flat
+  //   const floor = userForm.details[selectedFloorIndex];
+  //   const flat = floor.roomDetails[selectedTab];
+  //   console.log(flat, selectedTab, "flooor");
+  //   if (flat?.rooms?.includes(room._id)) return;
+
+  //   // // Update the userForm state
+  //   setUserForm((prev) => {
+  //     const updatedDetails = [...prev.details];
+  //     updatedDetails[selectedFloorIndex]?.roomDetails[selectedTab]?.rooms.push(
+  //       room._id
+  //     );
+  //     return { ...prev, details: updatedDetails };
+  //   });
+
+  //   // Hide suggestions and reset input
+  //   setInputValue("");
+  // };
   const handleSelect = (room) => {
-    // Get currently selected floor and flat
     const floor = userForm.details[selectedFloorIndex];
     const flat = floor.roomDetails[selectedTab];
-    console.log(flat, selectedTab, "flooor");
-    if (flat?.rooms?.includes(room._id)) return;
 
-    // // Update the userForm state
+    if (
+      flat?.rooms?.some((r) =>
+        typeof r === "string" ? r === room._id : r._id === room._id
+      )
+    ) {
+      return;
+    }
+
     setUserForm((prev) => {
       const updatedDetails = [...prev.details];
-      updatedDetails[selectedFloorIndex]?.roomDetails[selectedTab]?.rooms.push(
-        room._id
-      );
+      updatedDetails[selectedFloorIndex]?.roomDetails[selectedTab]?.rooms.push({
+        roomDetails: room, // Store the whole room object
+      });
       return { ...prev, details: updatedDetails };
     });
-
-    // Hide suggestions and reset input
-    setInputValue("");
   };
 
   const handleDeleteFloorAndFlat = (Id) => {

@@ -166,7 +166,7 @@ const useServices = (props) => {
 
       if (response?.data?.responseCode === 109) {
         publishNotification(
-          `User ${isEdit ? "updated" : "created"} successfully`,
+          `Project ${isEdit ? "updated" : "created"} successfully`,
           "success"
         );
         resetForm();
@@ -184,7 +184,7 @@ const useServices = (props) => {
       }
     } catch (error) {
       publishNotification(
-        `Error while ${isEdit ? "updating" : "creating"} user`,
+        `Error while ${isEdit ? "updating" : "creating"} Project`,
         "error"
       );
     } finally {

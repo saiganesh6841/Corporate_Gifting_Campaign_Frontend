@@ -95,6 +95,8 @@ function BasicDetails({
                       flat: "",
                       room: "",
                       roomName: "",
+                      startDate: "",
+                      endDate: "",
                     }));
                   }
                 }}

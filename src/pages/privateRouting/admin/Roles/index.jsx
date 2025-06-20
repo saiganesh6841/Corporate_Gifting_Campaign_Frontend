@@ -10,9 +10,9 @@ import Toolbar from "../../../../components/EnhancedToolbar/Toolbar";
 import Header from "../../../../components/HeaderUi/Index";
 import Pagination from "../../../../components/Table/Pagination";
 import TableComponent from "../../../../components/Table/Table";
-import { PanelConfirmation } from "../../../../components/confirmationpanel/Index";
+// import { PanelConfirmation } from "../../../../components/confirmationpanel/Index";
 import CustomFilter from "../../../../components/customFilter/Index";
-import OnRenderFooterContent from "../../../../components/panelFooter/Footer";
+// import OnRenderFooterContent from "../../../../components/panelFooter/Footer";
 import { tableButtons } from "../../../../components/tableButtons/TableButtons";
 import ViewColumn from "../../../../components/viewcolumn/Index";
 import LocalStorage from "../../../../config/LocalStorage";
@@ -26,6 +26,8 @@ import useTable from "./hooks/useTable";
 import useTableFunctions from "./hooks/useTableFunctions";
 import { useStyles } from "./styles/style";
 import { addFormDetails, form, queryBody } from "./constants/constant";
+import { PanelConfirmation } from "../../../../components/confirmationpanel/Index";
+import OnRenderFooterContent from "../../../../components/panelFooter/Footer";
 
 function Roles(props) {
   const classes = useStyles();
@@ -40,7 +42,9 @@ function Roles(props) {
 
   const resetForm = () => {
     setOpenForm({ ...form });
-    resetRecords();
+    // clearSelectedRows();
+    setRecordId([]);
+    setErrors({});
   };
 
   const resetRecords = () => {
@@ -129,7 +133,7 @@ function Roles(props) {
 
   const resetQueryBody = () => {
     setQuery({ ...queryBody });
-    setOpenForm({ ...form });
+    // setOpenForm({ ...form });
   };
 
   return (
@@ -191,7 +195,7 @@ function Roles(props) {
               setQuery={setQuery}
               tableData={tableData}
             />
-            {openForm?.isOpen && (
+            {/* {openForm?.isOpen && (
               <PanelConfirmation
                 isNoFooter={openForm.divType === "column"}
                 isOpen={openForm?.isOpen}
@@ -287,7 +291,66 @@ function Roles(props) {
                   />
                 )}
               </PanelConfirmation>
-            )}
+            )} */}
+            <PanelConfirmation
+              isNoFooter={openForm?.divType === "column"}
+              isOpen={openForm?.isOpen}
+              title={openForm?.title}
+              width={openForm?.width}
+              hasCloseButton={openForm?.hasCloseButton}
+              dismissPanel={resetForm}
+              onRenderFooterContent={() => (
+                <OnRenderFooterContent
+                  field1={{
+                    text: openForm?.divType === "view" ? "" : "Submit",
+                    handle: () => {
+                      setOpenForm({
+                        ...openForm,
+                        isSaveForm: true,
+                      });
+                    },
+                  }}
+                  field2={{
+                    text: openForm?.divType === "filter" ? "Reset" : "Cancel",
+                    handle:
+                      openForm?.divType === "filter"
+                        ? resetQueryBody
+                        : resetForm,
+                  }}
+                />
+              )}
+            >
+              {(openForm?.divType === "add" ||
+                openForm?.divType === "edit" ||
+                openForm?.divType === "view") && (
+                <AEVForm
+                  classes={classes}
+                  services={services}
+                  openForm={openForm}
+                  setOpenForm={setOpenForm}
+                />
+              )}
+              {openForm?.divType === "filter" && (
+                <CustomFilter
+                  query={query}
+                  setQuery={setQuery}
+                  openForm={openForm}
+                  resetForm={resetForm}
+                  resetQueryBody={resetQueryBody}
+                  inventory={true}
+                  orders={true}
+                />
+              )}
+              {openForm?.divType === "column" && (
+                <ViewColumn
+                  filteredColumn={viewColumn}
+                  openForm={openForm}
+                  resetForm={resetForm}
+                  setViewColumn={setViewColumn}
+                  filterColumn={filterColumn(columns)}
+                />
+              )}
+            </PanelConfirmation>
 
             <AddRole
               openForm={openForm}

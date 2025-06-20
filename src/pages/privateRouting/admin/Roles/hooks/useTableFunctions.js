@@ -15,20 +15,52 @@ const useTableFunctions = ({
   const isLargeScreen = useMediaQuery("(min-width: 1084px)");
   const width = isLargeScreen ? "82.5%" : "75.2%";
   const { publishNotification, closeSnackbar } = useAlert();
+  // const handleCsvExport = () => {
+  //   // downloadcsv function whih is from useDownload hook gives the data of items to be downloaded
+  //   const { data, headers } = downloadCsv(viewColumn);
+  //   const options = {
+  //     fieldSeparator: ",",
+  //     quoteStrings: '"',
+  //     decimalSeparator: ".",
+  //     showLabels: true,
+  //     // showTitle: true,
+  //     title: "",
+  //     useTextFile: false,
+  //     useBom: true,
+  //     // useKeysAsHeaders: true,
+  //     headers, //<-- Won't work with useKeysAsHeaders present!
+  //   };
+
+  //   const csvExporter = new ExportToCsv(options);
+  //   if (data?.length > 0) {
+  //     csvExporter.generateCsv(data);
+  //   } else {
+  //     publishNotification("No data to export", "error");
+  //   }
+  // };
   const handleCsvExport = () => {
-    // downloadcsv function whih is from useDownload hook gives the data of items to be downloaded
     const { data, headers } = downloadCsv(viewColumn);
+    // console.log(data,headers,"excel download")
+
+    console.log(data, "data");
+
+    data.forEach((item, ind) => {
+      item["Created By"] = item?.createdByUser;
+      item["Role Name"] = item?.roleName;
+      item["Created On"] = item?.createdAt;
+      item["Updated On"] = item?.updatedAt;
+      item["Updated By"] = item?.updatedByUser;
+      // item[""] = item;
+    });
+
     const options = {
       fieldSeparator: ",",
       quoteStrings: '"',
       decimalSeparator: ".",
       showLabels: true,
-      // showTitle: true,
-      title: "",
       useTextFile: false,
       useBom: true,
-      // useKeysAsHeaders: true,
-      headers, //<-- Won't work with useKeysAsHeaders present!
+      headers,
     };
 
     const csvExporter = new ExportToCsv(options);
@@ -39,6 +71,9 @@ const useTableFunctions = ({
     }
   };
 
+  const handleUploadExcel = () => {
+    setIsUploadModalOpen(true);
+  };
   const add = () => {
     if (selectedRows?.length === 0) {
       handleOpen();
@@ -55,7 +90,7 @@ const useTableFunctions = ({
     }
     if (selectedRows?.length === 0 || selectedRows?.length > 1) {
       return publishNotification(
-        `Please select one Item from the table`,
+        `Please select one Record from the table`,
         "error"
       );
     }
@@ -75,7 +110,7 @@ const useTableFunctions = ({
   const view = () => {
     if (selectedRows?.length === 0 || selectedRows?.length > 1) {
       return publishNotification(
-        `Please select one Item from the table`,
+        `Please select one Record from the table`,
         "error"
       );
     }
@@ -98,7 +133,7 @@ const useTableFunctions = ({
         ...p,
         isOpen: true,
         divType: "filter",
-        title: "",
+        title: "Filter",
         description: "",
         width: 500,
         hasCloseButton: true,
@@ -127,7 +162,7 @@ const useTableFunctions = ({
   const assignRole = () => {
     if (selectedRows?.length === 0 || selectedRows?.length > 1) {
       return publishNotification(
-        `Please select one Item from the table`,
+        `Please select one Record from the table`,
         "error"
       );
     }
@@ -150,7 +185,7 @@ const useTableFunctions = ({
         ...p,
         isOpen: true,
         divType: "column",
-        title: "",
+        title: "View Columns",
         description: "",
         width: 500,
         hasCloseButton: true,

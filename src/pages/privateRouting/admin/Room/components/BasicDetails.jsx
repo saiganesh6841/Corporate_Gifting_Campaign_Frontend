@@ -40,6 +40,8 @@ function BasicDetails({
     }));
   };
 
+  console.log(userForm);
+
   return (
     <Grid container spacing={2}>
       {userForm?.roomLogo && userForm?.roomName && userForm?.color && (

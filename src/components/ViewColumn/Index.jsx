@@ -54,7 +54,9 @@ const ColumnOption = ({
     <FluentProvider theme={teamsLightTheme}>
       <Stack verticalAlign="space-between" className="choose-panel">
         <Stack>
-          <Stack style={{ gap: "1.2rem", marginTop: "1.3rem" }}>
+          <Stack
+            style={{ gap: "1.2rem", marginTop: "1.3rem", marginBottom: "2rem" }}
+          >
             {newColumns?.length > 0 &&
               newColumns?.map((value, ind) => {
                 if (!value?.fieldName) return;
