@@ -139,6 +139,10 @@ const useServices = (props) => {
   };
 
   const updateRole = async () => {
+    if (!addForm?.name) {
+      setErrors({ roleName: "Role Name field is required" });
+      return;
+    }
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
@@ -158,11 +162,13 @@ const useServices = (props) => {
         tableQuery(query);
         resetRecords();
         resetAddForm();
+        setOpenForm({ ...openForm, isOpen: false });
+        tableQuery(query);
       }
-      setOpenForm({ ...openForm, isOpen: false });
-      tableQuery(query);
+
       if (response.code === 100 && response.data.responseCode === 114) {
-        publishNotification("Duplicate Role", "error");
+        setErrors({ roleName: response?.data?.message });
+        publishNotification(response?.data?.message, "error");
       }
     } catch (e) {
       publishNotification("Something went wrong, while updating role", "error");

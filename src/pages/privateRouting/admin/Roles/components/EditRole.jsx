@@ -12,7 +12,8 @@ import PermissionComponent from "./PermissionComponent";
 import roleImage from "../../../../../assets/Images/floraName.png";
 
 function AEVForm(props) {
-  const { openForm, recordId, addForm, setAddForm, addFormDetails } = props;
+  const { openForm, recordId, addForm, setAddForm, addFormDetails, errors } =
+    props;
   const [selectLabel, setSelectLabel] = useState("User");
   const [showMicroPermissions, setShowMicroPermissions] = useState(false);
 
@@ -114,6 +115,11 @@ function AEVForm(props) {
                       }
                       disabled={openForm?.divType === "view"}
                     />
+                    {errors?.roleName && (
+                      <span style={{ color: "red", fontSize: "12px" }}>
+                        {errors?.roleName}
+                      </span>
+                    )}
                   </Field>
                 </Grid>
 

@@ -134,7 +134,7 @@ const useServices = (props) => {
 
       if (response?.data?.responseCode === 109) {
         publishNotification(
-          `User ${isEdit ? "updated" : "created"} successfully`,
+          `Task ${isEdit ? "updated" : "created"} successfully`,
           "success"
         );
         resetForm();
@@ -152,7 +152,7 @@ const useServices = (props) => {
       }
     } catch (error) {
       publishNotification(
-        `Error while ${isEdit ? "updating" : "creating"} user`,
+        `Error while ${isEdit ? "updating" : "creating"} task`,
         "error"
       );
     } finally {
@@ -189,7 +189,7 @@ const useServices = (props) => {
         });
       }
     } catch (error) {
-      publishNotification("Error while fetching user details", "error");
+      publishNotification("Error while fetching task details", "error");
     } finally {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
     }
@@ -230,7 +230,7 @@ const useServices = (props) => {
         });
       }
     } catch (error) {
-      publishNotification("Error while fetching user details", "error");
+      publishNotification("Error while fetching task details", "error");
     } finally {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
     }
@@ -253,7 +253,7 @@ const useServices = (props) => {
         tableQuery(query);
         dismissDelete();
         resetRecords();
-        publishNotification("User Deleted Successfully", "success");
+        publishNotification("Task Deleted Successfully", "success");
       }
     } catch (error) {
       publishNotification("Something went wrong while deleting", "error");
@@ -276,10 +276,7 @@ const useServices = (props) => {
         setCreatedByList(response?.data?.result);
       }
     } catch (error) {
-      publishNotification(
-        "Error while fetching Created By users list",
-        "error"
-      );
+      publishNotification("Error while fetching Created By task list", "error");
     } finally {
       setLoading({ ...loading, isOpen: false, type: "" });
     }

@@ -156,7 +156,7 @@ const useServices = (props) => {
         if (response?.data?.message === "Mobile number already exists.") {
           setErrors((p) => ({
             ...p,
-            mobileNo: "Mobile number already exists",
+            mobileNumber: "Mobile number already exists",
           }));
         } else if (response?.data?.message === "Email already exists.") {
           setErrors((p) => ({ ...p, email: "Email already exists" }));

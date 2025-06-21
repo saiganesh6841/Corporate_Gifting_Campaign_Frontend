@@ -130,11 +130,11 @@ const useUpload = ({ setUserForm, userForm, onUpload }) => {
       const formData = new FormData();
       formData.append("attachment", data.attachment);
       formData.append("folderName", data.folderName || "profileImages");
-      const APIRequest = await fetch(ConfigAPIURL.uploadFile, {
+      const uploadResponse = await fetch(ConfigAPIURL.uploadFile, {
         method: "PUT",
         body: data,
       });
-      const response = await APIRequest.json();
+      const response = await uploadResponse.json();
       if (response.data?.attachmentUrl) {
         onUpload(response.data?.attachmentUrl?.[0]);
       }

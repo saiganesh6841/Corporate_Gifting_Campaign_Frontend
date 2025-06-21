@@ -89,7 +89,7 @@ function BasicDetails({
       [field]: trimmedValue,
     }));
   };
-
+  console.log(openForm);
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -256,7 +256,8 @@ function BasicDetails({
                   onChange={(e) => handleChange(e, "email")}
                   disabled={
                     userForm?.userType === "customer" ||
-                    openForm?.divType === "view"
+                    openForm?.divType === "view" ||
+                    openForm?.divType === "edit"
                   }
                   onBlur={() => {
                     if (userForm?.email) {
@@ -306,8 +307,9 @@ function BasicDetails({
                     }
                   }}
                   disabled={
-                    userForm?.userType === "customer" &&
-                    openForm?.divType === "view"
+                    userForm?.userType === "customer" ||
+                    openForm?.divType === "view" ||
+                    openForm?.divType === "edit"
                   }
                 />
               </Field>

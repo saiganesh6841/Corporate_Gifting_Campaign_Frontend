@@ -105,25 +105,18 @@ const useServices = (props) => {
 
       if (response?.data?.responseCode === 109) {
         publishNotification(
-          `User ${isEdit ? "updated" : "created"} successfully`,
+          `Room ${isEdit ? "updated" : "created"} successfully`,
           "success"
         );
         resetForm();
         tableQuery(query);
       }
       if (response?.data?.responseCode === 114) {
-        if (response?.data?.message === "Mobile number already exists.") {
-          setErrors((p) => ({
-            ...p,
-            mobileNo: "Mobile number already exists",
-          }));
-        } else if (response?.data?.message === "Email already exists.") {
-          setErrors((p) => ({ ...p, email: "Email already exists" }));
-        }
+        publishNotification(response?.data?.message, "error");
       }
     } catch (error) {
       publishNotification(
-        `Error while ${isEdit ? "updating" : "creating"} user`,
+        `Error while ${isEdit ? "updating" : "creating"} room`,
         "error"
       );
     } finally {
@@ -152,7 +145,7 @@ const useServices = (props) => {
         });
       }
     } catch (error) {
-      publishNotification("Error while fetching user details", "error");
+      publishNotification("Error while fetching room details", "error");
     } finally {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
     }
@@ -175,7 +168,7 @@ const useServices = (props) => {
         tableQuery(query);
         dismissDelete();
         resetRecords();
-        publishNotification("User Deleted Successfully", "success");
+        publishNotification("Room Deleted Successfully", "success");
       }
     } catch (error) {
       publishNotification("Something went wrong while deleting", "error");

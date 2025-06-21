@@ -231,7 +231,7 @@ const useServices = (props) => {
         });
       }
     } catch (error) {
-      publishNotification("Error while fetching user details", "error");
+      publishNotification("Error while fetching project details", "error");
     } finally {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
     }
@@ -269,7 +269,7 @@ const useServices = (props) => {
         });
       }
     } catch (error) {
-      publishNotification("Error while fetching user details", "error");
+      publishNotification("Error while fetching project details", "error");
     } finally {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
     }
@@ -292,7 +292,7 @@ const useServices = (props) => {
         tableQuery(query);
         dismissDelete();
         resetRecords();
-        publishNotification("User Deleted Successfully", "success");
+        publishNotification("Project Deleted Successfully", "success");
       }
     } catch (error) {
       publishNotification("Something went wrong while deleting", "error");

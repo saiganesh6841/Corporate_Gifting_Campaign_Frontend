@@ -195,7 +195,7 @@ function Roles(props) {
               setQuery={setQuery}
               tableData={tableData}
             />
-            {/* {openForm?.isOpen && (
+            {openForm?.isOpen && (
               <PanelConfirmation
                 isNoFooter={openForm.divType === "column"}
                 isOpen={openForm?.isOpen}
@@ -253,6 +253,7 @@ function Roles(props) {
                     unAssigned={unAssigned}
                     addFormDetails={addFormDetails}
                     resetRecords={resetRecords}
+                    errors={errors}
                   />
                 )}
 
@@ -291,8 +292,8 @@ function Roles(props) {
                   />
                 )}
               </PanelConfirmation>
-            )} */}
-            <PanelConfirmation
+            )}
+            {/* <PanelConfirmation
               isNoFooter={openForm?.divType === "column"}
               isOpen={openForm?.isOpen}
               title={openForm?.title}
@@ -320,14 +321,20 @@ function Roles(props) {
                 />
               )}
             >
-              {(openForm?.divType === "add" ||
-                openForm?.divType === "edit" ||
-                openForm?.divType === "view") && (
-                <AEVForm
-                  classes={classes}
-                  services={services}
+              {openForm?.isOpen && openForm?.divType === "edit" && (
+                <EditRole
                   openForm={openForm}
                   setOpenForm={setOpenForm}
+                  classes={classes}
+                  recordId={recordId[0]?._id}
+                  setAddForm={setAddForm}
+                  addForm={addForm}
+                  setAssigned={setAssigned}
+                  setUnAssigned={setUnAssigned}
+                  assigned={assigned}
+                  unAssigned={unAssigned}
+                  addFormDetails={addFormDetails}
+                  resetRecords={resetRecords}
                 />
               )}
               {openForm?.divType === "filter" && (
@@ -350,7 +357,7 @@ function Roles(props) {
                   filterColumn={filterColumn(columns)}
                 />
               )}
-            </PanelConfirmation>
+            </PanelConfirmation> */}
 
             <AddRole
               openForm={openForm}
