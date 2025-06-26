@@ -6,6 +6,13 @@ import utilController from "../../../../../utils/Utilcontroller";
 import CustomDropdown from "../../../../../components/CustomDropdown/Index";
 
 const ProjectInformation = ({ classes, userForm, setUserForm, disabled }) => {
+  if (!userForm?.status) {
+    return (
+      <Box className="box_container" sx={{ padding: "1rem" }}>
+        <Typography variant="content">Loading project details...</Typography>
+      </Box>
+    );
+  }
   return (
     <>
       <Box className="box_container" sx={{ padding: "1rem" }}>
@@ -22,7 +29,7 @@ const ProjectInformation = ({ classes, userForm, setUserForm, disabled }) => {
           {/* <Box sx={getStatusStyles("pending")}>{userForm?.status}</Box> */}
           <Box>
             <CustomDropdown
-              initialStatus={userForm?.status}
+              initialStatus={userForm?.status && userForm?.status}
               disabled={disabled}
               onChange={(newStatus) => {
                 setUserForm((prev) => ({

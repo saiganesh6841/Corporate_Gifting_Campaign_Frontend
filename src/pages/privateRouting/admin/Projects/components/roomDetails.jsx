@@ -110,7 +110,8 @@ const RoomDetails = ({
       const flatRooms =
         updatedDetails[selectedFloorIndex].roomDetails[selectedTab].rooms;
       updatedDetails[selectedFloorIndex].roomDetails[selectedTab].rooms =
-        flatRooms.filter((id) => id !== roomId);
+        flatRooms.filter((id) => id.roomDetails?._id !== roomId);
+      console.log(flatRooms, updatedDetails, "data");
       return { ...prev, details: updatedDetails };
     });
   };
@@ -137,15 +138,18 @@ const RoomDetails = ({
   const handleSelect = (room) => {
     const floor = userForm.details[selectedFloorIndex];
     const flat = floor.roomDetails[selectedTab];
-
-    if (
-      flat?.rooms?.some((r) =>
-        typeof r === "string" ? r === room._id : r._id === room._id
-      )
-    ) {
-      return;
-    }
-
+    const isAlreadyAdded = flat?.rooms?.some((r) => {
+      if (typeof r === "string") return r === room._id;
+      return r?.roomDetails?._id === room._id;
+    });
+    if (isAlreadyAdded) return;
+    // if (
+    //   flat?.rooms?.some((r) =>
+    //     typeof r === "string" ? r === room._id : r._id === room._id
+    //   )
+    // ) {
+    //   return;
+    // }
     setUserForm((prev) => {
       const updatedDetails = [...prev.details];
       updatedDetails[selectedFloorIndex]?.roomDetails[selectedTab]?.rooms.push({
@@ -372,16 +376,16 @@ const RoomDetails = ({
                 ]?.rooms.map((room) => {
                   const roomData =
                     typeof room === "string"
-                      ? services.roomList.find((r) => r._id === room)
+                      ? services.roomList?.find((r) => r._id === room)
                       : room.roomDetails;
 
                   if (!roomData) return null;
 
                   return (
                     <Chip
-                      key={roomData._id}
+                      key={roomData?._id}
                       label={roomData.roomName}
-                      onDelete={() => handleRoomDelete(roomData._id)}
+                      onDelete={() => handleRoomDelete(roomData?._id)}
                       sx={{ backgroundColor: "#511C1C", color: "#fff" }}
                       deleteIcon={
                         <PresenceOffline16Regular style={{ color: "#fff" }} />
@@ -411,7 +415,10 @@ const RoomDetails = ({
                         <ListItem
                           key={room._id}
                           button
-                          onClick={() => handleSelect(room)}
+                          onClick={() => {
+                            handleSelect(room);
+                            setInputValue("");
+                          }}
                         >
                           <ListItemText primary={room.roomName} />
                         </ListItem>

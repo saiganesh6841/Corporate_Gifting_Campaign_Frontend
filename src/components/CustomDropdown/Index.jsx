@@ -52,7 +52,7 @@ const CustomDropdown = ({ initialStatus, onChange, disabled }) => {
 
   const current =
     statusOptions.find((s) => s.value === selectedStatus) || statusOptions[0];
-
+  console.log(current, selectedStatus, "status");
   const handleSelect = (statusValue) => {
     setSelectedStatus(statusValue);
     if (onChange) onChange(statusValue);
@@ -74,9 +74,13 @@ const CustomDropdown = ({ initialStatus, onChange, disabled }) => {
             padding: "8px 12px",
           }}
           disabled={disabled}
-          icon={React.cloneElement(current.icon, {
-            style: { color: current.color },
-          })}
+          icon={
+            current?.icon
+              ? React.cloneElement(current.icon, {
+                  style: { color: current.color },
+                })
+              : null
+          }
           iconPosition="before"
           menuIcon={
             <ChevronDownRegular
