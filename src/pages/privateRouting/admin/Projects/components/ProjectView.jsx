@@ -97,7 +97,13 @@ const ProjectView = ({
               <Stack horizontal gap={4}>
                 <Dropdown
                   placeholder="Floor"
-                  style={{ width: "100px", minWidth: "unset" }}
+                  style={{
+                    width:
+                      services?.data?.floor === "Ground Floor"
+                        ? "170px"
+                        : "100px",
+                    minWidth: "unset",
+                  }}
                   // onClick={() => services?.floorsDropdown()}
                   value={services?.data?.floor}
                   onOptionSelect={(e, data) => {
