@@ -59,6 +59,13 @@ const useServices = (props) => {
     message: "",
   });
 
+  const [data, setData] = useState({
+    floor: "",
+    floorId: "",
+    flatId: "",
+    flat: "",
+  });
+
   useEffect(() => {
     fetchRoomList();
     fetchSuperVisorList();
@@ -278,14 +285,14 @@ const useServices = (props) => {
   const deleteUser = async () => {
     const ids = recordId?.map((id) => id?._id);
     const payload = {
-      taskIds: ids,
+      projectIds: ids,
     };
 
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        ConfigAPIURL.deleteTask,
+        ConfigAPIURL.deleteProject,
         JSON.stringify(payload)
       );
       if (response?.data?.responseCode === 109) {
@@ -376,15 +383,61 @@ const useServices = (props) => {
     }
   };
 
+  const fetchFloorDropdownData = async (url, setState, payload = {}) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        url,
+        JSON.stringify(payload)
+      );
+      if (response?.data?.responseCode === 109) {
+        setState(response.data?.result);
+        setData((prev) => {
+          const updated = {
+            ...prev,
+            floorId: response?.data?.result[0]?._id,
+            floor: response?.data?.result[0]?.floor,
+          };
+          return updated;
+        });
+      }
+    } catch (error) {
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
+  const fetchFlatDropdownData = async (url, setState, payload = {}) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        url,
+        JSON.stringify(payload)
+      );
+      if (response?.data?.responseCode === 109) {
+        setState(response.data?.result);
+        setData((prev) => {
+          const updated = {
+            ...prev,
+            flatId: response?.data?.result[0]?._id,
+            flat: response?.data?.result[0]?.flat,
+          };
+          return updated;
+        });
+      }
+    } catch (error) {
+      publishNotification("Error while fetching data", "error");
+    }
+  };
+
   // Pass projectId for floorDropdown
-  const floorsDropdown = () =>
-    fetchDropdownData(ConfigAPIURL.floorsDropdown, setFloorList, {
+  const floorsDropdown = async () =>
+    await fetchFloorDropdownData(ConfigAPIURL.floorsDropdown, setFloorList, {
       projectId: recordId[0]?._id,
     });
 
   // Pass projectId and floorId for flatDropdown
-  const flatDropdown = (floorId) =>
-    fetchDropdownData(ConfigAPIURL.flatDropdown, setFlatList, {
+  const flatDropdown = async (floorId) =>
+    await fetchFlatDropdownData(ConfigAPIURL.flatDropdown, setFlatList, {
       projectId: recordId[0]?._id,
       floorId,
     });
@@ -527,6 +580,8 @@ const useServices = (props) => {
     addMessage,
     deleteFloor,
     deleteFlat,
+    data,
+    setData,
   };
 };
 

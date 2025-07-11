@@ -5,9 +5,10 @@ import React, { useEffect, useState } from "react";
 import { Separator } from "@fluentui/react";
 import { FluentProvider, teamsLightTheme } from "@fluentui/react-components";
 import {
-  Cart24Filled,
-  DocumentOnePage24Filled,
-  PeopleTeam24Filled,
+  Document24Regular,
+  DocumentBulletList24Regular,
+  DocumentCheckmark24Regular,
+  People24Regular,
 } from "@fluentui/react-icons";
 import { useTheme } from "@mui/styles";
 import Header from "../../../../components/HeaderUi/Index";
@@ -49,25 +50,25 @@ function Dashboard(props) {
         {
           color: "#582538",
           label: "Total Projects",
-          icon: <PeopleTeam24Filled style={{ color: "#ffff" }} />,
+          icon: <DocumentBulletList24Regular style={{ color: "#ffff" }} />,
           count: services?.statisticsData?.totalProjects,
         },
         {
           color: "#007F0A",
           label: "Completed Projects",
-          icon: <DocumentOnePage24Filled style={{ color: "#ffff" }} />,
+          icon: <DocumentCheckmark24Regular style={{ color: "#ffff" }} />,
           count: services?.statisticsData?.completedProjects,
         },
         {
           color: "#CA9700",
           label: "In Progress",
-          icon: <Cart24Filled style={{ color: "#ffff" }} />,
+          icon: <Document24Regular style={{ color: "#ffff" }} />,
           count: services?.statisticsData?.inProgress,
         },
         {
           color: "#0078D4",
           label: "Total Users ",
-          icon: <Cart24Filled style={{ color: "#ffff" }} />,
+          icon: <People24Regular style={{ color: "#ffff" }} />,
           count: services?.statisticsData?.totalUsers,
         },
       ]);

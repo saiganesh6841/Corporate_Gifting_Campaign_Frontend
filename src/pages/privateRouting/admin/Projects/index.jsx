@@ -238,12 +238,12 @@ function Project() {
             onDismissModal={dismissDelete}
             title={
               recordId?.length > 1
-                ? `${isDeleteOpen ? "Delete" : "Restore"} Users`
-                : `${isDeleteOpen ? "Delete" : "Restore"} User`
+                ? `${isDeleteOpen ? "Delete" : "Restore"} Project`
+                : `${isDeleteOpen ? "Delete" : "Restore"} Project`
             }
             content={`Are you sure you want to ${
               isDeleteOpen ? "delete" : "restore"
-            } selected ${recordId?.length > 1 ? "Users" : "User"}?`}
+            } selected ${recordId?.length > 1 ? "Projects" : "Project"}?`}
             Button={"Delete"}
             onClick={isDeleteOpen && services?.deleteUser}
           />

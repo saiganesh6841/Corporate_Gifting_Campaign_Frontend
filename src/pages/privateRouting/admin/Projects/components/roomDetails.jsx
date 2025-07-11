@@ -45,11 +45,14 @@ const RoomDetails = ({
   const [selectedDeleteId, setSelectedDeleteId] = useState(null);
 
   const handleAddFloor = () => {
-    const floorNo = Number(floorNoInput);
-    if (!floorNo || isNaN(floorNo)) return;
+    let floorNo = Number(floorNoInput);
+    if (floorNo < 0 || isNaN(floorNo)) return;
     if (userForm.details?.some((floor) => floor.floorNo === floorNo)) return;
 
+    floorNo = floorNo === 0 ? "Ground Floor" : floorNo;
+
     const newFloor = { floorNo, roomDetails: [] };
+
     setUserForm((prev) => ({
       ...prev,
       details: [...(prev.details || []), newFloor],
@@ -174,7 +177,6 @@ const RoomDetails = ({
     setIsDeleteFloor(false);
     setIsDeleteFlat(false);
   };
-  console.log(userForm, "userForm");
   const isEdit = openForm?.divType === "edit";
   return (
     <>
@@ -206,7 +208,8 @@ const RoomDetails = ({
                   <PrimaryBtn
                     key={ind}
                     style={{
-                      maxWidth: "120px",
+                      maxWidth:
+                        val.floorNo === "Ground Floor" ? "170px" : "120px",
                       display: "flex",
                       alignItems: "center",
                       gap: "6px",
@@ -220,7 +223,9 @@ const RoomDetails = ({
                       setSelectedTab(0);
                     }}
                   >
-                    {`Floor ${val.floorNo}`}{" "}
+                    {val.floorNo === "Ground Floor"
+                      ? val.floorNo
+                      : `Floor ${val.floorNo}`}
                     <Delete20Filled
                       onClick={(e) => {
                         e.stopPropagation();

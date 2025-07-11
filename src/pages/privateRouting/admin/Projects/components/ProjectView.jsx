@@ -12,7 +12,7 @@ import RoomLogo from "../../../../../components/RoomLogo/Index";
 import { CommentNote20Regular } from "@fluentui/react-icons";
 import { useTheme } from "@mui/styles";
 import ImageCard from "./ImageCard";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PanelConfirmation } from "../../../../../components/confirmationpanel/Index";
 import OnRenderFooterContent from "../../../../../components/panelFooter/Footer";
 import ProjectUpload from "./ProjectUploads";
@@ -41,18 +41,11 @@ const ProjectView = ({
   };
   const [selectedRoomId, setSelectedRoomId] = useState("");
 
-  const [data, setData] = useState({
-    floorNo: "",
-    floorId: "",
-    flatId: "",
-    flatNo: "",
-  });
-
   useEffect(() => {
-    if (data.floorId && data?.flatId) {
-      services?.roomDropdown(data.floorId, data?.flatId);
+    if (services?.data.floorId && services?.data?.flatId) {
+      services?.roomDropdown(services?.data.floorId, services?.data?.flatId);
     }
-  }, [data]);
+  }, [services?.data?.floorId, services?.data?.flatId]);
 
   const handleRoomClick = (roomId) => {
     setIsOpen(true);
@@ -61,7 +54,25 @@ const ProjectView = ({
 
   const handleRoomSelect = (roomId, timestamp) => {
     setSelectedRoomId(roomId);
-    services?.viewRoomImageData(data?.flatId, roomId, timestamp);
+    services?.viewRoomImageData(services?.data?.flatId, roomId, timestamp);
+  };
+
+  useEffect(() => {
+    fetchFloorDropdown();
+  }, []);
+
+  useEffect(() => {
+    if (services?.data?.floorId) {
+      fetchFlatDropdown();
+    }
+  }, [services?.data?.floorId]);
+
+  const fetchFloorDropdown = useCallback(async () => {
+    await services.floorsDropdown();
+  }, []);
+
+  const fetchFlatDropdown = async () => {
+    await services.flatDropdown(services?.data?.floorId);
   };
 
   return (
@@ -87,15 +98,15 @@ const ProjectView = ({
                 <Dropdown
                   placeholder="Floor"
                   style={{ width: "100px", minWidth: "unset" }}
-                  onClick={() => services?.floorsDropdown()}
-                  value={data?.floorNo}
+                  // onClick={() => services?.floorsDropdown()}
+                  value={services?.data?.floor}
                   onOptionSelect={(e, data) => {
-                    setData((prev) => ({
+                    services?.setData((prev) => ({
                       ...prev,
                       floorId: data.optionValue,
-                      floorNo: data?.optionText,
+                      floor: data?.optionText,
                       flatId: "",
-                      flatNo: "",
+                      flat: "",
                     }));
                   }}
                 >
@@ -112,13 +123,15 @@ const ProjectView = ({
                 <Combobox
                   placeholder="Flat"
                   style={{ width: "100px", minWidth: "unset" }}
-                  onClick={() => services?.flatDropdown(data?.floorId)}
-                  value={data?.flatNo}
+                  // onClick={() =>
+                  //   services?.flatDropdown(services?.data?.floorId)
+                  // }
+                  value={services?.data?.flat}
                   onOptionSelect={(e, data) => {
-                    setData((prev) => ({
+                    services?.setData((prev) => ({
                       ...prev,
                       flatId: data.optionValue,
-                      flatNo: data.optionText,
+                      flat: data.optionText,
                     }));
                   }}
                 >

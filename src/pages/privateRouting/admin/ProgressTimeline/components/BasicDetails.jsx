@@ -80,6 +80,7 @@ function BasicDetails({
                 size="medium"
                 style={{ width: "150px", minWidth: "unset" }}
                 value={userForm?.projectName}
+                onClick={() => services.projectDropdown()}
                 onOptionSelect={(e, data) => {
                   const selectedItem = services?.projectList?.find(
                     (item) => item._id === data.optionValue

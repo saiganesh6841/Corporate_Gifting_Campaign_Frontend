@@ -56,9 +56,6 @@ const useServices = (props) => {
     message: "",
   });
 
-  useEffect(() => {
-    projectDropdown();
-  }, []);
 
   useEffect(() => {
     if (!query) return;
