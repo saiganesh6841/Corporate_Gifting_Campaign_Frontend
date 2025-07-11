@@ -46,13 +46,23 @@ const RoomDetails = ({
 
   const handleAddFloor = () => {
     let floorNo = Number(floorNoInput);
+
+    // Check if input is a valid number and not negative
     if (floorNo < 0 || isNaN(floorNo)) return;
-    if (userForm.details?.some((floor) => floor.floorNo === floorNo)) return;
 
-    floorNo = floorNo === 0 ? "Ground Floor" : floorNo;
+    // Convert 0 to "Ground Floor"
+    const floorLabel = floorNo === 0 ? "Ground Floor" : floorNo;
 
-    const newFloor = { floorNo, roomDetails: [] };
+    // Prevent adding if already exists
+    const floorExists = userForm.details?.some(
+      (floor) => floor.floorNo === floorLabel
+    );
+    if (floorExists) return;
 
+    // Create new floor object
+    const newFloor = { floorNo: floorLabel, roomDetails: [] };
+
+    // Update state
     setUserForm((prev) => ({
       ...prev,
       details: [...(prev.details || []), newFloor],
