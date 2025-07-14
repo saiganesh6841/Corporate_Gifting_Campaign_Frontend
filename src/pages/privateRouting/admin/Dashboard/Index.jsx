@@ -105,9 +105,6 @@ function Dashboard(props) {
               <Box
                 sx={{
                   marginBottom: "24px",
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
                 }}
               >
                 <GraphHeader

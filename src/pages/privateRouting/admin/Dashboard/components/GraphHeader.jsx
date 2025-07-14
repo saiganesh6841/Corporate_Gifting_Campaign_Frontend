@@ -5,11 +5,11 @@ import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { onFormatDate } from "../utils/util";
 import { Typography } from "@mui/material";
 
-const moduleOptionsList = {
-  projects: "Projects",
-  users: "Users",
-  tasks: "Tasks",
-};
+// const moduleOptionsList = {
+//   projects: "Projects",
+//   users: "Users",
+//   tasks: "Tasks",
+// };
 // const timeData = {
 //   day: "Day",
 //   week: "Week",
@@ -64,7 +64,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
           // maxDate={new Date(graphFiltersData?.endDate * 1000)}
           formatDate={onFormatDate}
           style={{
-            width: "150px",
+            width: "200px",
             marginRight: "8px",
           }}
           className={` input__Style`}
@@ -86,7 +86,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
           minDate={new Date(graphFiltersData?.startDate * 1000)}
           // maxDate={new Date()}
           style={{
-            width: "150px",
+            width: "200px",
           }}
           formatDate={onFormatDate}
           className={` input__Style`}
@@ -110,7 +110,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
           size="large"
           placeholder="Status"
           className="time-select"
-          style={{ minWidth: "unset", width: "150px", marginLeft: "5px" }}
+          style={{ minWidth: "unset", width: "200px", marginLeft: "5px" }}
           value={
             projectStatus.find(
               (option) => option.value === graphFiltersData?.status
