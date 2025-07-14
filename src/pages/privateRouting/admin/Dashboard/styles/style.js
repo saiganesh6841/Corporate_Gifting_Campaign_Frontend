@@ -117,7 +117,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "40%",
+    width: "52%",
     marginTop: "6px",
   },
 
@@ -125,7 +125,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "40%",
+    width: "47%",
   },
 
   statusContainer: {

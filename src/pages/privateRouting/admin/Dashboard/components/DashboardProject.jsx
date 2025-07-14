@@ -46,15 +46,21 @@ const DashboardProject = ({ services }) => {
   };
   return (
     <Grid container spacing={5}>
-      {
-        services?.projects?.length === 0 && (
-          <Box sx={{width:"100%",display:'flex',justifyContent:"center" ,alignItems:"center", padding:"12px"}}>
-            <Typography sx={{fontSize:"40px", fontWeight:700}}>
-              No Datas
-            </Typography>
-          </Box>
-        )
-      }
+      {services?.projects?.length === 0 && (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "12px",
+          }}
+        >
+          <Typography sx={{ fontSize: "40px", fontWeight: 700 }}>
+            No Datas
+          </Typography>
+        </Box>
+      )}
       {services?.projects?.map((project) => {
         const status = getStatusStyles(project.status);
         return (
@@ -84,7 +90,7 @@ const DashboardProject = ({ services }) => {
                   {formatDate(project.startDate)}
                 </Typography>
                 <Typography
-                  sx={{ color: "#362626", fontSize: "14px", fontWeight: 400 }}
+                  sx={{ color: "#362626", fontSize: "14px", fontWeight: 400, textAlign:"left" }}
                 >
                   {formatDate(project.endDate)}
                 </Typography>
@@ -96,7 +102,7 @@ const DashboardProject = ({ services }) => {
                   Start Date
                 </Typography>
                 <Typography
-                  sx={{ color: "#7A8391", fontSize: "14px", fontWeight: 400 }}
+                  sx={{ color: "#7A8391", fontSize: "14px", fontWeight: 400, textAlign:"left" }}
                 >
                   End Date
                 </Typography>

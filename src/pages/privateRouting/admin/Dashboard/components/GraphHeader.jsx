@@ -20,6 +20,7 @@ const moduleOptionsList = {
 const projectStatus = [
   { label: "In Progress", value: "inprogress" },
   { label: "Completed", value: "completed" },
+  { label: "Cancelled", value: "cancelled" },
 ];
 
 function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
