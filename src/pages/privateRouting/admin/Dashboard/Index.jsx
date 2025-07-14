@@ -19,12 +19,12 @@ import useServices from "./hooks/useServices";
 import { useStyles } from "./styles/style";
 import LocalStorage from "../../../../config/LocalStorage";
 import AreaGraph from "./components/AreaGraph";
+import DashboardProject from "./components/DashboardProject";
 
 const graphFilter = {
-  dateType: "month", //year , day , month , week
-  module: "projects", // orders
-  startDate: 1746085108,
-  endDate: Math.floor(new Date().setHours(23, 59, 0, 0) / 1000),
+  status: "",
+  startDate: "",
+  endDate: "",
 }; //constant
 
 const pieChartFilter = {
@@ -105,6 +105,9 @@ function Dashboard(props) {
               <Box
                 sx={{
                   marginBottom: "24px",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
               >
                 <GraphHeader
@@ -114,10 +117,12 @@ function Dashboard(props) {
               </Box>
 
               {/* area graph */}
-              <AreaGraph
+              {/* <AreaGraph
                 services={services}
                 graphFiltersData={graphFiltersData}
-              />
+              /> */}
+
+              <DashboardProject services={services}/>
             </Box>
           </Box>
         </FluentProvider>

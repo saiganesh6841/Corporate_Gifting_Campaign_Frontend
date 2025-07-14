@@ -3,18 +3,24 @@ import { Grid, useTheme } from "@mui/material";
 import React from "react";
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { onFormatDate } from "../utils/util";
-import Typography from "../../../../../components/Text/Typogarphy";
+import { Typography } from "@mui/material";
+
 const moduleOptionsList = {
   projects: "Projects",
   users: "Users",
   tasks: "Tasks",
 };
-const timeData = {
-  day: "Day",
-  week: "Week",
-  month: "Month",
-  year: "Year",
-};
+// const timeData = {
+//   day: "Day",
+//   week: "Week",
+//   month: "Month",
+//   year: "Year",
+// };
+
+const projectStatus = [
+  { label: "In Progress", value: "inprogress" },
+  { label: "Completed", value: "completed" },
+];
 
 function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
   const theme = useTheme();
@@ -22,7 +28,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
   return (
     <Grid container>
       <Grid item xs={6}>
-        <Dropdown
+        {/* <Dropdown
           size="large"
           placeholder="Select Module"
           style={{
@@ -46,12 +52,15 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
               {moduleOptionsList[data]}
             </Option>
           ))}
-        </Dropdown>
+        </Dropdown> */}
+        <Typography sx={{ fontSize: "20px", fontWeight: 700 }}>
+          Projects
+        </Typography>
       </Grid>
 
       <Grid item xs={6}>
         <DatePicker
-          maxDate={new Date(graphFiltersData?.endDate * 1000)}
+          // maxDate={new Date(graphFiltersData?.endDate * 1000)}
           formatDate={onFormatDate}
           style={{
             width: "150px",
@@ -74,7 +83,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
         />
         <DatePicker
           minDate={new Date(graphFiltersData?.startDate * 1000)}
-          maxDate={new Date()}
+          // maxDate={new Date()}
           style={{
             width: "150px",
           }}
@@ -98,20 +107,24 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
         {/* <Grid item xs={2}> */}
         <Dropdown
           size="large"
-          placeholder="Time"
+          placeholder="Status"
           className="time-select"
           style={{ minWidth: "unset", width: "150px", marginLeft: "5px" }}
-          value={timeData[graphFiltersData?.dateType]}
+          value={
+            projectStatus.find(
+              (option) => option.value === graphFiltersData?.status
+            )?.label
+          }
           onOptionSelect={(e, data) => {
             setGraphFiltersData((p) => ({
               ...p,
-              dateType: data?.optionValue,
+              status: data?.optionValue,
             }));
           }}
         >
-          {Object.keys(timeData)?.map((data) => (
-            <Option key={data} value={data}>
-              {timeData[data]}
+          {projectStatus?.map((data) => (
+            <Option key={data.label} value={data.value}>
+              {data?.label}
             </Option>
           ))}
         </Dropdown>

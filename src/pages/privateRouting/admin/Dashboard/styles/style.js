@@ -60,8 +60,8 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginLeft:"12px",
-    marginRight:"12px"
+    marginLeft: "12px",
+    marginRight: "12px",
   },
   iconContainer: {
     width: "45px",
@@ -77,7 +77,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding:"10px"
+    padding: "10px",
   },
 
   tooltipContainer: {
@@ -106,5 +106,57 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "16px",
     position: "relative",
     zIndex: 99999,
+  },
+
+  dashboardProjectContainer: {
+    border: "1px solid #0000001A",
+    borderRadius: "10px",
+    padding: "16px",
+  },
+  startDateEndDateContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "40%",
+    marginTop: "6px",
+  },
+
+  startDateEndDateLabel: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "40%",
+  },
+
+  statusContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  assignedWorkersContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "50%",
+    marginTop: "6px",
+  },
+
+  mainText: {
+    color: "#362626",
+    fontWeight: 400,
+    fontSize: "14px",
+  },
+
+  subText: {
+    color: "#7A8391",
+    fontSize: "14px",
+    fontWeight: 400,
+  },
+  statusContent: {
+    display: "flex",
+    alignItems: "center",
+    gap: 2,
+    padding: "12px",
+    borderRadius: "12px",
   },
 }));

@@ -18,7 +18,7 @@ const useServices = ({ graphFiltersData, pieChartFiltersData }) => {
   const [statisticsData, setStatisticsData] = useState([]);
   const [graphData, setGraphData] = useState([]);
   const [pieChartData, setPieChartData] = useState([]);
-
+  const [projects, setProjects] = useState([]);
   useEffect(() => {
     handleGetCountDashboard();
   }, []);
@@ -26,7 +26,7 @@ const useServices = ({ graphFiltersData, pieChartFiltersData }) => {
     getPieChartData();
   }, [JSON.stringify(pieChartFiltersData)]);
   useEffect(() => {
-    getGraphData();
+    getProjects();
   }, [JSON.stringify(graphFiltersData)]);
 
   const handleGetCountDashboard = async () => {
@@ -65,15 +65,27 @@ const useServices = ({ graphFiltersData, pieChartFiltersData }) => {
       value: curr?.totalRevenue,
       fill: constantColors[i],
     })); //move to a seperate function
-
+    r;
     setPieChartData(data);
   };
 
-  const getGraphData = async () => {
-    const url = `${ConfigAPIURL.getGraphData}?dateType=${graphFiltersData?.dateType}&startDate=${graphFiltersData?.startDate}&endDate=${graphFiltersData?.endDate}&graphType=${graphFiltersData?.module}`;
-    const response = await APIRequest.request("GET", url);
-    if (response?.data?.responseCode === 109) {
-      setGraphData(response?.data?.result?.[graphFiltersData?.module]);
+  // const getGraphData = async () => {
+  //   const url = `${ConfigAPIURL.getGraphData}?startDate=${graphFiltersData?.startDate}&endDate=${graphFiltersData?.endDate}&status=${graphFiltersData?.status}`;
+  //   const response = await APIRequest.request("GET", url);
+  //   if (response?.data?.responseCode === 109) {
+  //     setGraphData(response?.data?.result?.[graphFiltersData?.module]);
+  //   }
+  // };
+
+  const getProjects = async () => {
+    try {
+      const url = `${ConfigAPIURL.getDashboardProjects}?startDate=${graphFiltersData?.startDate}&endDate=${graphFiltersData?.endDate}&status=${graphFiltersData?.status}`;
+      const response = await APIRequest.request("GET", url);
+      if (response?.data?.responseCode === 109) {
+        setProjects(response?.data?.result);
+      }
+    } catch (error) {
+      console.log("error", error);
     }
   };
 
@@ -93,6 +105,7 @@ const useServices = ({ graphFiltersData, pieChartFiltersData }) => {
     setStatisticsData,
     graphData,
     pieChartData,
+    projects,
   };
 };
 
