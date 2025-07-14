@@ -112,6 +112,7 @@ export const useStyles = makeStyles((theme) => ({
     border: "1px solid #0000001A",
     borderRadius: "10px",
     padding: "16px",
+    cursor:"pointer"
   },
   startDateEndDateContainer: {
     display: "flex",

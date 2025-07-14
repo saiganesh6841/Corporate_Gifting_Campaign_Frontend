@@ -67,7 +67,7 @@ const DashboardProject = ({ services }) => {
         const status = getStatusStyles(project.status);
         return (
           <Grid item xs={6} sm={4} md={3} lg={4} key={project._id}>
-            <div
+            <Box
               className={classes.dashboardProjectContainer}
               onClick={(e) => {
                 e.stopPropagation();
@@ -167,7 +167,7 @@ const DashboardProject = ({ services }) => {
                   </Typography>
                 </Box>
               </Box>
-            </div>
+            </Box>
           </Grid>
         );
       })}
