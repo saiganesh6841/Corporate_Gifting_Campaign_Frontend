@@ -251,7 +251,7 @@ const useServices = (props) => {
         "POST",
         `${ConfigAPIURL.projectView}`,
         JSON.stringify({
-          recordId: recordId[0]?._id,
+          recordId: openForm?.recordId,
         })
       );
       if (response?.data?.responseCode === 109) {
@@ -358,7 +358,7 @@ const useServices = (props) => {
       const response = await APIRequest.request(
         "POST",
         ConfigAPIURL.ProjectTable,
-        JSON.stringify({ recordId: recordId[0]?._id, ...query })
+        JSON.stringify({ recordId: openForm?.recordId, ...query })
       );
       if (response?.data?.responseCode === 109) {
         setWorkerData(response.data);
@@ -432,20 +432,20 @@ const useServices = (props) => {
   // Pass projectId for floorDropdown
   const floorsDropdown = async () =>
     await fetchFloorDropdownData(ConfigAPIURL.floorsDropdown, setFloorList, {
-      projectId: recordId[0]?._id,
+      projectId: openForm?.recordId,
     });
 
   // Pass projectId and floorId for flatDropdown
   const flatDropdown = async (floorId) =>
     await fetchFlatDropdownData(ConfigAPIURL.flatDropdown, setFlatList, {
-      projectId: recordId[0]?._id,
+      projectId: openForm?.recordId,
       floorId,
     });
 
   // Pass projectId, floorId, flatId for roomDropdown
   const roomDropdown = (floorId, flatId) =>
     fetchDropdownData(ConfigAPIURL.roomDropdown, setRoomData, {
-      projectId: recordId[0]?._id,
+      projectId: openForm?.recordId,
       floorId,
       flatId,
     });

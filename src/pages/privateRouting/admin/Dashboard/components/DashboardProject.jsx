@@ -6,9 +6,11 @@ import {
 import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useStyles } from "../styles/style";
+import { useNavigate } from "react-router-dom";
 
 const DashboardProject = ({ services }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const capitalizeWords = (str) =>
     str.replace(/\b\w/g, (char) => char.toUpperCase());
 
@@ -65,7 +67,18 @@ const DashboardProject = ({ services }) => {
         const status = getStatusStyles(project.status);
         return (
           <Grid item xs={6} sm={4} md={3} lg={4} key={project._id}>
-            <Box className={classes.dashboardProjectContainer}>
+            <div
+              className={classes.dashboardProjectContainer}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(
+                  {
+                    pathname: "/admin/projects",
+                    search: `?isOpen=true&divType=view&id=${project?._id}`,
+                  },
+                );
+              }}
+            >
               <img
                 src={project?.uploadImage}
                 alt="project"
@@ -90,7 +103,12 @@ const DashboardProject = ({ services }) => {
                   {formatDate(project.startDate)}
                 </Typography>
                 <Typography
-                  sx={{ color: "#362626", fontSize: "14px", fontWeight: 400, textAlign:"left" }}
+                  sx={{
+                    color: "#362626",
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    textAlign: "left",
+                  }}
                 >
                   {formatDate(project.endDate)}
                 </Typography>
@@ -102,7 +120,12 @@ const DashboardProject = ({ services }) => {
                   Start Date
                 </Typography>
                 <Typography
-                  sx={{ color: "#7A8391", fontSize: "14px", fontWeight: 400, textAlign:"left" }}
+                  sx={{
+                    color: "#7A8391",
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    textAlign: "left",
+                  }}
                 >
                   End Date
                 </Typography>
@@ -144,7 +167,7 @@ const DashboardProject = ({ services }) => {
                   </Typography>
                 </Box>
               </Box>
-            </Box>
+            </div>
           </Grid>
         );
       })}

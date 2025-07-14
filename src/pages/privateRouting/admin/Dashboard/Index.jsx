@@ -122,7 +122,7 @@ function Dashboard(props) {
                 graphFiltersData={graphFiltersData}
               /> */}
 
-              <DashboardProject services={services}/>
+              <DashboardProject services={services} />
             </Box>
           </Box>
         </FluentProvider>

@@ -13,9 +13,19 @@ const utilController = {
   getQueryParams: (history, param) => {
     // pass the history object as argument
     if (!history) throw new Error("History object is undefined");
-    const urlParams = new URLSearchParams(history.location.search);
+    const urlParams = new URLSearchParams(history.search);
     const payload = urlParams.get(param);
     return payload;
+  },
+  removeQueryParamId: (Id, history, state) => {
+    const searchParams = new URLSearchParams(state?.from?.search);
+    if (Id) {
+      searchParams.delete("id");
+      history(`${state?.from?.pathname}${state?.from?.search ?? ""}`, {
+        replace: true, // optional, if you want to avoid pushing a new entry
+        state: null,
+      });
+    }
   },
   getDateTime: (epochdate) => {
     return new Date(epochdate * 1000)?.toLocaleDateString("en-in");

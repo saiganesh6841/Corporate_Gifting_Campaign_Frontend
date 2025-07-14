@@ -29,6 +29,8 @@ import ViewColumn from "../../../../components/ViewColumn/Index";
 import ConfirmationModal from "../../../../components/ConfirmationModal/Index";
 import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import utilController from "../../../../utils/Utilcontroller";
 
 function Project() {
   const classes = useStyles();
@@ -46,11 +48,25 @@ function Project() {
     (item) => !activeLabels.includes(item.id)
   );
 
+  const location = useLocation();
+  const state = location?.state ?? {};
+  const navigate = useNavigate();
+
   const resetForm = () => {
+    const isOpen = utilController.getQueryParams(location, "isOpen");
+    const divType = utilController.getQueryParams(location, "divType");
+    const id = utilController.getQueryParams(location, "id");
+    utilController.removeQueryParamId(id, navigate, state);
     setOpenForm({ ...form });
     clearSelectedRows();
     setRecordId([]);
     setErrors({});
+    if (state && isOpen && divType) {
+      navigate(`${state?.from?.pathname}${state?.from?.search ?? ""}`, {
+        replace: true,
+        state: null,
+      });
+    }
   };
 
   const resetRecords = () => {

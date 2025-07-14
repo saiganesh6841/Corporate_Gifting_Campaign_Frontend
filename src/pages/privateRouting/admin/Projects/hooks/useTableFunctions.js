@@ -1,6 +1,8 @@
 import { ExportToCsv } from "export-to-csv";
 import useAlert from "../../../../../hooks/useAlert";
-
+import utilController from "../../../../../utils/Utilcontroller";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 const useTableFunctions = ({
   downloadCsv,
   viewColumn,
@@ -13,7 +15,9 @@ const useTableFunctions = ({
   handleRestore,
 }) => {
   const { publishNotification, closeSnackbar } = useAlert();
+  const location = useLocation();
 
+  const projectId = utilController.getQueryParams(location, "id");
   const handleCsvExport = () => {
     const { data, headers } = downloadCsv(viewColumn);
     // console.log(data,headers,"excel download")
@@ -76,8 +80,8 @@ const useTableFunctions = ({
     }
   };
 
-  const view = () => {
-    if (recordId.length === 1) {
+  const view = (projectId = "") => {
+    if (recordId.length === 1 || projectId) {
       // fetchRoles();
       // getDetails();
       setOpenForm((p) => {
@@ -88,7 +92,8 @@ const useTableFunctions = ({
           title: "View Project",
           width: 1000,
           hasCloseButton: false,
-          rowDetails: recordId,
+          recordId: recordId?.[0]?._id || projectId,
+          rowDetails: recordId || projectId,
         };
       });
     } else if (recordId.length > 1) {
@@ -164,6 +169,12 @@ const useTableFunctions = ({
       publishNotification("Please select at least one record", "error");
     }
   };
+
+  useEffect(() => {
+    if (projectId) {
+      view(projectId);
+    }
+  }, [projectId]);
 
   return {
     handleCsvExport,
