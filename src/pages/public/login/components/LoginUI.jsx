@@ -8,7 +8,7 @@ import CustomTextFiled from "../../../../components/loginInputFields";
 import PrimaryBtn from "../../../../components/button";
 import LoginFields from "./LoginComponent";
 import OtpField from "./OtpComponent";
-import loginLogo from "../../../../assets/Images/LoginLogo.png";
+import loginLogo from "../../../../assets/Images/snapFlowLoginImg.png";
 
 function LoginUI({ services, classes }) {
   const {
@@ -57,7 +57,7 @@ function LoginUI({ services, classes }) {
             padding: "6px 0px",
           }}
         >
-          <img src={loginLogo} width="80px" height="80px" />
+          <img src={loginLogo} width="120px" height="100px" />
         </div>
         <Typography className={classes.titleText}>
           {!otpTrue ? "Login" : "Verify OTP"}

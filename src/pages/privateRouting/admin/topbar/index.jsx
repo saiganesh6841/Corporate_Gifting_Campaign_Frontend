@@ -14,7 +14,7 @@ import { Icon } from "@fluentui/react/lib/Icon";
 import { AlertBadge24Regular } from "@fluentui/react-icons";
 import { Logout } from "@mui/icons-material";
 import useStyles from "./styles/style";
-import floraImage from "../../../../assets/Images/floraName.png";
+import snapFlowImage from "../../../../assets/Images/SnapFlow.png";
 import { useTheme } from "@mui/styles";
 import LocalStorage from "../../../../config/LocalStorage";
 
@@ -96,7 +96,7 @@ function TopBar(props) {
       >
         <Toolbar className={classes.Toolbar}>
           <Stack className={classes.title}>
-            <img className={classes.logo} src={floraImage} alt="logo" />
+            <img className={classes.logo} src={snapFlowImage} alt="logo" />
           </Stack>
 
           <Stack direction="row" spacing={2} alignItems="center">
