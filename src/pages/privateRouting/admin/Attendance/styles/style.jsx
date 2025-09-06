@@ -81,4 +81,32 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginTop: "50px",
   },
+  rowDiffStyle: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+  },
+  fieldStyle: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardStyle: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    borderRadius: "8px",
+    padding: "16px",
+    border: "1px solid #0000001A",
+    gap: "24px",
+    width: "100%",
+  },
+  detailStyle: {
+    borderRadius: "12px",
+    padding: "1rem",
+    border: "1px solid #0000001A",
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+    width: "100%",
+  },
 }));

@@ -37,11 +37,11 @@ export const userDetails = {
 };
 
 export const inactiveLabels = [
-  "view",
+  // "view",
   "edit",
   "restore",
   "create",
   "delete",
   "export",
 ];
-export const activeLabels = ["view", "edit", "create", "delete", "restore"];
+export const activeLabels = ["edit", "create", "delete", "restore"];

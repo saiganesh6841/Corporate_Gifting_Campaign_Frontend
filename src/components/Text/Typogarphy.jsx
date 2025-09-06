@@ -22,6 +22,10 @@ export const useStylesFromThemeFunction = makeStyles((theme) => ({
     fontSize: "1.8rem",
     fontWeight: "bold",
   },
+  boldSmallStyle: {
+    fontSize: "12px",
+    fontWeight: 700,
+  },
 }));
 
 const Typography = (props) => {

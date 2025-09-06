@@ -81,8 +81,8 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "view",
-          title: "View Schedule Time",
-          width: 700,
+          title: "View Attendance",
+          width: 900,
           hasCloseButton: false,
           rowDetails: recordId,
         };

@@ -214,7 +214,8 @@ const TableComponent = (props) => {
             <TableRow
               key={item._id}
               aria-selected={selected}
-              onDoubleClick={() => !multiselect && rowAction && rowAction(item)}
+              // onDoubleClick={() => !multiselect && rowAction && rowAction(item)}
+              onDoubleClick={() =>  rowAction && rowAction(item)}
               onClick={() => {
                 updateRecord(item, multiselect);
                 return onClick();

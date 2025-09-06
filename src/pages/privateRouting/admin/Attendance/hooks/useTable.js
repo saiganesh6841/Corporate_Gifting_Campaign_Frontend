@@ -45,7 +45,21 @@ const useTable = (columns, setOpenForm, resetForm) => {
     setRecordId(allRowsSelected ? items : []);
   };
 
-  const handlerowAction = (item) => {};
+  const handlerowAction = (item) => {
+    setOpenForm((p) => {
+      return {
+        ...p,
+        isOpen: true,
+        divType: "view",
+        title: "View Attendance",
+        width: 900,
+        hasCloseButton: false,
+        recordId: item?._id,
+        rowDetails: item,
+        // rowDetails: recordId,
+      };
+    });
+  };
   return {
     viewColumn,
     setViewColumn,
