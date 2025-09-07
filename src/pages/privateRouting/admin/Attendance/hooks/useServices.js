@@ -34,7 +34,7 @@ const useServices = (props) => {
 
   const { publishNotification } = useAlert();
   const [createdByList, setCreatedByList] = useState([]);
-
+  const [attendanceData, setAttendanceData] = useState(null);
   const [tableData, setTableData] = useState({
     result: null,
     pages: 0,
@@ -148,34 +148,21 @@ const useServices = (props) => {
   };
 
   const getEditTable = async ({ setUserForm }) => {
+    console.log(recordId, "recordId");
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        `${ConfigAPIURL.getUserDetails}`,
+        `${ConfigAPIURL.attendanceDetails}`,
         JSON.stringify({
-          userId: recordId[0]?.userId,
+          userId: recordId[0]?.userObjectId || openForm?.recordId,
+          date: openForm?.date,
         })
       );
       if (response?.data?.responseCode === 109) {
-        const user = response?.data?.rows;
-        setUserForm({
-          userId: user?.userId || "",
-          userType: user?.userType || "",
-          userName: user?.userName || "",
-          fname: user?.fname || "",
-          lname: user?.lname || "",
-          email: user?.email || "",
-          mobileNumber: user?.mobileNumber || "",
-          permission: user?.permission?._id || "",
-          permissionName: user?.permission?.name || "",
-          password: user?.password || "",
-          gender: user?.gender || "",
-          profileImage: user?.profileImage,
-          dob: user?.dob || null,
-          isSuperAdmin: user?.isSuperAdmin || false,
-          fullName: user?.fullName || "",
-        });
+        console.log(response?.data, "data");
+        setAttendanceData(response?.data);
+        setUserForm({});
       }
     } catch (error) {
       publishNotification("Error while fetching user details", "error");
@@ -242,6 +229,7 @@ const useServices = (props) => {
     errors,
     setErrors,
     createdByList,
+    attendanceData,
   };
 };
 

@@ -1,6 +1,7 @@
 import { Box, Divider } from "@mui/material";
 import Typography from "../../../../../components/Text/Typogarphy";
-
+import utilController from "../../../../../utils/Utilcontroller";
+// import utilController from "../../../../"
 const DetailRow = ({ label, value, isBold = false }) => {
   return (
     <Box
@@ -18,26 +19,46 @@ const DetailRow = ({ label, value, isBold = false }) => {
   );
 };
 
-const AttendanceDetails = ({ classes }) => {
+const AttendanceDetails = ({ classes, data }) => {
   return (
     <Box className={classes.detailStyle}>
       {/* Date & Day */}
-      <Typography variant="heading">January 25, 2024</Typography>
+      <Typography variant="heading">
+        {data?.attendanceDate
+          ? utilController.formatDateMonthName(data?.attendanceDate)
+          : "-"}
+      </Typography>
       <Typography variant="content" sx={{ color: "gray" }}>
-        Thursday
+        {data?.dayName}
       </Typography>
 
       {/* Check-in & Check-out */}
-      <DetailRow label="Check-In" value="9:15 AM" isBold />
-      <DetailRow label="Check-Out" value="6:30 PM" isBold />
+      <DetailRow
+        label="Check-In"
+        value={
+          data?.checkIn ? utilController.getFormattedTime(data?.checkIn) : "-"
+        }
+        isBold
+      />
+      <DetailRow
+        label="Check-Out"
+        value={
+          data?.checkOut ? utilController.getFormattedTime(data?.checkOut) : "-"
+        }
+        isBold
+      />
 
       <Divider sx={{ marginY: "8px" }} />
 
       {/* Details */}
-      <DetailRow label="Total Hours" value="9h 15m" isBold />
-      <DetailRow label="Location" value="Mumbai Office" isBold />
+      <DetailRow
+        label="Total Hours"
+        value={data?.totalDuration ? data?.totalDuration : "-"}
+        isBold
+      />
+      {/* <DetailRow label="Location" value="Mumbai Office" isBold />
       <DetailRow label="Project" value="Villa" isBold />
-      <DetailRow label="Supervisor" value="Rajesh Kumar" isBold />
+      <DetailRow label="Supervisor" value="Rajesh Kumar" isBold /> */}
 
       {/* Check in/out logs */}
       <Box sx={{ marginTop: "8px" }}>

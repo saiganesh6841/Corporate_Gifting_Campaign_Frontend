@@ -68,6 +68,14 @@ const utilController = {
     };
     return date.toLocaleDateString("en-US", options);
   },
+  formatDateMonthName: (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long", // full month name (e.g. September)
+      day: "2-digit", // always 2 digits (e.g. 06)
+    });
+  },
   getDate: (epochdate) => {
     const date = new Date(epochdate * 1000);
     const options = {

@@ -29,11 +29,13 @@ const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
   const theme = useTheme();
   const [tabList, setTabList] = useState("basic");
 
-  const { userForm, setUserForm } = useAevForm({
+  const { userForm, setUserForm, selectedDate, setSelectedDate } = useAevForm({
     openForm,
     services,
     setOpenForm,
   });
+
+  console.log(selectedDate, "selectedDate");
 
   return (
     <>
@@ -47,15 +49,28 @@ const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
           }}
         >
           <Grid item xs={12} spacing={2}>
-            <AttendanceInformation classes={classes} />
+            <AttendanceInformation
+              classes={classes}
+              data={services?.attendanceData}
+            />
           </Grid>
 
           <Grid container spacing={1}>
             <Grid item xs={7}>
-              <AttendanceCalendar statusMap={statusMap} />
+              <AttendanceCalendar
+                statusMap={statusMap}
+                data={services?.attendanceData?.result}
+                holidays={services?.attendanceData?.publicHolidays}
+                setSelectedDate={setSelectedDate}
+                setOpenForm={setOpenForm}
+              />
             </Grid>
             <Grid item xs={5}>
-              <AttendanceDetails classes={classes} />
+              <AttendanceDetails
+                classes={classes}
+                // data={services?.attendanceData}
+                data={selectedDate}
+              />
             </Grid>
           </Grid>
           {/* <BasicDetails

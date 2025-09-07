@@ -54,7 +54,7 @@ const useTable = (columns, setOpenForm, resetForm) => {
         title: "View Attendance",
         width: 900,
         hasCloseButton: false,
-        recordId: item?._id,
+        recordId: item?.userObjectId,
         rowDetails: item,
         // rowDetails: recordId,
       };

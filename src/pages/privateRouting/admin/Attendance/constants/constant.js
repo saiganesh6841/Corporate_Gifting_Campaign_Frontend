@@ -21,6 +21,7 @@ export const form = {
   hasCloseButton: true,
   isSaveForm: false,
   discription: "",
+  date: null,
 };
 
 export const userDetails = {

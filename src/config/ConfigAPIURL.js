@@ -55,6 +55,7 @@ class ConfigAPIURL {
 
   //attendance
   static listAttendance = this.baseUrl + "/admin/attendence/list";
+  static attendanceDetails = this.baseUrl + "/admin/attendence/details";
 
   //dropdown
   static projectDropdown = this.baseUrl + "/admin/dropdown/project";
