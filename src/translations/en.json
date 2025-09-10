@@ -1,5 +1,4 @@
 {
- 
   "sideNavMenu": {
     "users": "Users",
     "profile": "Profile",
@@ -36,27 +35,26 @@
     "item": "Items",
     "Vendor": "Vendors",
     "Orders": "Orders",
-    "Appointments":"Appointments",
+    "Appointments": "Appointments",
     "Challenges": "Challenges",
     "goldenTips": "Golden Tips",
     "settings": "Settings",
     "specializations": "Specializations",
     "subscriptions": "Subscriptions",
-    "Plans":"Plans",
-    "hospitals":"Hospitals",
-    "requests":"Requests",
-    "history":"History",
-    "transactions":"Transactions",
-    "complaints":"Complaints",
-    "manageFAQs":"Manage FAQs",
-    "support":"Support",
-    "masterData":"Master Data",
-    "FAQsCategory":"FAQs Category",
-    "tasks":"Task",
-    "room":"Room",
-    "scheduleTime":"Schedule Time",
-    "attendance":"Attendence",
-    "progressTimeline":"Progress Timeline"
+    "Plans": "Plans",
+    "hospitals": "Hospitals",
+    "requests": "Requests",
+    "history": "History",
+    "transactions": "Transactions",
+    "complaints": "Complaints",
+    "manageFAQs": "Manage FAQs",
+    "support": "Support",
+    "masterData": "Master Data",
+    "FAQsCategory": "FAQs Category",
+    "tasks": "Task",
+    "room": "Room",
+    "scheduleTime": "Schedule Time",
+    "attendance": "Attendance",
+    "progressTimeline": "Progress Timeline"
   }
-  
 }

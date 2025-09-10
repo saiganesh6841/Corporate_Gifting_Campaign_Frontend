@@ -508,12 +508,20 @@ export default function AttendanceCalendar({
     const d = subMonths(viewDate, 1);
     setViewDate(d);
     onMonthChange?.(d);
+    setOpenForm((prev) => ({
+      ...prev,
+      date: Math.floor(d.getTime() / 1000),
+    }));
   };
   const goNext = () => {
     if (!canGoNext) return;
     const d = addMonths(viewDate, 1);
     setViewDate(d);
     onMonthChange?.(d);
+    setOpenForm((prev) => ({
+      ...prev,
+      date: Math.floor(d.getTime() / 1000),
+    }));
   };
   const goToday = () => {
     setViewDate(currentMonth);
@@ -538,7 +546,7 @@ export default function AttendanceCalendar({
     onMonthChange?.(d);
     setOpenForm((prev) => ({
       ...prev,
-      date: Math.floor(d.getTime() / 1000), // ✅ update in setOpenForm
+      date: Math.floor(d.getTime() / 1000),
     }));
     closePicker();
   };
@@ -604,10 +612,10 @@ export default function AttendanceCalendar({
             setSelectedKey(k);
             const selected = data?.find((item) => item.attendanceDate === k);
             setSelectedDate?.(selected || { date: k, holiday });
-            setOpenForm((prev) => ({
-              ...prev,
-              date: Math.floor(startOfMonth(d).getTime() / 1000),
-            }));
+            // setOpenForm((prev) => ({
+            //   ...prev,
+            //   date: Math.floor(startOfMonth(d).getTime() / 1000),
+            // }));
           }}
           style={{
             position: "relative",
@@ -640,6 +648,31 @@ export default function AttendanceCalendar({
     );
   };
 
+  const Legend = () => (
+    <Stack
+      horizontal
+      wrap
+      tokens={{ childrenGap: 14 }}
+      styles={{
+        root: { marginTop: 12, textAlign: "center", alignItems: "center" },
+      }}
+    >
+      {Object.entries(STATUS).map(([k, v]) => (
+        <Stack
+          key={k}
+          horizontal
+          verticalAlign="center"
+          tokens={{ childrenGap: 6 }}
+        >
+          <span
+            style={{ width: 8, height: 8, borderRadius: 8, background: v.dot }}
+          />
+          <span style={{ fontSize: 14 }}>{v.label}</span>
+        </Stack>
+      ))}
+    </Stack>
+  );
+
   return (
     <div
       style={{
@@ -653,6 +686,7 @@ export default function AttendanceCalendar({
       <Header />
       <Weekdays />
       <Cells />
+      <Legend />
 
       {/* ---- Year/Month Picker Modal ---- */}
       <Dialog

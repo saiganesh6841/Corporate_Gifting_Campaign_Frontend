@@ -124,6 +124,7 @@ function User() {
     setQuery({ ...queryBody });
     // setOpenForm({ ...form });
   };
+  console.log(openForm, "openForm");
   return (
     <div className={classes.root}>
       <Header classes={classes} text="Attendance" />

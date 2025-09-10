@@ -124,7 +124,7 @@ class SideBarMenu {
       onclick: null,
       urlEndWith: "attendance",
       className: "",
-      permissionLevel: "Attendence",
+      permissionLevel: "Attendance",
       regularIcon: <Calendar24Regular />,
       filledIcon: <Calendar24Filled style={{ color: "#C98383" }} />,
       eventKey: "attendance",
