@@ -470,6 +470,19 @@ export default function AttendanceCalendar({
   const [viewDate, setViewDate] = React.useState(startOfMonth(initialMonth));
   const [selectedKey, setSelectedKey] = React.useState(keyOf(today));
 
+  React.useEffect(() => {
+    const todayKey = keyOf(today);
+    const todayData = data?.find((item) => item.attendanceDate === todayKey);
+
+    if (todayData) {
+      setSelectedDate?.(todayData);
+    } else if (holidayMap[todayKey]) {
+      setSelectedDate?.({ date: todayKey, holiday: holidayMap[todayKey] });
+    } else {
+      setSelectedDate?.({ date: todayKey });
+    }
+  }, [data, holidays]);
+
   // modal state
   const [pickerOpen, setPickerOpen] = React.useState(false);
   const [pickerYear, setPickerYear] = React.useState(viewDate.getFullYear());
@@ -610,7 +623,7 @@ export default function AttendanceCalendar({
           key={d.getTime()}
           onClick={() => {
             setSelectedKey(k);
-            const selected = data?.find((item) => item.attendanceDate === k);
+            const selected = data?.find((item) => item?.attendanceDate === k);
             setSelectedDate?.(selected || { date: k, holiday });
             // setOpenForm((prev) => ({
             //   ...prev,
