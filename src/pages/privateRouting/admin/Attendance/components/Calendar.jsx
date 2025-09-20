@@ -425,9 +425,9 @@ import {
 
 const STATUS = {
   Present: { tile: "#E7F6EC", dot: "#107C10", label: "Present" },
-  Absent: { tile: "#FDE7E9", dot: "#A4262C", label: "Absent" },
-  Overtime: { tile: "#EEE8F9", dot: "#5C2E91", label: "Overtime" },
-  Late: { tile: "#FFF3D6", dot: "#C19C00", label: "Late" },
+  Absent: { tile: "#FF00041A", dot: "#FF0004", label: "Absent" },
+  overtime: { tile: "#EEE8F9", dot: "#5C2E91", label: "Overtime" },
+  late: { tile: "#FFF3D6", dot: "#C19C00", label: "Late" },
   earlyLeave: { tile: "#FFF3D6", dot: "#C19C00", label: "Early Leave" },
 };
 const OUTSIDE_BG = "#F5F5F5";
@@ -608,14 +608,33 @@ export default function AttendanceCalendar({
 
   const Cells = () => {
     const tiles = [];
+    const todayMidnight = new Date(today.setHours(0, 0, 0, 0));
     for (let d = gridStart; d <= gridEnd; d = addDays(d, 1)) {
       const k = keyOf(d);
       const inMonth = isSameMonth(d, monthStart);
       const st = statusMap[k];
       const holiday = holidayMap[k];
+
+      // let bg = inMonth ? "#fff" : OUTSIDE_BG;
+      // if (holiday) bg = "#EDEDED";
+      // if (inMonth && st && STATUS[st]) bg = STATUS[st].tile;
+
+      // if (inMonth && !st && !holiday && d < today.setHours(0, 0, 0, 0)) {
+      //   bg = STATUS.Absent.tile;
+      // }
+      let finalStatus = st; // default = backend status
       let bg = inMonth ? "#fff" : OUTSIDE_BG;
-      if (holiday) bg = "#EDEDED";
-      if (inMonth && st && STATUS[st]) bg = STATUS[st].tile;
+
+      if (holiday) {
+        bg = "#EDEDED";
+      } else if (inMonth && finalStatus && STATUS[finalStatus]) {
+        bg = STATUS[finalStatus].tile;
+      } else if (inMonth && !finalStatus && !holiday && d < todayMidnight) {
+        // auto mark absent
+        finalStatus = "Absent";
+        bg = STATUS.Absent.tile;
+      }
+
       const isSelected = selectedKey === k;
 
       tiles.push(
@@ -645,6 +664,32 @@ export default function AttendanceCalendar({
           }}
         >
           {format(d, "d")}
+          {/* {st && STATUS[st] && (
+            <span
+              title={STATUS[st].label}
+              style={{
+                position: "absolute",
+                bottom: 6,
+                width: 8,
+                height: 8,
+                borderRadius: 8,
+                background: STATUS[st].dot,
+              }}
+            />
+          )} */}
+          {finalStatus && STATUS[finalStatus] && (
+            <span
+              title={STATUS[finalStatus].label}
+              style={{
+                position: "absolute",
+                bottom: 6,
+                width: 8,
+                height: 8,
+                borderRadius: 8,
+                background: STATUS[finalStatus].dot,
+              }}
+            />
+          )}
         </div>
       );
     }
