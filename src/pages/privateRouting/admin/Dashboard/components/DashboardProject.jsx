@@ -71,20 +71,22 @@ const DashboardProject = ({ services }) => {
               className={classes.dashboardProjectContainer}
               onClick={(e) => {
                 e.stopPropagation();
-                navigate(
-                  {
-                    pathname: "/admin/projects",
-                    search: `?isOpen=true&divType=view&id=${project?._id}`,
-                  },
-                );
+                navigate({
+                  pathname: "/admin/projects",
+                  search: `?isOpen=true&divType=view&id=${project?._id}`,
+                });
               }}
             >
               <img
                 src={project?.uploadImage}
                 alt="project"
-                width="380px"
+                // width="380px"
                 height="200px"
-                style={{ objectFit: "cover", borderRadius: "8px" }}
+                style={{
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                  width: "100%",
+                }}
               />
               <Typography
                 sx={{ color: "#561E1E", fontWeight: 600, fontSize: "20px" }}

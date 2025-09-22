@@ -25,6 +25,7 @@ function BasicDetails({
   services,
 }) {
   const theme = useTheme();
+
   const handleTaskChange = (index, value) => {
     const updatedTasks = [...userForm.task];
     updatedTasks[index].taskDescription = value;
@@ -50,7 +51,79 @@ function BasicDetails({
   };
 
   const isEdit = openForm?.divType === "edit";
-  console.log(userForm?.taskDescription, "isEdit");
+  console.log(userForm, "isEdit");
+  const pickFirstOrNull = (arr) =>
+    Array.isArray(arr) && arr.length ? arr[0] : null;
+
+  // 1) Auto-pick FLOOR when projectId exists and floor isn't set yet
+  useEffect(() => {
+    const run = async () => {
+      if (!userForm?.projectId) return;
+
+      // try to get floors from the API call; fall back to services.floorList
+      let floors = await services?.floorsDropdown(userForm?.projectId);
+      console.log("floors: ", floors);
+      if (!floors?.length) floors = services?.floorList || [];
+
+      const firstFloor = pickFirstOrNull(floors);
+      if (!firstFloor) return;
+
+      setUserForm((prev) => ({
+        ...prev,
+        floorNo: firstFloor?._id,
+        floor: firstFloor?.floor,
+      }));
+    };
+    run();
+  }, [userForm?.projectId]); // runs when projectId comes in or floor changes
+
+  // 2) Auto-pick FLAT when floor is set and flat isn't yet
+  useEffect(() => {
+    const run = async () => {
+      if (!userForm?.projectId || !userForm?.floorNo) return;
+
+      let flats = await services?.flatDropdown(
+        userForm.projectId,
+        userForm.floorNo
+      );
+      if (!flats?.length) flats = services?.flatList || [];
+
+      const firstFlat = pickFirstOrNull(flats);
+      if (!firstFlat) return;
+
+      setUserForm((prev) => ({
+        ...prev,
+        flatNo: firstFlat._id,
+        flat: firstFlat.flat,
+      }));
+    };
+    run();
+  }, [userForm?.projectId, userForm?.floorNo]);
+
+  // 3) Auto-pick ROOM when flat is set and room isn't yet
+  useEffect(() => {
+    const run = async () => {
+      if (!userForm?.projectId || !userForm?.floorNo || !userForm?.flatNo)
+        return;
+
+      let rooms = await services?.roomDropdown?.(
+        userForm.projectId,
+        userForm.floorNo,
+        userForm.flatNo
+      );
+      if (!rooms?.length) rooms = services?.roomList || [];
+
+      const firstRoom = pickFirstOrNull(rooms);
+      if (!firstRoom) return;
+
+      setUserForm((prev) => ({
+        ...prev,
+        room: firstRoom._id,
+        roomName: firstRoom.roomName,
+      }));
+    };
+    run();
+  }, [userForm?.projectId, userForm?.floorNo, userForm?.flatNo]);
   return (
     <Grid
       container
@@ -79,7 +152,7 @@ function BasicDetails({
                 className={` input__Style  progress_combobox`}
                 size="medium"
                 style={{ width: "150px", minWidth: "unset" }}
-                value={userForm?.projectName}
+                value={userForm?.projectName || ""}
                 onClick={() => services.projectDropdown()}
                 onOptionSelect={(e, data) => {
                   const selectedItem = services?.projectList?.find(

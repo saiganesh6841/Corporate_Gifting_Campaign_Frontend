@@ -27,11 +27,16 @@ const AEVForm = ({ openForm, setOpenForm, classes, services }) => {
             marginTop: "12px",
           }}
         >
-          {userForm?.projectId && (
-            <Grid item xs={12}>
-              <ProjectBar userForm={userForm} classes={classes} />
-            </Grid>
-          )}
+          {/* {userForm?.projectId && ( */}
+          <Grid item xs={12}>
+            <ProjectBar
+              userForm={userForm}
+              classes={classes}
+              status={services?.status}
+              setStatus={services?.setStatus}
+            />
+          </Grid>
+          {/* )} */}
           <BasicDetails
             {...{
               classes,

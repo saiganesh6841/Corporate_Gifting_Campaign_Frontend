@@ -1,7 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import ImageCard from "./ImageCard";
 import PrimaryBtn from "../../../../../components/button";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import OnRenderFooterContent from "../../../../../components/panelFooter/Footer";
 import { PanelConfirmation } from "../../../../../components/confirmationpanel/Index";
 import UploadModal from "./UploadModal";
@@ -44,6 +44,18 @@ const ProjectUpload = ({
     setIsUploadOpen(true);
     services?.roomImageDetails(id);
   };
+
+  useEffect(() => {
+    if (!isCalendarOpen) return;
+    const onPointerDown = (event) => {
+      if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+        setIsCalendarOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", onPointerDown, true); // capture = true
+    return () =>
+      document.removeEventListener("pointerdown", onPointerDown, true);
+  }, [isCalendarOpen]);
 
   return (
     <>
@@ -98,7 +110,11 @@ const ProjectUpload = ({
               <DefaultButton variant="outlined" style={{ width: "60px" }}>
                 <Calendar20Regular
                   color={theme.palette.primary.main}
-                  onClick={() => setIsCalendarOpen((open) => !open)}
+                  // onClick={() => setIsCalendarOpen((open) => !open)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent click from bubbling to document
+                    setIsCalendarOpen((prev) => !prev);
+                  }}
                 />
               </DefaultButton>
               {isCalendarOpen && (

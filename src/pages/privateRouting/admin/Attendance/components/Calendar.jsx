@@ -424,7 +424,7 @@ import {
 } from "date-fns";
 
 const STATUS = {
-  Present: { tile: "#E7F6EC", dot: "#107C10", label: "Present" },
+  present: { tile: "#E7F6EC", dot: "#107C10", label: "Present" },
   Absent: { tile: "#FF00041A", dot: "#FF0004", label: "Absent" },
   overtime: { tile: "#EEE8F9", dot: "#5C2E91", label: "Overtime" },
   late: { tile: "#FFF3D6", dot: "#C19C00", label: "Late" },

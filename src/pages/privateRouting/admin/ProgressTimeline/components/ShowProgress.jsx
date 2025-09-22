@@ -280,7 +280,7 @@ const ShowProgress = ({
     }
   }, [data]);
 
-  if (!data || data.length === 0) {
+  if (!data || data.length === 0 || !userForm?.projectId) {
     return (
       <div style={{ textAlign: "center" }}>
         <Typography variant="heading">No Data Found</Typography>

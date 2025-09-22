@@ -38,6 +38,7 @@ const useServices = (props) => {
     rows: [],
     filterRecords: 0,
   });
+  const [status, setStatus] = useState("inprogress");
   const [projectList, setProjectList] = useState([]);
   const [floorList, setFloorList] = useState([]);
   const [flatList, setFlatList] = useState([]);
@@ -56,11 +57,14 @@ const useServices = (props) => {
     message: "",
   });
 
-
   useEffect(() => {
     if (!query) return;
     tableQuery(query);
   }, [query, LocalStorage?.adminButtonPermission]);
+
+  // useEffect(() => {
+  //   projectDropdown();
+  // }, [status]);
 
   const tableQuery = (query) => {
     try {
@@ -127,7 +131,8 @@ const useServices = (props) => {
         JSON.stringify(payload)
       );
       if (response?.data?.responseCode === 109) {
-        setState(response.data?.result);
+        setState(response?.data?.result);
+        return response?.data?.result;
       }
     } catch (error) {
       publishNotification("Error while fetching data", "error");
@@ -135,7 +140,9 @@ const useServices = (props) => {
   };
 
   const projectDropdown = () =>
-    fetchDropdownData(ConfigAPIURL.projectDropdown, setProjectList);
+    fetchDropdownData(ConfigAPIURL.projectDropdown, setProjectList, {
+      status: status,
+    });
 
   // Pass projectId for floorDropdown
   const floorsDropdown = (projectId) =>
@@ -181,6 +188,8 @@ const useServices = (props) => {
     flatDropdown,
     floorsDropdown,
     progressData,
+    setStatus,
+    status,
   };
 };
 

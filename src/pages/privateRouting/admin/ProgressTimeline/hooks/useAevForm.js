@@ -19,22 +19,37 @@ const useAevForm = ({ openForm, services = {} }) => {
     }
   }, [openForm?.divType]);
 
+  // useEffect(() => {
+  //   projectDropdown();
+  // }, []);
+
   useEffect(() => {
     projectDropdown();
-  }, []);
+  }, [services?.status]);
 
-  const fetchProjectDropdownData = async (url, payload = {}) => {
+  const fetchProjectDropdownData = async (
+    url
+    // payload = { status: services?.status }
+  ) => {
     try {
       const response = await APIRequest.request(
         "POST",
         url,
-        JSON.stringify(payload)
+        JSON.stringify({ status: services?.status })
       );
       if (response?.data?.responseCode === 109) {
         setUserForm((prev) => ({
           ...prev,
-          projectId: response?.data?.result[0]?._id,
-          projectName: response?.data?.result[0]?.projectName,
+          projectId: response?.data?.result[0]?._id ?? "",
+          projectName: response?.data?.result[0]?.projectName ?? "",
+          floorNo: "",
+          flatNo: "",
+          room: "",
+          flat: "",
+          floor: "",
+          roomName: "",
+          startDate: "",
+          endDate: "",
         }));
       }
     } catch (error) {

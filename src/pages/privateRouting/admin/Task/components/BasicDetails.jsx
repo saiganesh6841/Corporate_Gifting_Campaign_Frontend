@@ -115,7 +115,12 @@ function BasicDetails({
                 <Combobox
                   className={` input__Style`}
                   size="medium"
-                  onClick={() => services?.floorsDropdown(userForm?.projectId)}
+                  // onClick={() => services?.floorsDropdown(userForm?.projectId)}
+                  onOpenChange={(e, data) => {
+                    if (data.open && userForm?.projectId) {
+                      services?.floorsDropdown(userForm.projectId);
+                    }
+                  }}
                   value={userForm?.floor}
                   placeholder="Select the floor"
                   onOptionSelect={(e, data) => {
@@ -152,12 +157,20 @@ function BasicDetails({
                   className={` input__Style`}
                   size="medium"
                   placeholder="Select the flat"
-                  onClick={() =>
-                    services?.flatDropdown(
-                      userForm?.projectId,
-                      userForm?.floorNo
-                    )
-                  }
+                  // onClick={() =>
+                  //   services?.flatDropdown(
+                  //     userForm?.projectId,
+                  //     userForm?.floorNo
+                  //   )
+                  // }
+                  onOpenChange={(e, data) => {
+                    if (data.open && userForm?.projectId) {
+                      services?.flatDropdown(
+                        userForm?.projectId,
+                        userForm?.floorNo
+                      );
+                    }
+                  }}
                   value={userForm?.flat}
                   onOptionSelect={(e, data) => {
                     setUserForm((prev) => ({
@@ -188,13 +201,22 @@ function BasicDetails({
                   className={` input__Style`}
                   size="medium"
                   placeholder="Select the room"
-                  onClick={() =>
-                    services?.roomDropdown(
-                      userForm?.projectId,
-                      userForm?.floorNo,
-                      userForm?.flatNo
-                    )
-                  }
+                  // onClick={() =>
+                  //   services?.roomDropdown(
+                  //     userForm?.projectId,
+                  //     userForm?.floorNo,
+                  //     userForm?.flatNo
+                  //   )
+                  // }
+                  onOpenChange={(e, data) => {
+                    if (data.open && userForm?.projectId) {
+                      services?.roomDropdown(
+                        userForm?.projectId,
+                        userForm?.floorNo,
+                        userForm?.flatNo
+                      );
+                    }
+                  }}
                   value={userForm?.roomName}
                   onOptionSelect={(e, data) => {
                     setUserForm((prev) => ({
@@ -234,7 +256,12 @@ function BasicDetails({
                   className={` input__Style`}
                   size="medium"
                   placeholder="Select the worker"
-                  onClick={() => services?.workerDropdown(userForm?.projectId)}
+                  // onClick={() => services?.workerDropdown(userForm?.projectId)}
+                  onOpenChange={(e, data) => {
+                    if (data.open && userForm?.projectId) {
+                      services?.workerDropdown(userForm?.projectId);
+                    }
+                  }}
                   value={userForm?.worker}
                   onOptionSelect={(e, data) => {
                     setUserForm((prev) => ({

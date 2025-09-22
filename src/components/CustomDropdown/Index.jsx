@@ -47,7 +47,12 @@ const statusOptions = [
   },
 ];
 
-const CustomDropdown = ({ initialStatus, onChange, disabled }) => {
+const CustomDropdown = ({
+  initialStatus,
+  onChange,
+  disabled,
+  hideOptions = [],
+}) => {
   const [selectedStatus, setSelectedStatus] = useState(initialStatus);
 
   const current =
@@ -94,21 +99,23 @@ const CustomDropdown = ({ initialStatus, onChange, disabled }) => {
       </MenuTrigger>
       <MenuPopover>
         <MenuList>
-          {statusOptions.map((opt) => (
-            <MenuItem
-              key={opt.value}
-              onClick={() => handleSelect(opt.value)}
-              style={{
-                color: opt.color,
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-              }}
-              icon={opt.icon}
-            >
-              <Text>{opt.label}</Text>
-            </MenuItem>
-          ))}
+          {statusOptions
+            ?.filter((opt) => !hideOptions?.includes(opt.value))
+            ?.map((opt) => (
+              <MenuItem
+                key={opt.value}
+                onClick={() => handleSelect(opt.value)}
+                style={{
+                  color: opt.color,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+                icon={opt.icon}
+              >
+                <Text>{opt.label}</Text>
+              </MenuItem>
+            ))}
         </MenuList>
       </MenuPopover>
     </Menu>

@@ -27,8 +27,15 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
   const theme = useTheme();
 
   return (
-    <Grid container>
-      <Grid item xs={6}>
+    <Grid
+      container
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <Grid>
         {/* <Dropdown
           size="large"
           placeholder="Select Module"
@@ -59,7 +66,7 @@ function GraphHeader({ setGraphFiltersData, graphFiltersData }) {
         </Typography>
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid>
         <DatePicker
           // maxDate={new Date(graphFiltersData?.endDate * 1000)}
           formatDate={onFormatDate}
