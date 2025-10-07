@@ -46,12 +46,12 @@ const AssignSuperVisor = ({
             <Box className={classes.spaceBetween}>
               <Field label="SuperVisors" className={classes.label} />
               {showDetails ? (
-                <ChevronDown24Regular
+                <ChevronUp24Regular
                   style={{ cursor: "pointer" }}
                   onClick={() => setShowDetails(false)}
                 />
               ) : (
-                <ChevronUp24Regular
+                <ChevronDown24Regular
                   style={{ cursor: "pointer" }}
                   onClick={() => setShowDetails(true)}
                 />

@@ -103,6 +103,7 @@ const useServices = (props) => {
           endDate: userForm?.endDate ?? "",
           page: userForm?.page ?? 1,
           pageSize: 10,
+          projectId: userForm?.projectId,
         })
       );
       if (response?.data?.responseCode === 109) {

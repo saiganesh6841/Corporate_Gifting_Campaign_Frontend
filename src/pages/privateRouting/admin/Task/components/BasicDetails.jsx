@@ -56,7 +56,7 @@ function BasicDetails({
   };
 
   const isEdit = openForm?.divType === "edit";
-  console.log(errors, userForm, "isEdit");
+  console.log(services?.projectList, userForm, "isEdit");
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>

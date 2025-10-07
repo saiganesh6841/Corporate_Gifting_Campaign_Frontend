@@ -28,7 +28,10 @@ const AttendanceInformation = ({ classes, data }) => {
           </Box> */}
           <Box className={classes.fieldStyle}>
             <Typography variant="content">Email</Typography>
-            <Typography variant="subHeading">
+            <Typography
+              variant="subHeading"
+              style={{ textTransform: "lowercase" }}
+            >
               {data?.userDetails?.email}
             </Typography>
           </Box>

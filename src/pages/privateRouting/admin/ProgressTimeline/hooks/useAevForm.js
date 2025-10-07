@@ -8,7 +8,7 @@ const useAevForm = ({ openForm, services = {} }) => {
 
   useEffect(() => {
     // gettting details of row
-    if (userForm?.flatNo && userForm?.room)
+    if (userForm?.flatNo || userForm?.room || userForm?.projectId)
       services?.getEditTable({ userForm });
   }, [userForm]);
 
