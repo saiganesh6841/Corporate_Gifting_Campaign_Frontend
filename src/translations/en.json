@@ -55,6 +55,7 @@
     "room": "Room",
     "scheduleTime": "Schedule Time",
     "attendance": "Attendance",
-    "progressTimeline": "Progress Timeline"
+    "progressTimeline": "Progress Timeline",
+    "campaigns":"Campaigns"
   }
 }

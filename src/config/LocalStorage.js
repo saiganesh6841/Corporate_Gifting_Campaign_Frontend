@@ -273,6 +273,7 @@ class LocalStorage {
     "Schedule Time": "/admin/scheduleTime",
     Attendance: "/admin/attendance",
     "Progress Timeline": "/admin/progressTimeline",
+    Campaigns:"/admin/campaigns"
   };
   static adminButtonPermission = [];
   static buttonPermissionDefault = [
