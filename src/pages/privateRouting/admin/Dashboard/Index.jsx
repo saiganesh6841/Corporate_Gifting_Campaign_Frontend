@@ -20,6 +20,7 @@ import { useStyles } from "./styles/style";
 import LocalStorage from "../../../../config/LocalStorage";
 import AreaGraph from "./components/AreaGraph";
 import DashboardProject from "./components/DashboardProject";
+import OrganizationCard from "./components/OrganizationCard";
 
 const graphFilter = {
   status: "",
@@ -49,15 +50,39 @@ function Dashboard(props) {
       setStatsConstData([
         {
           color: "#582538",
-          label: "Total Projects",
+          label: "Total Campaigns",
           icon: <DocumentBulletList24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.totalProjects,
+          count: services?.statisticsData?.summary?.totalCampaigns,
         },
         {
           color: "#007F0A",
-          label: "Completed Projects",
+          label: "Completed Campaigns",
           icon: <DocumentCheckmark24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.completedProjects,
+          count: services?.statisticsData?.summary?.completedCampaigns,
+        },
+        {
+          color: "#CA9700",
+          label: "Active Campaigns",
+          icon: <Document24Regular style={{ color: "#ffff" }} />,
+          count: services?.statisticsData?.summary?.activeCampaigns,
+        },
+        {
+          color: "#0078D4",
+          label: "Total Employees",
+          icon: <People24Regular style={{ color: "#ffff" }} />,
+          count: services?.statisticsData?.summary?.totalEmployees,
+        },
+        {
+          color: "#582538",
+          label: "Total Orders",
+          icon: <DocumentBulletList24Regular style={{ color: "#ffff" }} />,
+          count: services?.statisticsData?.summary?.totalOrders,
+        },
+        {
+          color: "#007F0A",
+          label: "Delivered Orders",
+          icon: <DocumentCheckmark24Regular style={{ color: "#ffff" }} />,
+          count: services?.statisticsData?.summary?.totalDelivered,
         },
         {
           color: "#CA9700",
@@ -70,6 +95,12 @@ function Dashboard(props) {
           label: "Total Users ",
           icon: <People24Regular style={{ color: "#ffff" }} />,
           count: services?.statisticsData?.totalUsers,
+        },
+        {
+          type: "organization",
+          organizationName: services?.statisticsData?.organization?.name,
+          email: services?.statisticsData?.organization?.email,
+          mobile: services?.statisticsData?.organization?.mobileNumber,
         },
       ]);
     }
@@ -85,20 +116,23 @@ function Dashboard(props) {
       <Header classes={classes} text="Dashboard" />
       <Box className={classes.statastics}>
         {statsConstData?.length > 0 &&
-          statsConstData.map((data, i) => (
-            <StatisticsCard
-              key={i}
-              classes={classes}
-              background={data.color}
-              Icon={data.icon}
-              label={data.label}
-              totalNumber={data.count || "0"}
-            />
-          ))}
+          statsConstData?.map((data, i) =>
+            data.type === "organization" ? (
+              <OrganizationCard key={i} classes={classes} data={data} />
+            ) : (
+              <StatisticsCard
+                key={i}
+                classes={classes}
+                background={data.color}
+                Icon={data.icon}
+                label={data.label}
+                totalNumber={data.count || "0"}
+              />
+            ),
+          )}
       </Box>
-      <div className={classes.spaceBetween}>
+      {/* <div className={classes.spaceBetween}>
         <FluentProvider theme={teamsLightTheme}>
-          {/* main dashboard  */}
 
           <Box className={classes.mainDashboardContainer}>
             <Box className={classes.dashBoardStatAndGraphContainer}>
@@ -113,17 +147,16 @@ function Dashboard(props) {
                 />
               </Box>
 
-              {/* area graph */}
-              {/* <AreaGraph
+              <AreaGraph
                 services={services}
                 graphFiltersData={graphFiltersData}
-              /> */}
+              />
 
               <DashboardProject services={services} />
             </Box>
           </Box>
         </FluentProvider>
-      </div>
+      </div> */}
     </div>
   );
 }

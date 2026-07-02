@@ -131,7 +131,12 @@ const utilController = {
     }
     return color;
   },
-
+  getFileExtension: (url) => {
+    if (!url) return "";
+    const cleanUrl = url.split("?")[0]; // remove query params
+    const parts = cleanUrl.split(".");
+    return parts.length > 1 ? parts.pop().toLowerCase() : "";
+  },
   countStatuses: (assignedEmployees) => {
     const statusCounts = assignedEmployees.reduce((acc, employee) => {
       const status = employee.status;
@@ -162,7 +167,7 @@ const utilController = {
           default:
             return "";
         }
-      }
+      },
     );
 
     return formattedCounts.join(", ");

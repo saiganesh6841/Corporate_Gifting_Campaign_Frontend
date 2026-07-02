@@ -58,8 +58,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   statastics: {
     display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexWrap: "wrap",
+    gap: "16px",
+    alignItems: "stretch",
+    // alignItems: "center",
     marginLeft: "12px",
     marginRight: "12px",
   },

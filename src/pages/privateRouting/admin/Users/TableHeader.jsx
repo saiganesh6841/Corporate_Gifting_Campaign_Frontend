@@ -39,8 +39,10 @@ const useTableHeader = (setOpenForm, openForm) => {
       primaryKey: true,
       renderCell: (item) => (
         <TableCellLayout truncate style={{ text: capitalize }}>
-          {item?.userType &&
-            utilController?.formatTextToCapitalize(item?.userType)}
+          {item?.userType === "HR"
+            ? "HR"
+            : item?.userType &&
+              utilController?.formatTextToCapitalize(item?.userType)}
         </TableCellLayout>
       ),
     },

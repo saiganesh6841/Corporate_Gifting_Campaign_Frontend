@@ -124,7 +124,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: "12px",
   },
   labels: {
-    height: "250px",
+    height: "350px",
     overflowY: "scroll",
     padding: "16px",
   },

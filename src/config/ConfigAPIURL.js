@@ -36,60 +36,46 @@ class ConfigAPIURL {
   static roleUpdate = this.baseUrl + "/admin/role/update";
   static roleDetails = this.baseUrl + "/admin/role/get";
 
-  // rooms
-  static listRooms = this.baseUrl + "/admin/room/getAll";
-  static getRoom = this.baseUrl + "/admin/room/get";
-  static createRoom = this.baseUrl + "/admin/room/create";
-  static updateRoom = this.baseUrl + "/admin/room/update";
-  static deleteRoom = this.baseUrl + "/admin/room/delete";
+  //organizations
+  static listOrganizations = this.baseUrl + "/admin/organization/list";
+  static createOrganization = this.baseUrl + "/admin/organization/create";
+  static editOrganization = this.baseUrl + "/admin/organization/edit";
+  static getOrganization = this.baseUrl + "/admin/organization/details";
+  static deleteOrganization = this.baseUrl + "/admin/organization/delete";
 
-  //tasks
-  static deleteTask = this.baseUrl + "/admin/task/delete";
-  static listTasks = this.baseUrl + "/admin/task/getAll";
-  static createTask = this.baseUrl + "/admin/task/create";
-  static updateTask = this.baseUrl + "/admin/task/update";
-  static getTask = this.baseUrl + "/admin/task/get";
-  static taskView = this.baseUrl + "/admin/task/view";
-  static taskLisMessages = this.baseUrl + "/admin/task/message/list";
-  static taskProjectDropdown = this.baseUrl + "/admin/task/projectDropdown";
+  //products
+  static listProducts = this.baseUrl + "/admin/product/list";
+  static createProduct = this.baseUrl + "/admin/product/create";
+  static editProduct = this.baseUrl + "/admin/product/edit";
+  static getProduct = this.baseUrl + "/admin/product/details";
+  static deleteProduct = this.baseUrl + "/admin/product/delete";
 
-  //attendance
-  static listAttendance = this.baseUrl + "/admin/attendence/list";
-  static attendanceDetails = this.baseUrl + "/admin/attendence/details";
+  //campaigns
+  static createCampaign = this.baseUrl + "/admin/campaign/create";
+  static listCampaigns = this.baseUrl + "/admin/campaign/list";
+  static editCampaign = this.baseUrl + "/admin/campaign/edit";
+  static getCampaign = this.baseUrl + "/admin/campaign/details";
+  static deleteCampaign = this.baseUrl + "/admin/campaign/delete";
 
-  //dropdown
-  static projectDropdown = this.baseUrl + "/admin/dropdown/project";
-  static workersDropdown = this.baseUrl + "/admin/dropdown/workers";
-  static flatDropdown = this.baseUrl + "/admin/dropdown/flats";
-  static floorsDropdown = this.baseUrl + "/admin/dropdown/floors";
-  static roomDropdown = this.baseUrl + "/admin/dropdown/rooms";
+  //orders
+  static createOrder = this.baseUrl + "/admin/order/create";
+  static listOrders = this.baseUrl + "/admin/order/list";
+  static editOrder = this.baseUrl + "/admin/order/edit";
+  static getOrder = this.baseUrl + "/admin/order/details";
+  static deleteOrder = this.baseUrl + "/admin/order/delete";
 
-  //progress timeline
-  static getProgressTimeline = this.baseUrl + "/admin/progress/get";
-
-  //projects
-  static roomsProjectDropdown = this.baseUrl + "/admin/project/dropdown/room";
-  static superVisor = this.baseUrl + "/admin/project/dropdown/supervisor";
-  static workerList = this.baseUrl + "/admin/project/dropdown/worker";
-  static createProject = this.baseUrl + "/admin/project/create";
-  static updateProject = this.baseUrl + "/admin/project/update";
-  static listProjects = this.baseUrl + "/admin/project/list";
-  static getProject = this.baseUrl + "/admin/project/get";
-  static projectView = this.baseUrl + "/admin/project/view";
-  static ProjectTable = this.baseUrl + "/admin/project/worker";
-  static viewRoomImages = this.baseUrl + "/admin/project/roomView";
-  static deleteProject = this.baseUrl + "/admin/project/delete";
-  static roomImageDetails = this.baseUrl + "/admin/project/roomImageDetails";
-  static deleteImage = this.baseUrl + "/admin/project/deleteImage";
-  static listMessages = this.baseUrl + "/admin/project/message/list";
-  static addMessage = this.baseUrl + "/admin/project/message";
-  static deleteFlat = this.baseUrl + "/admin/project/deleteFlat";
-  static deleteFloor = this.baseUrl + "/admin/project/deleteFloor";
+  //employee gift card
+  static validateToken = this.baseUrl + "/admin/gift/validate-token";
+  static placeOrder = this.baseUrl + "/admin/gift/place-order";
 
   // dashboard
   static getGraphData = this.baseUrl + "/admin/dashboard/graph";
-  static getDashBoardCounts = this.baseUrl + "/admin/dashboard/count";
+  static getDashBoardCounts = this.baseUrl + "/admin/dashboard";
   static getDashboardProjects = this.baseUrl + "/admin/dashboard/projects";
+
+  //dropdown
+  static listOrganizationDropdown =
+    this.baseUrl + "/admin/dropdown/organization";
 }
 
 export default ConfigAPIURL;

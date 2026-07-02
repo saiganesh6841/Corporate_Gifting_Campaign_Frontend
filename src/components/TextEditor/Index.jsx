@@ -43,29 +43,60 @@ export default function TextEditor({
   label,
   required,
 }) {
+  // const handleChange = (newContent) => {
+  //   try {
+  //     // const contentToEncode =
+  //     //   newContent.trim() === "<p><br></p>" ? "" : newContent;
+  //     // const encodedContent = window.btoa(contentToEncode);
+  //     // setData(encodedContent);
+  //     const tempElement = document.createElement("div");
+  //     tempElement.innerHTML = newContent;
+  //     const plainText = tempElement.textContent || tempElement.innerText || "";
+
+  //     const cleaned = plainText.replace(/\u00A0/g, "").trim(); // Remove &nbsp;
+
+  //     const contentToEncode = cleaned === "" ? "" : newContent;
+  //     const encodedContent = window.btoa(contentToEncode);
+  //     setData(encodedContent);
+  //   } catch (error) {
+  //     console.error("Error encoding content to Base64", error);
+  //   }
+  // };
+
+  // const getDecodedContent = (encodedContent) => {
+  //   try {
+  //     return window.atob(encodedContent);
+  //   } catch (error) {
+  //     console.error("Error decoding Base64 content", error);
+  //     return "";
+  //   }
+  // };
+  // replace handleChange in TextEditor.jsx
   const handleChange = (newContent) => {
     try {
-      // const contentToEncode =
-      //   newContent.trim() === "<p><br></p>" ? "" : newContent;
-      // const encodedContent = window.btoa(contentToEncode);
-      // setData(encodedContent);
       const tempElement = document.createElement("div");
       tempElement.innerHTML = newContent;
       const plainText = tempElement.textContent || tempElement.innerText || "";
-
-      const cleaned = plainText.replace(/\u00A0/g, "").trim(); // Remove &nbsp;
-
+      const cleaned = plainText.replace(/\u00A0/g, "").trim();
       const contentToEncode = cleaned === "" ? "" : newContent;
-      const encodedContent = window.btoa(contentToEncode);
+
+      // ✅ use encodeURIComponent + unescape to handle emojis and special chars
+      // window.btoa() alone fails on non-ASCII (emojis, ₹, etc.)
+      const encodedContent = contentToEncode
+        ? window.btoa(unescape(encodeURIComponent(contentToEncode)))
+        : "";
+
       setData(encodedContent);
     } catch (error) {
       console.error("Error encoding content to Base64", error);
     }
   };
 
+  // replace getDecodedContent in TextEditor.jsx
   const getDecodedContent = (encodedContent) => {
     try {
-      return window.atob(encodedContent);
+      if (!encodedContent) return "";
+      return decodeURIComponent(escape(window.atob(encodedContent)));
     } catch (error) {
       console.error("Error decoding Base64 content", error);
       return "";

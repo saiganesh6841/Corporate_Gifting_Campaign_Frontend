@@ -9,6 +9,7 @@ import {
   Combobox,
   Button,
   Dropdown,
+  Textarea,
 } from "@fluentui/react-components";
 import {
   Eye24Filled,
@@ -34,6 +35,8 @@ function BasicDetails({
   openForm,
   roles,
   fetchRoles,
+  organizations,
+  fetchOrganizations,
   errors,
   resetPasswordAttempts,
 }) {
@@ -149,7 +152,7 @@ function BasicDetails({
                   }
                   // disabled={isEdit}
                 >
-                  {["admin", "worker", "supervisor"].map((type) => (
+                  {["admin", "HR", "vendor"].map((type) => (
                     <Option
                       key={type}
                       onClick={() => {
@@ -189,6 +192,68 @@ function BasicDetails({
               </Field>
             </Grid>
 
+            {userForm?.userType === "HR" && (
+              <Grid item xs={6}>
+                <Field
+                  className={classes.label}
+                  label="Select Organization"
+                  required
+                  validationMessage={
+                    errors?.organizationId
+                      ? "Organization field is required"
+                      : ""
+                  }
+                  htmlFor="organizationId"
+                >
+                  <Combobox
+                    id="organizationId"
+                    className={`input__Style`}
+                    size="medium"
+                    placeholder="Select Organization"
+                    value={userForm?.organizationName || ""}
+                    onChange={(e) => {
+                      setUserForm({
+                        ...userForm,
+                        organizationName: e.target.value,
+                      });
+
+                      fetchOrganizations(e.target.value);
+                    }}
+                    onOptionSelect={(_, data) => {
+                      const selectedOption = organizations.find(
+                        (org) => org._id === data.optionValue,
+                      );
+                      setUserForm({
+                        ...userForm,
+                        organizationId: selectedOption?._id,
+                        organizationName: selectedOption?.name,
+                      });
+                      delete errors["organizationId"];
+                    }}
+                    onClick={() => {
+                      fetchOrganizations();
+                    }}
+                    disabled={
+                      openForm?.divType === "view" || userForm?.isSuperAdmin
+                    }
+                  >
+                    {organizations?.map((option) => (
+                      <Option
+                        key={option._id}
+                        value={option._id}
+                        text={option?.name}
+                      >
+                        <p
+                          style={{ textTransform: "capitalize", margin: "4px" }}
+                        >
+                          {option.name}
+                        </p>
+                      </Option>
+                    ))}
+                  </Combobox>
+                </Field>
+              </Grid>
+            )}
             <Grid item xs={6}>
               <Field className={classes.label} label="Gender" htmlFor="gender">
                 <Combobox
@@ -198,7 +263,7 @@ function BasicDetails({
                   size={"medium"}
                   placeholder="Gender"
                   value={utilController?.formatTextToCapitalize(
-                    userForm?.gender || ""
+                    userForm?.gender || "",
                   )}
                   disabled={openForm?.divType === "view"}
                 >
@@ -262,7 +327,7 @@ function BasicDetails({
                   onBlur={() => {
                     if (userForm?.email) {
                       const isValid = Validation.emailValidation(
-                        userForm?.email
+                        userForm?.email,
                       );
                       if (!isValid) {
                         errors["email"] = "Please enter valid email address";
@@ -314,135 +379,191 @@ function BasicDetails({
                 />
               </Field>
             </Grid>
-
-            {userForm?.userType !== "worker" && (
+            <Grid item xs={6}>
+              <Field
+                className={classes.label}
+                label="Role"
+                required
+                validationMessage={
+                  errors?.permission ? "Role field is required" : ""
+                }
+                htmlFor="permission"
+              >
+                <Combobox
+                  id="permission"
+                  className={`input__Style`}
+                  size="medium"
+                  placeholder="Select Role"
+                  value={userForm?.permissionName || ""}
+                  onOptionSelect={(_, data) => {
+                    const selectedOption = roles.find(
+                      (r) => r._id === data.optionValue,
+                    );
+                    setUserForm({
+                      ...userForm,
+                      permission: selectedOption?._id,
+                      permissionName: selectedOption?.name,
+                    });
+                    delete errors["permission"];
+                  }}
+                  onClick={() => {
+                    fetchRoles();
+                  }}
+                  disabled={
+                    openForm?.divType === "view" || userForm?.isSuperAdmin
+                  }
+                >
+                  {roles?.map((option) => (
+                    <Option
+                      key={option._id}
+                      value={option._id}
+                      text={option?.name}
+                    >
+                      <p style={{ textTransform: "capitalize", margin: "4px" }}>
+                        {option.name}
+                      </p>
+                    </Option>
+                  ))}
+                </Combobox>
+              </Field>
+            </Grid>
+            {userForm?.userType === "vendor" && (
               <Grid item xs={6}>
                 <Field
                   className={classes.label}
-                  label="Role"
+                  label="Warehouse Pincode"
                   required
-                  validationMessage={
-                    errors?.permission ? "Role field is required" : ""
-                  }
-                  htmlFor="permission"
+                  validationMessage={errors?.warehousePincode}
+                  htmlFor="warehousePincode"
                 >
-                  <Combobox
-                    id="permission"
-                    className={`input__Style`}
-                    size="medium"
-                    placeholder="Select Role"
-                    value={userForm?.permissionName || ""}
-                    onOptionSelect={(_, data) => {
-                      const selectedOption = roles.find(
-                        (r) => r._id === data.optionValue
-                      );
+                  <Input
+                    id="warehousePincode"
+                    className={` input__Style`}
+                    size="large"
+                    placeholder="Enter your Warehouse Pincode"
+                    value={userForm?.mobileNumber || ""}
+                    onChange={(event) => {
+                      const value = event.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                      const truncatedValue = value.slice(0, 6); // Limit to 10 digits
+
                       setUserForm({
                         ...userForm,
-                        permission: selectedOption?._id,
-                        permissionName: selectedOption?.name,
+                        warehousePincode: truncatedValue,
                       });
-                      delete errors["permission"];
+                      delete errors["warehousePincode"];
                     }}
-                    onClick={() => {
-                      fetchRoles();
+                    onBlur={() => {
+                      if (userForm?.warehousePincode) {
+                        if (userForm.warehousePincode.length < 6) {
+                          errors["warehousePincode"] =
+                            "Warehouse Pincode must be at least 10 digits";
+                        } else {
+                          delete errors["warehousePincode"];
+                        }
+                      }
                     }}
-                    disabled={
-                      openForm?.divType === "view" || userForm?.isSuperAdmin
-                    }
-                  >
-                    {roles?.map((option) => (
-                      <Option
-                        key={option._id}
-                        value={option._id}
-                        text={option?.name}
-                      >
-                        <p
-                          style={{ textTransform: "capitalize", margin: "4px" }}
-                        >
-                          {option.name}
-                        </p>
-                      </Option>
-                    ))}
-                  </Combobox>
+                  />
+                </Field>
+              </Grid>
+            )}
+            {userForm?.userType === "vendor" && (
+              <Grid item xs={12}>
+                <Field
+                  className={classes.label}
+                  label="Warehouse Address"
+                  validationMessage={errors?.warehouseAddress}
+                  required
+                  htmlFor="warehouseAddress"
+                >
+                  <Textarea
+                    id="warehouseAddress"
+                    // className={"input__Style"}
+                    size={"large"}
+                    placeholder="Add a Complete warehouse address"
+                    resize="vertical"
+                    rows={3}
+                    value={userForm?.warehouseAddress || ""}
+                    onChange={(e) => handleChange(e, "warehouseAddress")}
+                    // disabled={isViewMode}
+                    onBlur={handleBlur("warehouseAddress")}
+                  />
                 </Field>
               </Grid>
             )}
 
-            {userForm?.userType !== "worker" && (
-              <Grid item xs={6}>
-                <Field
-                  className={classes.label}
-                  label="Password"
-                  required
-                  validationMessage={errors?.password}
-                  htmlFor="password"
+            <Grid item xs={6}>
+              <Field
+                className={classes.label}
+                label="Password"
+                required
+                validationMessage={errors?.password}
+                htmlFor="password"
+              >
+                <Grid
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "10px",
+                  }}
                 >
-                  <Grid
+                  <Input
+                    id="password"
+                    className="input__Style"
+                    size="large"
+                    style={{ width: "280px" }}
+                    placeholder="Enter Password"
+                    type={showPassword ? "text" : "password"}
+                    onBlur={handleBlur("password")}
+                    value={userForm?.password || ""}
+                    onChange={(e) => handleChange(e, "password")}
+                    contentAfter={
+                      <Button
+                        appearance="subtle"
+                        icon={
+                          showPassword ? <Eye24Filled /> : <EyeOff24Filled />
+                        }
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        aria-label="Toggle password visibility"
+                      />
+                    }
+                    disabled={
+                      userForm?.userType === "customer" ||
+                      openForm?.divType === "view"
+                    }
+                  />
+                  <span
                     style={{
                       display: "flex",
-                      flexDirection: "row",
-                      gap: "10px",
+                      alignItems: "center",
                     }}
                   >
-                    <Input
-                      id="password"
-                      className="input__Style"
-                      size="large"
-                      style={{ width: "280px" }}
-                      placeholder="Enter Password"
-                      type={showPassword ? "text" : "password"}
-                      onBlur={handleBlur("password")}
-                      value={userForm?.password || ""}
-                      onChange={(e) => handleChange(e, "password")}
-                      contentAfter={
-                        <Button
-                          appearance="subtle"
-                          icon={
-                            showPassword ? <Eye24Filled /> : <EyeOff24Filled />
-                          }
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          aria-label="Toggle password visibility"
-                        />
-                      }
-                      disabled={
-                        userForm?.userType === "customer" ||
-                        openForm?.divType === "view"
-                      }
-                    />
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      {userForm?.userType !== "customer" && (
-                        <IconButton
-                          aria-label="generate random password"
-                          onClick={handleGeneratePassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          <Reset />
-                        </IconButton>
-                      )}
-                    </span>
-                  </Grid>
-                  <Text
-                    weight="semibold"
-                    style={{
-                      color: "#0F62FE",
-                      cursor: "pointer",
-                      visibility:
-                        openForm?.divType === "edit" ? "visible" : "hidden",
-                    }}
-                    onClick={() => resetPasswordAttempts()}
-                  >
-                    Password Attempt Reset
-                  </Text>
-                  {/* )} */}
-                </Field>
-              </Grid>
-            )}
+                    {userForm?.userType !== "customer" && (
+                      <IconButton
+                        aria-label="generate random password"
+                        onClick={handleGeneratePassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        <Reset />
+                      </IconButton>
+                    )}
+                  </span>
+                </Grid>
+                <Text
+                  weight="semibold"
+                  style={{
+                    color: "#0F62FE",
+                    cursor: "pointer",
+                    visibility:
+                      openForm?.divType === "edit" ? "visible" : "hidden",
+                  }}
+                  onClick={() => resetPasswordAttempts()}
+                >
+                  Password Attempt Reset
+                </Text>
+                {/* )} */}
+              </Field>
+            </Grid>
           </Grid>
         </Box>
       </Grid>

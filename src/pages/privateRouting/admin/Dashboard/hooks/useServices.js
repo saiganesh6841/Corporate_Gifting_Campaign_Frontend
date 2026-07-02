@@ -22,21 +22,24 @@ const useServices = ({ graphFiltersData, pieChartFiltersData }) => {
   useEffect(() => {
     handleGetCountDashboard();
   }, []);
-  useEffect(() => {
-    getPieChartData();
-  }, [JSON.stringify(pieChartFiltersData)]);
-  useEffect(() => {
-    getProjects();
-  }, [JSON.stringify(graphFiltersData)]);
+  // useEffect(() => {
+  //   getPieChartData();
+  // }, [JSON.stringify(pieChartFiltersData)]);
+  // useEffect(() => {
+  //   getProjects();
+  // }, [JSON.stringify(graphFiltersData)]);
 
   const handleGetCountDashboard = async () => {
     const response = await APIRequest.request(
       "POST",
       ConfigAPIURL.getDashBoardCounts,
-      ""
+      JSON.stringify({
+        organizationId: JSON.parse(localStorage.getItem("userDetails"))
+          ?.organizationId,
+      }),
     );
     if (response?.data?.responseCode === 109) {
-      setStatisticsData(response?.data?.result);
+      setStatisticsData(response?.data?.data);
     }
   };
 
@@ -93,7 +96,7 @@ const useServices = ({ graphFiltersData, pieChartFiltersData }) => {
     const response = await APIRequest.request(
       "POST",
       ConfigAPIURL.getPieChartData,
-      JSON.stringify({ ...pieChartFiltersData })
+      JSON.stringify({ ...pieChartFiltersData }),
     );
     if (response?.data?.responseCode === 109) {
       structurePieChartData(response?.data?.result);

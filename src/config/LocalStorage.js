@@ -47,6 +47,8 @@ class LocalStorage {
     isSuperAdmin: false,
     token: "",
     userId: "",
+    organizationId: "",
+    organizationName: "",
   };
   static dataTablePageSize = [5, 10, 25, 50, 100, 250, 500, 1000];
   static adminKeyboardShortcut = [
@@ -273,7 +275,11 @@ class LocalStorage {
     "Schedule Time": "/admin/scheduleTime",
     Attendance: "/admin/attendance",
     "Progress Timeline": "/admin/progressTimeline",
-    Campaigns:"/admin/campaigns"
+    Campaigns: "/admin/campaigns",
+    Organizations: "/admin/organizations",
+    Products: "/admin/products",
+    Employees: "/admin/employees",
+    Orders: "/admin/orders",
   };
   static adminButtonPermission = [];
   static buttonPermissionDefault = [

@@ -12,7 +12,11 @@ const Users = React.lazy(() => import("./Users"));
 const Role = React.lazy(() => import("./Roles/index"));
 // const Settings = React.lazy(() => import("./Settings"));
 // const taskManagement = React.lazy(() => import("./task-management")); // Will add later
-
+const Organizations = React.lazy(() => import("./Organizations/index"));
+const Campaigns = React.lazy(() => import("./Campaigns/index"));
+const Products = React.lazy(() => import("./Products/index"));
+const Employees = React.lazy(() => import("./Employees/index"));
+const Orders = React.lazy(() => import("./Orders/index"));
 function AdminContentRouting() {
   // const services = useServices();
 
@@ -23,12 +27,13 @@ function AdminContentRouting() {
 
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="security/role" element={<Role />} />
-        {/* <Route path="tasks" element={<Task />} />
-        <Route path="rooms" element={<Room />} />
-        <Route path="projects" element={<Projects />} />
-        <Route path="progressTimeline" element={<ProgressTimeline />} />
+        <Route path="campaigns" element={<Campaigns />} />
+        <Route path="products" element={<Products />} />
+        <Route path="organizations" element={<Organizations />} />
+        <Route path="/employees" element={<Employees />} />
+        <Route path="/orders" element={<Orders />} />
 
-        <Route path="attendance" element={<Attendance />} /> */}
+        {/* <Route path="attendance" element={<Attendance />} /> */}
 
         {/* Fallback route */}
         <Route path="*" element={<h3>Coming soon.</h3>} />

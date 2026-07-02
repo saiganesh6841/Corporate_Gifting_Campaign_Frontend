@@ -34,6 +34,8 @@ export const userDetails = {
   password: "",
   permission: "",
   profileImage: "",
+  organizationName: "",
+  organizationId: "",
 };
 
 export const inactiveLabels = ["view", "restore", "export"];

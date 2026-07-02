@@ -22,6 +22,10 @@ const customerRequiredDetails = {
   fullName: "",
   email: "",
   mobileNumber: "",
+  organizationName: "",
+  organizationId: "",
+  password: "",
+  permission: "",
 };
 // this is api calls happen
 const useServices = (props) => {
@@ -41,6 +45,7 @@ const useServices = (props) => {
   const { publishNotification } = useAlert();
 
   const [roles, setRoles] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
   const [createdByList, setCreatedByList] = useState([]);
   const [subscriptionList, setSubscriptionList] = useState([]);
   const [challengeDropdownList, setChallengeDropdownList] = useState([]);
@@ -80,7 +85,7 @@ const useServices = (props) => {
         APIRequest.request(
           "POST",
           ConfigAPIURL.getAllUsers,
-          JSON.stringify(query)
+          JSON.stringify(query),
         ).then((tableData) => {
           setTableData(tableData?.data);
           setLoading({ ...loading, isOpen: false });
@@ -101,7 +106,7 @@ const useServices = (props) => {
 
     let validationFields = {};
 
-    if (userForm?.userType === "worker") {
+    if (userForm?.userType === "HR") {
       validationFields = { ...customerRequiredDetails };
     } else {
       validationFields = { ...required };
@@ -133,21 +138,28 @@ const useServices = (props) => {
           _id: recordId[0]?._id,
           permission: userForm?.permission ? userForm?.permission : null,
           email: userForm?.email?.toLowerCase(),
+          organizationId:
+            userForm?.userType === "HR" ? userForm?.organizationId : null,
         }
-      : { ...userForm, email: userForm?.email?.toLowerCase() };
+      : {
+          ...userForm,
+          email: userForm?.email?.toLowerCase(),
+          organizationId:
+            userForm?.userType === "HR" ? userForm?.organizationId : null,
+        };
 
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         method,
         URL,
-        JSON.stringify(payload)
+        JSON.stringify(payload),
       );
 
       if (response?.data?.responseCode === 109) {
         publishNotification(
           `User ${isEdit ? "updated" : "created"} successfully`,
-          "success"
+          "success",
         );
         resetForm();
         tableQuery(query);
@@ -165,7 +177,7 @@ const useServices = (props) => {
     } catch (error) {
       publishNotification(
         `Error while ${isEdit ? "updating" : "creating"} user`,
-        "error"
+        "error",
       );
     } finally {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
@@ -180,7 +192,7 @@ const useServices = (props) => {
         `${ConfigAPIURL.getUserDetails}`,
         JSON.stringify({
           userId: recordId[0]?.userId,
-        })
+        }),
       );
       if (response?.data?.responseCode === 109) {
         const user = response?.data?.rows;
@@ -200,6 +212,8 @@ const useServices = (props) => {
           dob: user?.dob || null,
           isSuperAdmin: user?.isSuperAdmin || false,
           fullName: user?.fullName || "",
+          organizationId: user?.userType === "HR" ? user?.organizationId : null,
+          organizationName: user?.organizationName || "",
         });
       }
     } catch (error) {
@@ -213,7 +227,7 @@ const useServices = (props) => {
     const response = await APIRequest.request(
       "POST",
       ConfigAPIURL.getAllSubcriptionsForRenewal,
-      ""
+      "",
     );
     if (response?.data?.responseCode === 109) {
       setSubscriptionList(response?.data?.rows);
@@ -231,7 +245,7 @@ const useServices = (props) => {
       const response = await APIRequest.request(
         "POST",
         ConfigAPIURL.deleteUser,
-        JSON.stringify(payload)
+        JSON.stringify(payload),
       );
       if (response?.data?.responseCode === 109) {
         tableQuery(query);
@@ -257,7 +271,7 @@ const useServices = (props) => {
       const response = await APIRequest.request(
         "POST",
         ConfigAPIURL.restoreUser,
-        JSON.stringify(payload)
+        JSON.stringify(payload),
       );
       if (response?.data?.responseCode === 109) {
         tableQuery(query);
@@ -277,10 +291,25 @@ const useServices = (props) => {
       const response = await APIRequest.request(
         "POST",
         ConfigAPIURL.listRoles,
-        JSON.stringify({ active: true, keyword: keyword ?? "" })
+        JSON.stringify({ active: true, keyword: keyword ?? "" }),
       );
       if (response?.data?.responseCode === 109) {
         setRoles(response?.data?.rows);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchOrganizations = async (keyword) => {
+    try {
+      const response = await APIRequest.request(
+        "POST",
+        ConfigAPIURL.listOrganizationDropdown,
+        JSON.stringify({ active: true, keyword: keyword ?? "" }),
+      );
+      if (response?.data?.responseCode === 109) {
+        setOrganizations(response?.data?.data);
       }
     } catch (error) {
       console.log(error);
@@ -296,7 +325,7 @@ const useServices = (props) => {
           passwordAttempt: 0,
           _id: recordId[0]?._id,
           userId: recordId[0]?.userId,
-        })
+        }),
       );
 
       if (response?.data?.responseCode === 109) {
@@ -315,7 +344,7 @@ const useServices = (props) => {
       const response = await APIRequest.request(
         "POST",
         ConfigAPIURL.userCreatedByList,
-        ""
+        "",
       );
       if (response?.data?.responseCode === 109) {
         setCreatedByList(response.data?.result);
@@ -323,7 +352,7 @@ const useServices = (props) => {
     } catch (error) {
       publishNotification(
         "Error while fetching Created By users list",
-        "error"
+        "error",
       );
     } finally {
       setLoading({ ...loading, isOpen: false, type: "" });
@@ -334,7 +363,7 @@ const useServices = (props) => {
     const response = await APIRequest.request(
       "POST",
       ConfigAPIURL.getDropdownChallenges,
-      ""
+      "",
     );
 
     if (response?.data?.responseCode === 109) {
@@ -363,6 +392,8 @@ const useServices = (props) => {
     getDropdownChallenges,
     challengeDropdownList,
     userSubscriptionDetails,
+    fetchOrganizations,
+    organizations,
   };
 };
 

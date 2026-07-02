@@ -56,6 +56,10 @@
     "scheduleTime": "Schedule Time",
     "attendance": "Attendance",
     "progressTimeline": "Progress Timeline",
-    "campaigns":"Campaigns"
+    "campaigns": "Campaigns",
+    "organizations": "Organizations",
+    "products": "Products",
+    "employees": "Employees",
+    "orders": "Orders"
   }
 }

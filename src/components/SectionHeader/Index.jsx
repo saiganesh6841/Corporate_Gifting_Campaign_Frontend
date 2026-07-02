@@ -2,8 +2,16 @@ import React from "react";
 import MuiTypography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Icon } from "@fluentui/react";
+import PrimaryBtn from "../button";
 
-const SectionHeading = ({ title, classes, theme, icon }) => {
+const SectionHeading = ({
+  title,
+  classes,
+  theme,
+  icon,
+  buttonText,
+  buttonOnClick,
+}) => {
   return (
     <Box
       sx={{
@@ -14,7 +22,8 @@ const SectionHeading = ({ title, classes, theme, icon }) => {
         borderTopLeftRadius: "8px",
         display: "flex",
         alignItems: "center",
-        justifyContent: "start",
+        // justifyContent: "start",
+        justifyContent: "space-between",
         padding: "12px",
       }}
     >
@@ -40,6 +49,14 @@ const SectionHeading = ({ title, classes, theme, icon }) => {
       >
         {title}
       </MuiTypography>
+      {buttonText && (
+        <PrimaryBtn
+          style={{ width: "auto", padding: "8px 12px" }}
+          onClick={buttonOnClick}
+        >
+          Select Products
+        </PrimaryBtn>
+      )}
     </Box>
   );
 };
