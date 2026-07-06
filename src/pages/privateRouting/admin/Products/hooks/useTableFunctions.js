@@ -76,7 +76,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "add",
-          title: "Create User",
+          title: "Create Product",
           width: 700,
           hasCloseButton: false,
         };
@@ -98,7 +98,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "view",
-          title: "View user",
+          title: "View Product",
           width: 700,
           hasCloseButton: false,
           rowDetails: recordId,
@@ -140,7 +140,7 @@ const useTableFunctions = ({
         ...p,
         isOpen: true,
         divType: "edit",
-        title: "Edit User",
+        title: "Edit Product",
         width: 700,
         hasCloseButton: false,
         rowDetails: rows,
@@ -179,7 +179,8 @@ const useTableFunctions = ({
     });
   };
 
-  const Delete = () => {
+  const Delete = (selectedRecord) => {
+    const recordId = selectedRecord ? [selectedRecord] : [];
     if (recordId.length > 0) {
       handleDelete();
     }

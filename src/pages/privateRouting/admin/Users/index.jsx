@@ -36,14 +36,15 @@ function User() {
   const [query, setQuery] = useState({ ...queryBody });
   const [openForm, setOpenForm] = useState({ ...form });
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isRestoreOpen, setIsRestoreOpen] = useState(false);
 
   const [errors, setErrors] = useState({});
   // active and inactive buttons function
   const inactiveTableButton = tableButtons.filter((item) =>
-    inactiveLabels.includes(item.id)
+    inactiveLabels.includes(item.id),
   );
   const activeTableButton = tableButtons.filter(
-    (item) => !activeLabels.includes(item.id)
+    (item) => !activeLabels.includes(item.id),
   );
 
   const resetForm = () => {
@@ -61,10 +62,16 @@ function User() {
   const handleDelete = () => {
     setIsDeleteOpen(true);
   };
+
+  const handleRestore = () => {
+    setIsRestoreOpen(true);
+  };
+
   const dismissDelete = () => {
     setIsDeleteOpen(false);
     clearSelectedRows();
     setRecordId([]);
+    setIsRestoreOpen(false);
   };
 
   const columns = useTableHeader(setOpenForm, openForm);
@@ -104,7 +111,7 @@ function User() {
     recordId,
     handleDelete,
     clearSelectedRows,
-    // handleRestore,
+    handleRestore,
   });
 
   useEffect(() => {
@@ -232,7 +239,7 @@ function User() {
           </PanelConfirmation>
 
           <ConfirmationModal
-            isOpen={isDeleteOpen}
+            isOpen={isDeleteOpen || isRestoreOpen}
             onDismissModal={dismissDelete}
             title={
               recordId?.length > 1
@@ -243,7 +250,9 @@ function User() {
               isDeleteOpen ? "delete" : "restore"
             } selected ${recordId?.length > 1 ? "Users" : "User"}?`}
             Button={"Delete"}
-            onClick={isDeleteOpen && services?.deleteUser}
+            onClick={
+              isDeleteOpen ? services?.deleteUser : services?.restoreUser
+            }
           />
         </FluentProvider>
       </div>
@@ -267,5 +276,5 @@ const mapDispachToProps = (dispatch) => {
 };
 // export default User;
 export default withTranslation("translations")(
-  connect(mapStateToProps, mapDispachToProps)(User)
+  connect(mapStateToProps, mapDispachToProps)(User),
 );

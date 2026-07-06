@@ -146,6 +146,7 @@ function User() {
           setRecordId={setRecordId}
           setQuery={setQuery}
           resetRecords={resetRecords}
+          isColumnView={true}
         />
 
         <FluentProvider theme={teamsLightTheme}>
@@ -216,7 +217,7 @@ function User() {
                 setOpenForm={setOpenForm}
               />
             )}
-            {openForm?.divType === "column" && (
+            {/* {openForm?.divType === "column" && (
               <ViewColumn
                 filteredColumn={viewColumn}
                 openForm={openForm}
@@ -224,7 +225,7 @@ function User() {
                 setViewColumn={setViewColumn}
                 filterColumn={filterColumn(columns)}
               />
-            )}
+            )} */}
             {openForm?.divType === "filter" && (
               <CustomFilter
                 query={query}
@@ -232,7 +233,7 @@ function User() {
                 openForm={openForm}
                 resetForm={resetForm}
                 resetQueryBody={resetQueryBody}
-                users={true}
+                users={false}
               />
             )}
           </PanelConfirmation>
@@ -242,12 +243,12 @@ function User() {
             onDismissModal={dismissDelete}
             title={
               recordId?.length > 1
-                ? `${isDeleteOpen ? "Delete" : "Restore"} Users`
-                : `${isDeleteOpen ? "Delete" : "Restore"} User`
+                ? `${isDeleteOpen ? "Delete" : "Restore"} Products`
+                : `${isDeleteOpen ? "Delete" : "Restore"} Product`
             }
             content={`Are you sure you want to ${
               isDeleteOpen ? "delete" : "restore"
-            } selected ${recordId?.length > 1 ? "Users" : "User"}?`}
+            } selected ${recordId?.length > 1 ? "Products" : "Product"}?`}
             Button={"Delete"}
             onClick={isDeleteOpen && services?.deleteUser}
           />

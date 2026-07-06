@@ -242,7 +242,9 @@ function User() {
                 openForm={openForm}
                 resetForm={resetForm}
                 resetQueryBody={resetQueryBody}
-                users={true}
+                campaigns={true}
+                getOrganizationList={services?.getOrganizationList}
+                createdByList={services?.organizationList}
               />
             )}
           </PanelConfirmation>

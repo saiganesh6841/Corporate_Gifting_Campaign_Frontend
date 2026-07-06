@@ -103,16 +103,6 @@ const useTableHeader = (setOpenForm, openForm) => {
     },
 
     {
-      columnId: "dob", // this is the unique id for a column
-      fieldName: "Date Of Birth",
-      minWidth: 170,
-      renderCell: (item) => (
-        <TableCellLayout truncate style={{ textTransform: "capitalize" }}>
-          {item?.dob ? utilController.getFormattedDate(item?.dob) : "-"}
-        </TableCellLayout>
-      ),
-    },
-    {
       columnId: "createdBy", // this is the unique id for a column
       fieldName: "Created By", // field name visible on header
       minWidth: 150,

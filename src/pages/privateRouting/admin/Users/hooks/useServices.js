@@ -36,7 +36,7 @@ const useServices = (props) => {
     openForm,
     setOpenForm,
     resetRecords,
-    dismissRestore,
+    // dismissRestore,
     errors,
     setErrors,
     resetForm,
@@ -214,6 +214,8 @@ const useServices = (props) => {
           fullName: user?.fullName || "",
           organizationId: user?.userType === "HR" ? user?.organizationId : null,
           organizationName: user?.organizationName || "",
+          warehousePincode: user?.warehousePincode || "",
+          warehouseAddress: user?.warehouseAddress || "",
         });
       }
     } catch (error) {
@@ -275,7 +277,7 @@ const useServices = (props) => {
       );
       if (response?.data?.responseCode === 109) {
         tableQuery(query);
-        dismissRestore();
+        dismissDelete();
         resetRecords();
         publishNotification("User Restored Successfully", "success");
       }
@@ -378,6 +380,7 @@ const useServices = (props) => {
     loading,
     sendToServer,
     deleteUser,
+    restoreUser,
     roles,
     setRoles,
     fetchRoles,

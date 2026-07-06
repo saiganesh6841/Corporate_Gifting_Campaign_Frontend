@@ -19,7 +19,7 @@ import {
   DismissCircle24Filled,
   DocumentTable24Regular,
 } from "@fluentui/react-icons";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "@mui/styles";
 import SectionHeading from "../../../../../components/SectionHeader/Index";
@@ -807,6 +807,8 @@ function BasicDetails({
             theme={theme}
             buttonText="Select Products"
             buttonOnClick={() => {
+              if (openForm?.divType === "view" || openForm?.divType === "edit")
+                return;
               setCampaignForm((p) => ({
                 ...p,
                 isProductModalOpen: true,
@@ -839,31 +841,34 @@ function BasicDetails({
                         />
 
                         {/* Delete Button */}
-                        <Button
-                          appearance="subtle"
-                          onClick={() => {
-                            setCampaignForm((prev) => ({
-                              ...prev,
-                              products: prev.products.filter(
-                                (p) => p._id !== product._id,
-                              ),
-                            }));
-                          }}
-                          style={{
-                            position: "absolute",
-                            top: 10,
-                            right: 10,
-                            minWidth: 36,
-                            width: 36,
-                            height: 36,
-                            borderRadius: "50%",
-                            background: "#fff",
-                            boxShadow: "0 2px 8px rgba(0,0,0,.18)",
-                            padding: 0,
-                          }}
-                        >
-                          <Delete20Filled color="#ef4444" />
-                        </Button>
+                        {openForm?.divType !== "view" &&
+                          openForm?.divType !== "edit" && (
+                            <Button
+                              appearance="subtle"
+                              onClick={() => {
+                                setCampaignForm((prev) => ({
+                                  ...prev,
+                                  products: prev.products.filter(
+                                    (p) => p._id !== product._id,
+                                  ),
+                                }));
+                              }}
+                              style={{
+                                position: "absolute",
+                                top: 10,
+                                right: 10,
+                                minWidth: 36,
+                                width: 36,
+                                height: 36,
+                                borderRadius: "50%",
+                                background: "#fff",
+                                boxShadow: "0 2px 8px rgba(0,0,0,.18)",
+                                padding: 0,
+                              }}
+                            >
+                              <Delete20Filled color="#ef4444" />
+                            </Button>
+                          )}
                       </Box>
                     </Grid>
                   ))}
@@ -892,207 +897,226 @@ function BasicDetails({
             classes={classes}
             theme={theme}
           />
-          <Grid container spacing={2} style={{ padding: "10px" }}>
-            {/* download template */}
-            <Grid item xs={12}>
-              <Box
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  marginBottom: 4,
-                }}
-              >
-                <DocumentTable24Regular style={{ color: "#0078D4" }} />
-                <Text size={200} style={{ color: "#666" }}>
-                  Download the template, fill employee details and upload below.
-                </Text>
-                <Button
-                  appearance="transparent"
-                  size="small"
-                  style={{ color: "#0078D4", padding: 0 }}
-                  onClick={() =>
-                    services?.handleDownloadTemplate(productExcelTemplate)
-                  }
+          {openForm?.divType === "edit" ? (
+            <Typography style={{ padding: 8 }}>
+              <strong>Total Employees:</strong> {campaignForm?.totalEmployees}
+            </Typography>
+          ) : (
+            <Grid container spacing={2} style={{ padding: "10px" }}>
+              {/* download template */}
+              <Grid item xs={12}>
+                <Box
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginBottom: 4,
+                  }}
                 >
-                  Download Template
-                </Button>
-              </Box>
-            </Grid>
-
-            {/* upload area */}
-            <Grid item xs={12}>
-              <Field
-                className={classes.label}
-                label="Upload Employee List"
-                required
-                validationMessage={errors?.employeeFile}
-                htmlFor="employeeFile"
-              >
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".xls,.xlsx,.csv"
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
-                  disabled={isViewMode}
-                />
-
-                {/* drop zone style box */}
-                {!campaignForm?.employeeFileName && (
-                  <Box
-                    onClick={() => !isViewMode && fileInputRef.current?.click()}
-                    style={{
-                      border: "2px dashed #c8c8c8",
-                      borderRadius: 8,
-                      padding: "28px 20px",
-                      textAlign: "center",
-                      cursor: isViewMode ? "default" : "pointer",
-                      background: "#fafafa",
-                      transition: "border-color 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isViewMode)
-                        e.currentTarget.style.borderColor = "#0078D4";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "#c8c8c8";
-                    }}
+                  <DocumentTable24Regular style={{ color: "#0078D4" }} />
+                  <Text size={200} style={{ color: "#666" }}>
+                    Download the template, fill employee details and upload
+                    below.
+                  </Text>
+                  <Button
+                    appearance="transparent"
+                    size="small"
+                    style={{ color: "#0078D4", padding: 0 }}
+                    onClick={() =>
+                      services?.handleDownloadTemplate(productExcelTemplate)
+                    }
                   >
-                    <ArrowUpload24Regular
+                    Download Template
+                  </Button>
+                </Box>
+              </Grid>
+
+              {/* upload area */}
+              <Grid item xs={12}>
+                <Field
+                  className={classes.label}
+                  label="Upload Employee List"
+                  required
+                  validationMessage={errors?.employeeFile}
+                  htmlFor="employeeFile"
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".xls,.xlsx,.csv"
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                    disabled={isViewMode}
+                  />
+
+                  {/* drop zone style box */}
+                  {!campaignForm?.employeeFileName && (
+                    <Box
+                      onClick={() =>
+                        !isViewMode && fileInputRef.current?.click()
+                      }
                       style={{
-                        color: "#0078D4",
-                        fontSize: 32,
-                        marginBottom: 8,
+                        border: "2px dashed #c8c8c8",
+                        borderRadius: 8,
+                        padding: "28px 20px",
+                        textAlign: "center",
+                        cursor: isViewMode ? "default" : "pointer",
+                        background: "#fafafa",
+                        transition: "border-color 0.2s",
                       }}
-                    />
-                    <Text
-                      style={{
-                        display: "block",
-                        color: "#444",
-                        marginBottom: 4,
+                      onMouseEnter={(e) => {
+                        if (!isViewMode)
+                          e.currentTarget.style.borderColor = "#0078D4";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "#c8c8c8";
                       }}
                     >
-                      Click to upload or drag & drop
-                    </Text>
-                    <Text size={200} style={{ color: "#999" }}>
-                      Accepted: .xls, .xlsx, .csv
-                    </Text>
-                  </Box>
-                )}
-
-                {/* file uploaded — show result */}
-                {campaignForm?.employeeFileName && (
-                  <Box
-                    style={{
-                      border: `1.5px solid ${
-                        fileValidation.status === "success"
-                          ? "#107c10"
-                          : "#a4262c"
-                      }`,
-                      borderRadius: 8,
-                      padding: "14px 16px",
-                      background:
-                        fileValidation.status === "success"
-                          ? "#f1faf1"
-                          : "#fdf3f4",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: 12,
-                    }}
-                  >
-                    <Box
-                      style={{ display: "flex", alignItems: "center", gap: 10 }}
-                    >
-                      {fileValidation.status === "success" ? (
-                        <CheckmarkCircle24Filled style={{ color: "#107c10" }} />
-                      ) : (
-                        <DismissCircle24Filled style={{ color: "#a4262c" }} />
-                      )}
-                      <Box>
-                        <Text
-                          weight="semibold"
-                          style={{ display: "block", fontSize: 13 }}
-                        >
-                          {campaignForm.employeeFileName}
-                        </Text>
-                        <Text size={200} style={{ color: "#666" }}>
-                          {fileValidation.message}
-                        </Text>
-                      </Box>
+                      <ArrowUpload24Regular
+                        style={{
+                          color: "#0078D4",
+                          fontSize: 32,
+                          marginBottom: 8,
+                        }}
+                      />
+                      <Text
+                        style={{
+                          display: "block",
+                          color: "#444",
+                          marginBottom: 4,
+                        }}
+                      >
+                        Click to upload or drag & drop
+                      </Text>
+                      <Text size={200} style={{ color: "#999" }}>
+                        Accepted: .xls, .xlsx, .csv
+                      </Text>
                     </Box>
+                  )}
 
-                    <Box
-                      style={{ display: "flex", alignItems: "center", gap: 8 }}
-                    >
-                      {fileValidation.status === "success" && (
-                        <Badge appearance="filled" color="success">
-                          {fileValidation.rowCount} employees
-                        </Badge>
-                      )}
-                      {!isViewMode && (
-                        <Button
-                          appearance="transparent"
-                          icon={<Delete24Regular />}
-                          size="small"
-                          onClick={handleRemoveFile}
-                          title="Remove file"
-                        />
-                      )}
-                    </Box>
-                  </Box>
-                )}
-
-                {/* validation error — show missing headers */}
-                {fileValidation.status === "error" &&
-                  !campaignForm?.employeeFileName && (
+                  {/* file uploaded — show result */}
+                  {campaignForm?.employeeFileName && (
                     <Box
                       style={{
-                        border: "1.5px solid #a4262c",
+                        border: `1.5px solid ${
+                          fileValidation.status === "success"
+                            ? "#107c10"
+                            : "#a4262c"
+                        }`,
                         borderRadius: 8,
                         padding: "14px 16px",
-                        background: "#fdf3f4",
-                        marginTop: 8,
+                        background:
+                          fileValidation.status === "success"
+                            ? "#f1faf1"
+                            : "#fdf3f4",
                         display: "flex",
                         alignItems: "center",
-                        gap: 10,
+                        justifyContent: "space-between",
+                        gap: 12,
                       }}
                     >
-                      <DismissCircle24Filled style={{ color: "#a4262c" }} />
-                      <Box>
-                        <Text
-                          weight="semibold"
-                          style={{
-                            display: "block",
-                            fontSize: 13,
-                            color: "#a4262c",
-                          }}
-                        >
-                          Upload failed
-                        </Text>
-                        <Text size={200} style={{ color: "#666" }}>
-                          {fileValidation.message}
-                        </Text>
+                      <Box
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 10,
+                        }}
+                      >
+                        {fileValidation.status === "success" ? (
+                          <CheckmarkCircle24Filled
+                            style={{ color: "#107c10" }}
+                          />
+                        ) : (
+                          <DismissCircle24Filled style={{ color: "#a4262c" }} />
+                        )}
+                        <Box>
+                          <Text
+                            weight="semibold"
+                            style={{ display: "block", fontSize: 13 }}
+                          >
+                            {campaignForm.employeeFileName}
+                          </Text>
+                          <Text size={200} style={{ color: "#666" }}>
+                            {fileValidation.message}
+                          </Text>
+                        </Box>
+                      </Box>
+
+                      <Box
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                        }}
+                      >
+                        {fileValidation.status === "success" && (
+                          <Badge appearance="filled" color="success">
+                            {fileValidation.rowCount} employees
+                          </Badge>
+                        )}
+                        {!isViewMode && (
+                          <Button
+                            appearance="transparent"
+                            icon={<Delete24Regular />}
+                            size="small"
+                            onClick={handleRemoveFile}
+                            title="Remove file"
+                          />
+                        )}
                       </Box>
                     </Box>
                   )}
 
-                {/* retry button after error */}
-                {fileValidation.status === "error" && !isViewMode && (
-                  <Button
-                    appearance="outline"
-                    size="small"
-                    style={{ marginTop: 10 }}
-                    icon={<ArrowUpload24Regular />}
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    Try Again
-                  </Button>
-                )}
-              </Field>
+                  {/* validation error — show missing headers */}
+                  {fileValidation.status === "error" &&
+                    !campaignForm?.employeeFileName && (
+                      <Box
+                        style={{
+                          border: "1.5px solid #a4262c",
+                          borderRadius: 8,
+                          padding: "14px 16px",
+                          background: "#fdf3f4",
+                          marginTop: 8,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 10,
+                        }}
+                      >
+                        <DismissCircle24Filled style={{ color: "#a4262c" }} />
+                        <Box>
+                          <Text
+                            weight="semibold"
+                            style={{
+                              display: "block",
+                              fontSize: 13,
+                              color: "#a4262c",
+                            }}
+                          >
+                            Upload failed
+                          </Text>
+                          <Text size={200} style={{ color: "#666" }}>
+                            {fileValidation.message}
+                          </Text>
+                        </Box>
+                      </Box>
+                    )}
+
+                  {/* retry button after error */}
+                  {fileValidation.status === "error" && !isViewMode && (
+                    <Button
+                      appearance="outline"
+                      size="small"
+                      style={{ marginTop: 10 }}
+                      icon={<ArrowUpload24Regular />}
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      Try Again
+                    </Button>
+                  )}
+                </Field>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </Box>
       </Grid>
 
@@ -1114,6 +1138,7 @@ function BasicDetails({
           }))
         }
         isSingleSelection={campaignForm?.giftingModel === "hr_selected"}
+        disabled={openForm?.divType === "view" || openForm?.divType === "edit"}
       />
     </Grid>
   );

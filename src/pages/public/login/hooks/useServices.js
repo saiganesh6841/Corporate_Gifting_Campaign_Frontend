@@ -33,13 +33,13 @@ function useServices() {
     const response = await APIRequest.request(
       "GET",
       ConfigAPIURL.sessionValidation,
-      ""
+      "",
     );
     if (response?.data?.responseCode === 109) {
       if (!response?.data?.user?.permission?.active) {
         publishNotification(
           "You do not have permission to log in. Please contact the administrator for assistance",
-          "error"
+          "error",
         );
         localStorage.clear();
         sessionStorage.clear();
@@ -67,7 +67,7 @@ function useServices() {
       ConfigAPIURL.accountLogin,
       JSON.stringify({
         ...loginDetails,
-      })
+      }),
     );
 
     if (
@@ -88,7 +88,7 @@ function useServices() {
 
   const verifyOTP = async () => {
     if (otp.length < 6) {
-      publishNotification("Please Enter 6 digits OTP", "error");
+      publishNotification("Please enter 6 digits OTP", "error");
       return;
     }
     const response = await APIRequest.request(
@@ -96,7 +96,7 @@ function useServices() {
       ConfigAPIURL.verifyOtp,
       JSON.stringify({
         otpVal: otp,
-      })
+      }),
     );
 
     if (response !== undefined && response !== null) {
@@ -109,7 +109,7 @@ function useServices() {
       } else if (response.data.responseCode === 112) {
         publishNotification(
           "You don't have any permission. Please contact admin",
-          "error"
+          "error",
         );
       }
     } else {
@@ -130,7 +130,7 @@ function useServices() {
       ConfigAPIURL.accountLogin,
       JSON.stringify({
         ...loginDetails,
-      })
+      }),
     );
 
     //redirect based on user type
@@ -151,7 +151,7 @@ function useServices() {
     } else if (response.data.responseCode === 104) {
       publishNotification(
         "Password is not matching, please check your password",
-        "error"
+        "error",
       );
     }
   };

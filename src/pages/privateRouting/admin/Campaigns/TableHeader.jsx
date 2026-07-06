@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 
 const useTableHeader = (setOpenForm, openForm) => {
   const styles = useStyles();
+  const userDetails = JSON.parse(localStorage.getItem("userDetails")) || {};
 
   const columns = [
     {
@@ -29,6 +30,17 @@ const useTableHeader = (setOpenForm, openForm) => {
       renderCell: (item) => (
         <TableCellLayout truncate style={{ text: capitalize }}>
           {item?.campaignName || ""}
+        </TableCellLayout>
+      ),
+    },
+    userDetails?.userType === "admin" && {
+      columnId: "organization", // this is the unique id for a column
+      fieldName: "Organization", // field name visible on header
+      minWidth: 120,
+      primaryKey: true,
+      renderCell: (item) => (
+        <TableCellLayout truncate style={{ text: capitalize }}>
+          {item?.organizationName || ""}
         </TableCellLayout>
       ),
     },

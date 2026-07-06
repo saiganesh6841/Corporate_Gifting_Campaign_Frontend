@@ -44,6 +44,34 @@ const useTableHeader = (setOpenForm, openForm) => {
       ),
     },
     {
+      columnId: "status",
+      fieldName: "Status",
+      minWidth: 200,
+      primaryKey: true,
+      renderCell: (item) => {
+        const status = item?.status?.toLowerCase();
+
+        const statusColor = {
+          pending: "#2563eb", // Blue
+          approved: "#16a34a", // Green
+          rejected: "#dc2626", // Red
+        };
+
+        return (
+          <TableCellLayout
+            truncate
+            style={{
+              textTransform: "capitalize",
+              color: statusColor[status] || "inherit",
+              fontWeight: 600,
+            }}
+          >
+            {item?.status || ""}
+          </TableCellLayout>
+        );
+      },
+    },
+    {
       columnId: "quantity", // this is the unique id for a column
       fieldName: "Quantity", // field name visible on header
       minWidth: 70,

@@ -54,7 +54,9 @@ function OrganizationCard({ classes, data }) {
             Email
           </Typography>
 
-          <Typography style={{ fontWeight: 500 }}>{data.email}</Typography>
+          <Typography style={{ fontWeight: 500, textTransform: "lowercase" }}>
+            {data.email}
+          </Typography>
         </Box>
 
         <Box display="flex" justifyContent="space-between">

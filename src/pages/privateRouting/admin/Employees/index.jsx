@@ -226,7 +226,7 @@ function User() {
                 openForm={openForm}
                 resetForm={resetForm}
                 resetQueryBody={resetQueryBody}
-                users={true}
+                users={false}
               />
             )}
           </PanelConfirmation>

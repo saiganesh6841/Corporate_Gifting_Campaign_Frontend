@@ -162,7 +162,7 @@ const useServices = (props) => {
       }
     } catch (error) {
       publishNotification(
-        `Error while ${isEdit ? "updating" : "creating"} user`,
+        `Error while ${isEdit ? "updating" : "creating"} organization`,
         "error",
       );
     } finally {
@@ -196,7 +196,7 @@ const useServices = (props) => {
         });
       }
     } catch (error) {
-      publishNotification("Error while fetching user details", "error");
+      publishNotification("Error while fetching organization details", "error");
     } finally {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
     }
@@ -315,7 +315,7 @@ const useServices = (props) => {
       }
     } catch (error) {
       publishNotification(
-        "Error while fetching Created By users list",
+        "Error while fetching Created By organization list",
         "error",
       );
     } finally {

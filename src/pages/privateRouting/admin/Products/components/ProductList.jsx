@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import ProductCard from "../../../../../components/Product/ProductCard";
 import LocalStorage from "../../../../../config/LocalStorage";
 
@@ -40,20 +40,35 @@ export default function ProductList({ products, setRecordId, tableFunctions }) {
   console.log(products, "products");
   return (
     <Box sx={{ p: 2 }}>
-      <Grid container spacing={3}>
-        {products.map((product) => (
-          <Grid item xs={12} sm={6} md={3} key={product._id}>
-            <ProductCard
-              product={product}
-              showStockBadge={true}
-              onManage={handleManage}
-              userType={userData?.userType}
-              setRecordId={setRecordId}
-              tableFunctions={tableFunctions}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {products?.length > 0 ? (
+        <Grid container spacing={3}>
+          {products.map((product) => (
+            <Grid item xs={12} sm={6} md={3} key={product._id}>
+              <ProductCard
+                product={product}
+                showStockBadge={true}
+                onManage={handleManage}
+                userType={userData?.userType}
+                setRecordId={setRecordId}
+                tableFunctions={tableFunctions}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Box
+          sx={{
+            py: 8,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h6" color="text.secondary">
+            No Products Available
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }

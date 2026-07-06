@@ -84,8 +84,9 @@ const Toolbar = ({
   children,
   themeColor,
   setQuery,
-  resetRecords,showSearch
-
+  resetRecords,
+  showSearch,
+  isColumnView,
 }) => {
   const classes = useStyles();
   iconStyleProps["primaryFill"] = themeColor;
@@ -94,12 +95,12 @@ const Toolbar = ({
     const buttons = {};
     if (buttonList?.length <= 6) {
       const renderedButtons = tableButtons?.filter((button) =>
-        buttonList?.includes(button?.id)
+        buttonList?.includes(button?.id),
       );
       buttons.renderedButtons = renderedButtons;
     } else {
       const fiteredButtons = tableButtons?.filter((button) =>
-        buttonList?.includes(button?.id)
+        buttonList?.includes(button?.id),
       );
       const renderedButtons = fiteredButtons?.slice(0, 4);
       const moreTableButtons = fiteredButtons?.slice(4);
@@ -127,15 +128,14 @@ const Toolbar = ({
   // Debounced search handler
   const handleSearch = useCallback(
     debounce((e, newValue) => {
-      
-      if(!showSearch) resetRecords();
+      if (!showSearch) resetRecords();
       //reset the selection before searching
       setQuery((prev) => ({
         ...prev,
         keyword: newValue,
       }));
     }, 300),
-    []
+    [],
   );
 
   const RegularIcon = ({ regular }) => {
@@ -193,19 +193,20 @@ const Toolbar = ({
             alignItems="center"
             gap=".8rem"
           >
-            {!showSearch && <Stack
-              onClick={buttonFunctions?.viewFilter}
-              flexDirection="row"
-              alignItems="center"
-              gap=".4rem"
-              style={{ cursor: "pointer" }}
-            >
-              <Filter24Regular {...iconStyleProps} />
-              <Typography style={{ fontWeight: 400, color: "black" }}>
-                {"Filter"}
-              </Typography>
-            </Stack>}
-            
+            {!showSearch && (
+              <Stack
+                onClick={buttonFunctions?.viewFilter}
+                flexDirection="row"
+                alignItems="center"
+                gap=".4rem"
+                style={{ cursor: "pointer" }}
+              >
+                <Filter24Regular {...iconStyleProps} />
+                <Typography style={{ fontWeight: 400, color: "black" }}>
+                  {"Filter"}
+                </Typography>
+              </Stack>
+            )}
 
             <Stack width="200px">
               <SearchBar
@@ -216,15 +217,16 @@ const Toolbar = ({
               />
             </Stack>
 
+            {!showSearch && !isColumnView && (
+              <ColumnTriple24Regular
+                onClick={() =>
+                  buttonFunctions?.editColumn && buttonFunctions?.editColumn()
+                }
+                style={{ cursor: "pointer" }}
+                {...iconStyleProps}
+              />
+            )}
 
-                {!showSearch && <ColumnTriple24Regular
-              onClick={() =>
-                buttonFunctions?.editColumn && buttonFunctions?.editColumn()
-              }
-              style={{ cursor: "pointer" }}
-              {...iconStyleProps}
-            />}
-            
             {children}
           </Stack>
         </Stack>

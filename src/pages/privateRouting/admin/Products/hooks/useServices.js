@@ -167,6 +167,7 @@ const useServices = (props) => {
           category: result?.category || "",
           brand: result?.brand || "",
           thumbnailImage: result?.thumbnailImage || "",
+          images: result?.images || [],
         });
       }
     } catch (error) {
@@ -177,23 +178,23 @@ const useServices = (props) => {
   };
 
   const deleteUser = async () => {
-    const ids = recordId?.map((id) => id?.userId);
+    const ids = recordId?.map((id) => id?._id);
     const payload = {
-      orgIds: ids,
+      productIds: ids,
     };
 
     try {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "POST",
-        ConfigAPIURL.deleteUser,
+        ConfigAPIURL.deleteProduct,
         JSON.stringify(payload),
       );
       if (response?.data?.responseCode === 109) {
         tableQuery(query);
         dismissDelete();
         resetRecords();
-        publishNotification("Organization Deleted Successfully", "success");
+        publishNotification("Product Deleted Successfully", "success");
       }
     } catch (error) {
       publishNotification("Something went wrong while deleting", "error");

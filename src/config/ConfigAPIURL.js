@@ -28,6 +28,7 @@ class ConfigAPIURL {
   static createUser = this.baseUrl + "/admin/user/create";
   static userUpdate = this.baseUrl + "/admin/user/update";
   static deleteUser = this.baseUrl + "/admin/user/delete";
+  static restoreUser = this.baseUrl + "/admin/user/restore";
 
   //roles
   static listRoles = this.baseUrl + "/admin/role/list";

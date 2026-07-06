@@ -9,6 +9,7 @@ import PrimaryBtn from "../../../../components/button";
 import LoginFields from "./LoginComponent";
 import OtpField from "./OtpComponent";
 import loginLogo from "../../../../assets/Images/snapFlowLoginImg.png";
+import images from "../../../../image.js";
 
 function LoginUI({ services, classes }) {
   const {
@@ -57,15 +58,15 @@ function LoginUI({ services, classes }) {
             padding: "6px 0px",
           }}
         >
-          <img src={loginLogo} width="120px" height="100px" />
+          <img src={images.aayeraLogo} width="120px" height="100px" />
         </div>
         <Typography className={classes.titleText}>
           {!otpTrue ? "Login" : "Verify OTP"}
         </Typography>
         <Typography className={classes.subTitleText}>
           {!otpTrue
-            ? "Please Login to your account"
-            : `Sent to ${loginDetails?.mobileNo}`}
+            ? "Please login to your account"
+            : `Sent to ${loginDetails?.email}`}
         </Typography>
         <br />
         {!otpTrue ? (

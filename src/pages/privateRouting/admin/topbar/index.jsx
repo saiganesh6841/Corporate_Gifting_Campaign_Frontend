@@ -96,7 +96,17 @@ function TopBar(props) {
       >
         <Toolbar className={classes.Toolbar}>
           <Stack className={classes.title}>
-            <img className={classes.logo} src={snapFlowImage} alt="logo" />
+            {/* <img className={classes.logo} src={snapFlowImage} alt="logo" /> */}
+            <Typography
+              variant="h1"
+              style={{
+                fontWeight: 700,
+                fontSize: "1.5rem",
+                color: theme.palette.primary.main,
+              }}
+            >
+              Aayera
+            </Typography>
           </Stack>
 
           <Stack direction="row" spacing={2} alignItems="center">
@@ -109,7 +119,7 @@ function TopBar(props) {
                   fontSize: "16px",
                 }}
               >
-                {LocalStorage?.userDetails?.name}
+                {LocalStorage?.userDetails?.fullName}
               </Typography>
               <Typography
                 variant="caption"

@@ -45,67 +45,200 @@ function Dashboard(props) {
   const services = useServices({ graphFiltersData, pieChartFiltersData });
   const [statsConstData, setStatsConstData] = useState([]);
 
+  // useEffect(() => {
+  //   if (services?.statisticsData) {
+  //     setStatsConstData([
+  //       {
+  //         color: "#582538",
+  //         label: "Total Campaigns",
+  //         icon: <DocumentBulletList24Regular style={{ color: "#ffff" }} />,
+  //         count: services?.statisticsData?.summary?.totalCampaigns,
+  //       },
+  //       {
+  //         color: "#007F0A",
+  //         label: "Completed Campaigns",
+  //         icon: <DocumentCheckmark24Regular style={{ color: "#ffff" }} />,
+  //         count: services?.statisticsData?.summary?.completedCampaigns,
+  //       },
+  //       {
+  //         color: "#CA9700",
+  //         label: "Active Campaigns",
+  //         icon: <Document24Regular style={{ color: "#ffff" }} />,
+  //         count: services?.statisticsData?.summary?.activeCampaigns,
+  //       },
+  //       {
+  //         color: "#0078D4",
+  //         label: "Total Employees",
+  //         icon: <People24Regular style={{ color: "#ffff" }} />,
+  //         count: services?.statisticsData?.summary?.totalEmployees,
+  //       },
+  //       {
+  //         color: "#582538",
+  //         label: "Total Orders",
+  //         icon: <DocumentBulletList24Regular style={{ color: "#ffff" }} />,
+  //         count: services?.statisticsData?.summary?.totalOrders,
+  //       },
+  //       {
+  //         color: "#007F0A",
+  //         label: "Delivered Orders",
+  //         icon: <DocumentCheckmark24Regular style={{ color: "#ffff" }} />,
+  //         count: services?.statisticsData?.summary?.totalDelivered,
+  //       },
+  //       {
+  //         color: "#CA9700",
+  //         label: "Total Budget",
+  //         icon: <Document24Regular style={{ color: "#ffff" }} />,
+  //         count: services?.statisticsData?.summary?.totalBudgetUsed,
+  //       },
+  //       {
+  //         type: "organization",
+  //         organizationName: services?.statisticsData?.organization?.name,
+  //         email: services?.statisticsData?.organization?.email,
+  //         mobile: services?.statisticsData?.organization?.mobileNumber,
+  //       },
+  //     ]);
+  //   }
+  // }, [services?.statisticsData]);
   useEffect(() => {
-    if (services?.statisticsData) {
-      setStatsConstData([
-        {
-          color: "#582538",
-          label: "Total Campaigns",
-          icon: <DocumentBulletList24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.summary?.totalCampaigns,
-        },
-        {
-          color: "#007F0A",
-          label: "Completed Campaigns",
-          icon: <DocumentCheckmark24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.summary?.completedCampaigns,
-        },
-        {
-          color: "#CA9700",
-          label: "Active Campaigns",
-          icon: <Document24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.summary?.activeCampaigns,
-        },
-        {
-          color: "#0078D4",
-          label: "Total Employees",
-          icon: <People24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.summary?.totalEmployees,
-        },
-        {
-          color: "#582538",
-          label: "Total Orders",
-          icon: <DocumentBulletList24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.summary?.totalOrders,
-        },
-        {
-          color: "#007F0A",
-          label: "Delivered Orders",
-          icon: <DocumentCheckmark24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.summary?.totalDelivered,
-        },
-        {
-          color: "#CA9700",
-          label: "In Progress",
-          icon: <Document24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.inProgress,
-        },
-        {
-          color: "#0078D4",
-          label: "Total Users ",
-          icon: <People24Regular style={{ color: "#ffff" }} />,
-          count: services?.statisticsData?.totalUsers,
-        },
-        {
-          type: "organization",
-          organizationName: services?.statisticsData?.organization?.name,
-          email: services?.statisticsData?.organization?.email,
-          mobile: services?.statisticsData?.organization?.mobileNumber,
-        },
-      ]);
-    }
-  }, [services?.statisticsData]);
+    if (!services?.statisticsData?.userType) return;
 
+    const summary = services.statisticsData.summary;
+    const organization = services.statisticsData.organization;
+
+    let cards = [];
+
+    switch (services?.statisticsData?.userType) {
+      // ================= HR =================
+      case "HR":
+        cards = [
+          {
+            color: "#582538",
+            label: "Total Campaigns",
+            icon: <DocumentBulletList24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalCampaigns,
+          },
+          {
+            color: "#007F0A",
+            label: "Completed Campaigns",
+            icon: <DocumentCheckmark24Regular style={{ color: "#fff" }} />,
+            count: summary?.completedCampaigns,
+          },
+          {
+            color: "#CA9700",
+            label: "Active Campaigns",
+            icon: <Document24Regular style={{ color: "#fff" }} />,
+            count: summary?.activeCampaigns,
+          },
+          {
+            color: "#0078D4",
+            label: "Total Employees",
+            icon: <People24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalEmployees,
+          },
+          {
+            color: "#8E44AD",
+            label: "Total Orders",
+            icon: <DocumentBulletList24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalOrders,
+          },
+          {
+            color: "#2ECC71",
+            label: "Delivered Orders",
+            icon: <DocumentCheckmark24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalDelivered,
+          },
+          {
+            color: "#F39C12",
+            label: "Total Budget",
+            icon: <Document24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalBudgetUsed,
+          },
+          {
+            type: "organization",
+            organizationName: organization?.name,
+            email: organization?.email,
+            mobile: organization?.mobileNumber,
+          },
+        ];
+        break;
+
+      // ================= ADMIN =================
+      case "admin":
+        cards = [
+          {
+            color: "#0078D4",
+            label: "Total Users",
+            icon: <People24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalUsers,
+          },
+          {
+            color: "#582538",
+            label: "Total Organizations",
+            icon: <People24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalOrganizations,
+          },
+          {
+            color: "#8E44AD",
+            label: "Total Campaigns",
+            icon: <DocumentBulletList24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalCampaigns,
+          },
+          {
+            color: "#2ECC71",
+            label: "Completed Campaigns",
+            icon: <DocumentCheckmark24Regular style={{ color: "#fff" }} />,
+            count: summary?.completedCampaigns,
+          },
+          {
+            color: "#F39C12",
+            label: "Total Orders",
+            icon: <Document24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalOrders,
+          },
+          {
+            color: "#F39C12",
+            label: "Total Employees",
+            icon: <Document24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalEmployees,
+          },
+        ];
+        break;
+
+      // ================= VENDOR =================
+      case "vendor":
+        cards = [
+          {
+            color: "#0078D4",
+            label: "Total Products",
+            icon: <DocumentBulletList24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalProducts,
+          },
+          {
+            color: "#582538",
+            label: "Total Orders",
+            icon: <Document24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalOrders,
+          },
+          {
+            color: "#2ECC71",
+            label: "Total Revenue",
+            icon: <DocumentCheckmark24Regular style={{ color: "#fff" }} />,
+            count: summary?.totalRevenue,
+          },
+        ];
+        break;
+
+      default:
+        cards = [];
+    }
+
+    setStatsConstData(cards);
+  }, [services?.statisticsData, services?.statisticsData?.userType]);
+  console.log(
+    "services?.statisticsData",
+    services?.statisticsData,
+    statsConstData,
+  );
   return (
     <div
       className={classes.root}

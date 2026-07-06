@@ -8,7 +8,7 @@ const LoginFields = ({ services, classes, errors }) => {
     <div>
       <CustomTextFiled
         type={"number"}
-        placeholder="Enter you Email"
+        placeholder="Enter your Email"
         value={services?.loginDetails?.email}
         onChange={(e) => {
           services?.setLoginDetails((p) => ({
@@ -40,7 +40,7 @@ const LoginFields = ({ services, classes, errors }) => {
         className={classes.forgotPassword}
         // style={{ display: otpState || forgotPassword ? "none" : "" }}
       >
-        <Link
+        {/* <Link
           component={RouterLink}
           to="/admin/password/forgotpassword"
           style={{
@@ -52,7 +52,7 @@ const LoginFields = ({ services, classes, errors }) => {
           <Typography className={classes.forgotPasswordText}>
             Forgot Password?
           </Typography>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 export const queryBody = {
   active: true,
-  userType: "All",
+  userType: "admin",
   page: 0,
   pageSize: 10,
   keyword: "",
@@ -9,6 +9,8 @@ export const queryBody = {
   startDate: null,
   endDate: Math.floor(new Date().setHours(23, 59, 0, 0) / 1000),
   createdByKeyword: "",
+  organization: "",
+  organizationName: "",
 };
 
 export const form = {

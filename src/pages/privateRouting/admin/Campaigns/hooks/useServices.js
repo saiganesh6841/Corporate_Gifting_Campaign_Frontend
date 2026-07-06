@@ -41,7 +41,7 @@ const useServices = (props) => {
   const { publishNotification } = useAlert();
 
   const [roles, setRoles] = useState([]);
-  const [createdByList, setCreatedByList] = useState([]);
+  const [organizationList, setOrganizationList] = useState([]);
   const [subscriptionList, setSubscriptionList] = useState([]);
   const [challengeDropdownList, setChallengeDropdownList] = useState([]);
   const [userRatings, setUserRatings] = useState([]);
@@ -74,9 +74,9 @@ const useServices = (props) => {
     handleChangeKeys,
   } = useUploadExcel();
 
-  useEffect(() => {
-    createdByUsers();
-  }, []);
+  // useEffect(() => {
+  //   createdByUsers();
+  // }, []);
 
   useEffect(() => {
     if (!query) return;
@@ -211,6 +211,8 @@ const useServices = (props) => {
           giftingModel: result?.giftingModel || "",
           products: result?.products || "",
           message: result?.message || "",
+          emailTextInformation: result?.emailTextInformation || "",
+          organizationId: result?.organization?._id || "",
         });
       }
     } catch (error) {
@@ -270,23 +272,20 @@ const useServices = (props) => {
     }
   };
 
-  const createdByUsers = async () => {
+  const getOrganizationList = async () => {
     try {
       setLoading({ ...loading, isOpen: true, type: "filter" });
 
       const response = await APIRequest.request(
         "POST",
-        ConfigAPIURL.userCreatedByList,
+        ConfigAPIURL.listOrganizationDropdown,
         "",
       );
       if (response?.data?.responseCode === 109) {
-        setCreatedByList(response.data?.result);
+        setOrganizationList(response.data?.data);
       }
     } catch (error) {
-      publishNotification(
-        "Error while fetching Created By users list",
-        "error",
-      );
+      publishNotification("Error while fetching Organization list", "error");
     } finally {
       setLoading({ ...loading, isOpen: false, type: "" });
     }
@@ -325,7 +324,6 @@ const useServices = (props) => {
     deleteUser,
     errors,
     setErrors,
-    createdByList,
     getProductList,
     productData,
     handleDownloadTemplate,
@@ -333,6 +331,8 @@ const useServices = (props) => {
     handleDownloadExcelFailedData,
     validateHeaders,
     handleChangeKeys,
+    getOrganizationList,
+    organizationList,
   };
 };
 

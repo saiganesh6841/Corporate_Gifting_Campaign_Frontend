@@ -6,7 +6,7 @@ import {
   Combobox,
   Textarea,
 } from "@fluentui/react-components";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useTheme } from "@mui/styles";
 import SectionHeading from "../../../../../components/SectionHeader/Index";
@@ -250,7 +250,7 @@ function BasicDetails({
               </Field>
             </Grid>
 
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <Field
                 className={classes.label}
                 label="Discount Price (₹)"
@@ -287,7 +287,7 @@ function BasicDetails({
                   }}
                 />
               </Field>
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={6}>
               <Field
@@ -378,6 +378,47 @@ function BasicDetails({
                     }));
                   }}
                 />
+                <Typography
+                  style={{ fontSize: "12px", color: "grey", textAlign: "end" }}
+                >
+                  Dimensions: 300x300 px
+                </Typography>
+              </Field>
+            </Grid>
+
+            <Grid item xs={12} style={{ marginTop: "1.5rem" }}>
+              <Field
+                className={classes.label}
+                label="Product Images"
+                // validationMessage={
+                //   errors?.thumbnailImage ? "Thumbnail field is required" : ""
+                // }
+                // required
+              >
+                <AttachmentsInputField
+                  id="images"
+                  onUpload={(fileUrl) => {
+                    setProductForm((prev) => ({
+                      ...prev,
+                      images: [...(prev.images || []), fileUrl],
+                    }));
+
+                    delete errors["images"];
+                  }}
+                  setUserForm={setProductForm}
+                  attachments={productForm?.images || []}
+                  handleDeleteAttachment={(ind) => {
+                    setProductForm((prev) => ({
+                      ...prev,
+                      images: prev.images.filter((_, i) => i !== ind),
+                    }));
+                  }}
+                />
+                <Typography
+                  style={{ fontSize: "12px", color: "grey", textAlign: "end" }}
+                >
+                  Dimensions: 1200 x 1200 px
+                </Typography>
               </Field>
             </Grid>
           </Grid>

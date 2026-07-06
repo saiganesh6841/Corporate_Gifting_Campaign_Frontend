@@ -31,7 +31,7 @@ export const form = {
 export const userDetails = {
   fullName: "",
   active: true,
-  userType: "HR",
+  userType: "employee",
   email: "",
   mobileNumber: null,
   address: "",

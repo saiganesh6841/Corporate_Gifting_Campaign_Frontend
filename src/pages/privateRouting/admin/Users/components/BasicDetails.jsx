@@ -441,7 +441,7 @@ function BasicDetails({
                     className={` input__Style`}
                     size="large"
                     placeholder="Enter your Warehouse Pincode"
-                    value={userForm?.mobileNumber || ""}
+                    value={userForm?.warehousePincode || ""}
                     onChange={(event) => {
                       const value = event.target.value.replace(/\D/g, ""); // Remove non-numeric characters
                       const truncatedValue = value.slice(0, 6); // Limit to 10 digits
@@ -456,7 +456,7 @@ function BasicDetails({
                       if (userForm?.warehousePincode) {
                         if (userForm.warehousePincode.length < 6) {
                           errors["warehousePincode"] =
-                            "Warehouse Pincode must be at least 10 digits";
+                            "Warehouse Pincode must be at least 6 digits";
                         } else {
                           delete errors["warehousePincode"];
                         }
@@ -510,7 +510,7 @@ function BasicDetails({
                     id="password"
                     className="input__Style"
                     size="large"
-                    style={{ width: "280px" }}
+                    style={{ width: "250px" }}
                     placeholder="Enter Password"
                     type={showPassword ? "text" : "password"}
                     onBlur={handleBlur("password")}

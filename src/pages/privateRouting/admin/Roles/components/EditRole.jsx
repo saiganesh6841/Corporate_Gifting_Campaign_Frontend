@@ -10,10 +10,12 @@ import { useStyles } from "../styles/style";
 import AccessComponent from "./AccessComponent";
 import PermissionComponent from "./PermissionComponent";
 import roleImage from "../../../../../assets/Images/SnapFlow.png";
+import { useTheme } from "@mui/styles";
 
 function AEVForm(props) {
   const { openForm, recordId, addForm, setAddForm, addFormDetails, errors } =
     props;
+  const theme = useTheme();
   const [selectLabel, setSelectLabel] = useState("User");
   const [showMicroPermissions, setShowMicroPermissions] = useState(false);
 
@@ -215,7 +217,7 @@ function AEVForm(props) {
                           event,
                           index,
                           idx,
-                          "permission"
+                          "permission",
                         )
                       }
                       disabled={openForm?.divType === "view"}
@@ -226,7 +228,17 @@ function AEVForm(props) {
                         marginTop: "50px",
                       }}
                     >
-                      <img src={roleImage} width="250px" alt="roles" />
+                      {/* <img src={roleImage} width="250px" alt="roles" /> */}
+                      <Typography
+                        variant="h1"
+                        style={{
+                          fontWeight: 700,
+                          fontSize: "1.5rem",
+                          color: theme.palette.primary.main,
+                        }}
+                      >
+                        Aayera
+                      </Typography>
                     </Box>
                   </Box>
                 </Box>
@@ -245,5 +257,5 @@ const mapDispachToProps = (dispatch) => {
   };
 };
 export default withTranslation("translations")(
-  connect(null, mapDispachToProps)(AEVForm)
+  connect(null, mapDispachToProps)(AEVForm),
 );

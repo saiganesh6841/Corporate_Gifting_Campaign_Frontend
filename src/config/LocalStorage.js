@@ -40,6 +40,7 @@ class LocalStorage {
     email: "",
     mobileNo: "",
     name: "",
+    fullName: "",
     permission: null,
     profileImage: "",
     userName: "",

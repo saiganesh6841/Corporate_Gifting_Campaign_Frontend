@@ -329,7 +329,7 @@ function GiftSelectionScreen({ campaign, employee, onSelect }) {
               letterSpacing: "-0.02em",
             }}
           >
-            Happy {campaign?.occasion ?? "Celebration"}, {firstName} ✨
+            Hello {firstName} ✨
           </h1>
           <p
             style={{

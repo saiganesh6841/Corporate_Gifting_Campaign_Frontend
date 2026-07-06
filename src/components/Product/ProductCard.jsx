@@ -38,6 +38,7 @@ export default function ProductCard({
   product,
   onManage,
   showStockBadge = false,
+  disabled,
   userType,
   setRecordId,
   tableFunctions,
@@ -105,7 +106,7 @@ export default function ProductCard({
               fontSize: 15,
               lineHeight: "20px",
               display: "-webkit-box",
-              WebkitLineClamp: 2,
+              WebkitLineClamp: 1,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               minHeight: 40,
@@ -186,7 +187,7 @@ export default function ProductCard({
             </Box>
           )}
 
-          {userType !== "vendor" && product?.vendorName && (
+          {/* {userType !== "vendor" && product?.vendorName && (
             <Box
               sx={{
                 px: "0.3rem",
@@ -200,7 +201,7 @@ export default function ProductCard({
             >
               {product?.vendorName}
             </Box>
-          )}
+          )} */}
         </Box>
         {/* Vendor */}
         {/* {userType !== "vendor" && (
@@ -268,7 +269,10 @@ export default function ProductCard({
 
                   <MenuItem
                     icon={<Delete20Regular />}
-                    // onClick={() => onDelete?.(product)}
+                    onClick={() => {
+                      setRecordId([product]);
+                      tableFunctions?.Delete(product);
+                    }}
                   >
                     Delete
                   </MenuItem>

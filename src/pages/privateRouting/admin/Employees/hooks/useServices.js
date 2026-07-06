@@ -89,6 +89,8 @@ const useServices = (props) => {
 
   const sendToServer = async (userForm, isEdit) => {
     // publishNotification("hello we are checking", "error");
+    if (loading?.isOpen) return;
+    setLoading({ ...loading, isOpen: true, type: "create" });
     // return;
     const method = isEdit ? "POST" : "POST";
     const URL = isEdit ? ConfigAPIURL.userUpdate : ConfigAPIURL.createUser;
@@ -159,6 +161,7 @@ const useServices = (props) => {
       );
     } finally {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: false });
+      setLoading({ ...loading, isOpen: false, type: "filter" });
     }
   };
 
@@ -175,7 +178,7 @@ const useServices = (props) => {
       if (response?.data?.responseCode === 109) {
         const user = response?.data?.rows;
         setUserForm({
-          userId: user?._id || "",
+          userId: user?.userId || "",
           userType: user?.userType || "",
           mobileNumber: user?.mobileNumber || "",
           fullName: user?.fullName || "",

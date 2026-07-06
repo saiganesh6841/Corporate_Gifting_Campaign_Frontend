@@ -12,6 +12,7 @@ const ProductSelectionModal = ({
   selectedProducts,
   setSelectedProducts,
   isSingleSelection,
+  disabled,
 }) => {
   const [tempSelected, setTempSelected] = useState([]);
 
@@ -100,7 +101,11 @@ const ProductSelectionModal = ({
                     }}
                   />
 
-                  <ProductCard product={product} userType={userType} />
+                  <ProductCard
+                    product={product}
+                    userType={userType}
+                    disabled={disabled}
+                  />
                 </Box>
               </Grid>
             );

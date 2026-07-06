@@ -150,7 +150,7 @@ function BasicDetails({
                   disabled
                   // disabled={isEdit}
                 >
-                  {["HR"].map((type) => (
+                  {["Employee"].map((type) => (
                     <Option
                       key={type}
                       onClick={() => {

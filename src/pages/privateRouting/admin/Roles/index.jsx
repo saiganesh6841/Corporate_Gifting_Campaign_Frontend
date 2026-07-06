@@ -42,7 +42,7 @@ function Roles(props) {
 
   const resetForm = () => {
     setOpenForm({ ...form });
-    // clearSelectedRows();
+    clearSelectedRows();
     setRecordId([]);
     setErrors({});
   };
@@ -100,7 +100,7 @@ function Roles(props) {
     selectedRows,
     setSelectedRows,
     recordId,
-    setRecordId
+    setRecordId,
   );
   const { downloadCsv } = useDownloadCSV(columns, tableData); // download excel sheet hook
 
@@ -214,8 +214,8 @@ function Roles(props) {
                         openForm?.divType === "column"
                           ? "Reset"
                           : openForm?.divType === "add"
-                          ? "Save"
-                          : "Save",
+                            ? "Save"
+                            : "Save",
                       handle: () =>
                         setOpenForm({
                           ...openForm,
@@ -223,10 +223,10 @@ function Roles(props) {
                             openForm?.divType === "add"
                               ? addRole()
                               : openForm?.divType === "edit"
-                              ? updateRole()
-                              : openForm?.divType === "assignRole"
-                              ? assignRole()
-                              : true,
+                                ? updateRole()
+                                : openForm?.divType === "assignRole"
+                                  ? assignRole()
+                                  : true,
                         }),
                     }}
                     field2={{
@@ -409,5 +409,5 @@ const mapDispachToProps = (dispatch) => {
   };
 };
 export default withTranslation("translations")(
-  connect(mapStateToProps, mapDispachToProps)(Roles)
+  connect(mapStateToProps, mapDispachToProps)(Roles),
 );

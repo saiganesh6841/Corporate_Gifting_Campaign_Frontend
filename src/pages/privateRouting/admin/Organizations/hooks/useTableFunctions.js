@@ -28,21 +28,15 @@ const useTableFunctions = ({
     console.log(data, "data");
 
     data.forEach((item, ind) => {
-      // const itemNameCopy = item?.name;
-      // const operatedByCopy = item?.operatedBy;
-      // const email = item?.email?.props.content;
-      // const createdBy = item?.createdBy[2];
-      // // const department = item?.department?.props.content;
-      item["User Type"] = item?.userId;
-      item["Full Name"] = item?.fullName?.[2];
+      item["Company Name"] = item?.companyName;
+      item["Contact Person Name"] = item?.fullName?.[2];
       item["Email"] = item?.email?.props?.content;
       item["Mobile Number"] = item?.mobileNumber?.props?.content;
-      item["Created By"] = item?.createdBy?.[2];
-      item["Updated By"] = item?.updatedBy?.[2];
+      item["Created By"] = item?.createdByUser?.[2];
+      item["Updated By"] = item?.updatedByUser?.[2];
 
-      item["User Id"] = item?.userId;
-      item["Gender"] = item?.gender;
-      item["Date Of Birth"] = item?.dob;
+      item["City"] = item?.city;
+      item["State"] = item?.state;
       item["Created On"] = item?.createdAt;
       item["Updated On"] = item?.updatedAt;
     });
@@ -76,15 +70,15 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "add",
-          title: "Create User",
+          title: "Create Organization",
           width: 700,
           hasCloseButton: false,
         };
       });
     } else {
       publishNotification(
-        "Please unselect all records for creating user",
-        "error"
+        "Please unselect all records for creating organization",
+        "error",
       );
     }
   };
@@ -98,7 +92,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "view",
-          title: "View user",
+          title: "View Organization",
           width: 700,
           hasCloseButton: false,
           rowDetails: recordId,
@@ -120,7 +114,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "edit",
-          title: "Edit user",
+          title: "Edit Organization",
           width: 700,
           hasCloseButton: false,
           rowDetails: recordId,

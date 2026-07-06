@@ -5,6 +5,7 @@ import {
   Combobox,
   Button,
   Text,
+  Textarea,
 } from "@fluentui/react-components";
 import { Delete20Filled, AddCircle24Regular } from "@fluentui/react-icons";
 import { Box, Grid } from "@mui/material";
@@ -29,6 +30,7 @@ function BasicDetails({
   services,
 }) {
   const theme = useTheme();
+  const userStorage = JSON.parse(localStorage.getItem("userData"));
   const [employeeQuery, setEmployeeQuery] = useState("");
   const [campaignQuery, setCampaignQuery] = useState("");
   const [isAddingEmployee, setIsAddingEmployee] = useState(false);
@@ -128,6 +130,53 @@ function BasicDetails({
   console.log("errors", errors);
   return (
     <Grid container spacing={2}>
+      {/* status modal */}
+
+      <Grid item xs={12}>
+        <Box className="box_container">
+          <SectionHeading title="Status" classes={classes} theme={theme} />
+          <Grid container spacing={2} style={{ padding: "10px" }}>
+            <Grid item xs={6}>
+              <Field
+                label="Status"
+                className={classes?.label}
+                required
+                validationMessage={errors?.status}
+              >
+                <Combobox
+                  value={services?.status || orderForm?.status || ""}
+                  selectedOptions={[status]}
+                  onOptionSelect={(_, data) => {
+                    const value = data.optionValue;
+                    services?.setStatus?.(value);
+                  }}
+                >
+                  <Option value="approved">Approved</Option>
+                  <Option value="cancelled">Cancelled</Option>
+                </Combobox>
+              </Field>
+            </Grid>
+            {/* {(services?.status === "cancelled" ||
+              orderForm?.status === "cancelled") && (
+              <Grid item xs={12}>
+                <Textarea
+                  value={orderForm?.rejectReason || ""}
+                  onChange={(e) => {
+                    setOrderForm((prev) => ({
+                      ...prev,
+                      rejectReason: e?.target?.value ?? "",
+                    }));
+                  }}
+                  placeholder="Enter reason for rejection"
+                  disabled={orderForm?.status === "cancelled"}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+            )} */}
+          </Grid>
+        </Box>
+      </Grid>
+
       {/* ── Employee Section ─────────────────────────── */}
       <Grid item xs={12}>
         <Box className="box_container">

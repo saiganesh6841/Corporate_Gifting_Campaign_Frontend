@@ -40,10 +40,10 @@ function User() {
   const [errors, setErrors] = useState({});
   // active and inactive buttons function
   const inactiveTableButton = tableButtons.filter((item) =>
-    inactiveLabels.includes(item.id)
+    inactiveLabels.includes(item.id),
   );
   const activeTableButton = tableButtons.filter(
-    (item) => !activeLabels.includes(item.id)
+    (item) => !activeLabels.includes(item.id),
   );
 
   const resetForm = () => {
@@ -226,7 +226,7 @@ function User() {
                 openForm={openForm}
                 resetForm={resetForm}
                 resetQueryBody={resetQueryBody}
-                users={true}
+                users={false}
               />
             )}
           </PanelConfirmation>
@@ -236,12 +236,12 @@ function User() {
             onDismissModal={dismissDelete}
             title={
               recordId?.length > 1
-                ? `${isDeleteOpen ? "Delete" : "Restore"} Users`
-                : `${isDeleteOpen ? "Delete" : "Restore"} User`
+                ? `${isDeleteOpen ? "Delete" : "Restore"} Organizations`
+                : `${isDeleteOpen ? "Delete" : "Restore"} Organization`
             }
             content={`Are you sure you want to ${
               isDeleteOpen ? "delete" : "restore"
-            } selected ${recordId?.length > 1 ? "Users" : "User"}?`}
+            } selected ${recordId?.length > 1 ? "Organizations" : "Organization"}?`}
             Button={"Delete"}
             onClick={isDeleteOpen && services?.deleteUser}
           />
@@ -267,5 +267,5 @@ const mapDispachToProps = (dispatch) => {
 };
 // export default User;
 export default withTranslation("translations")(
-  connect(mapStateToProps, mapDispachToProps)(User)
+  connect(mapStateToProps, mapDispachToProps)(User),
 );

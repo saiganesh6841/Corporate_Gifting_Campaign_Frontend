@@ -76,7 +76,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "add",
-          title: "Create User",
+          title: "Create Employee",
           width: 700,
           hasCloseButton: false,
         };
@@ -84,7 +84,7 @@ const useTableFunctions = ({
     } else {
       publishNotification(
         "Please unselect all records for creating user",
-        "error"
+        "error",
       );
     }
   };
@@ -98,7 +98,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "view",
-          title: "View user",
+          title: "View Employee",
           width: 700,
           hasCloseButton: false,
           rowDetails: recordId,
@@ -120,7 +120,7 @@ const useTableFunctions = ({
           ...p,
           isOpen: true,
           divType: "edit",
-          title: "Edit user",
+          title: "Edit Employee",
           width: 700,
           hasCloseButton: false,
           rowDetails: recordId,

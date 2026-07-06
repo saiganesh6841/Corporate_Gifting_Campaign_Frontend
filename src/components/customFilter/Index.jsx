@@ -12,7 +12,7 @@ import { DatePicker } from "@fluentui/react-datepicker-compat";
 import React, { useEffect, useState } from "react";
 import Typography from "../Text/Typogarphy";
 
-const userTypes = ["admin", "worker", "supervisor"];
+const userTypes = ["admin", "vendor", "HR"];
 const statusList = ["pending", "inprogress", "completed", "cancelled"];
 
 const CustomFilter = ({
@@ -22,10 +22,12 @@ const CustomFilter = ({
   resetForm,
   children,
   users,
+  campaigns,
   showStatus,
   tasks,
   createdByList,
   createdByProject,
+  getOrganizationList,
 }) => {
   const [filter, setFilter] = useState({});
   //using in the expense management filter page
@@ -40,6 +42,8 @@ const CustomFilter = ({
       createdByKeyword: query?.createdByKeyword,
       status: query?.status,
       projectKeyword: query?.projectKeyword,
+      organization: query?.organization,
+      organizationName: query?.organizationName,
     });
   }, [query]);
 
@@ -192,6 +196,51 @@ const CustomFilter = ({
                 </Option>
               ))}
             </Dropdown>
+          </Field>
+        )}
+
+        {campaigns && filter?.userType === "admin" && (
+          <Field label="Organization">
+            <Combobox
+              className={` input__Style`}
+              value={filter?.organizationName}
+              placeholder="Select the organization"
+              size="large"
+              onClick={() => {
+                getOrganizationList();
+              }}
+              style={{ textTransform: "capitalize" }}
+              onChange={(e) => {
+                setFilter({
+                  ...filter,
+                  organizationName: e.target.value,
+                });
+                getOrganizationList();
+              }}
+              onOptionSelect={(e, data) => {
+                setFilter({
+                  ...filter,
+                  organization: data?.optionValue,
+                  organizationName: data?.optionText,
+                });
+              }}
+            >
+              {createdByList?.length > 0 ? (
+                createdByList?.map((val, ind) => (
+                  <Option
+                    style={{ textTransform: "capitalize" }}
+                    value={val?._id}
+                    text={val?.name}
+                  >
+                    {val?.name}
+                  </Option>
+                ))
+              ) : (
+                <Option disabled style={{ textAlign: "center" }}>
+                  No Data Found
+                </Option>
+              )}
+            </Combobox>
           </Field>
         )}
 

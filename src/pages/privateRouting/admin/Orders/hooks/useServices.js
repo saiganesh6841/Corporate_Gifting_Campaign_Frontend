@@ -19,6 +19,10 @@ const required = {
   pincode: "",
 };
 
+const editRequired = {
+  status: "",
+};
+
 const newEmployeeRequired = {
   campaignId: "",
   // productId: "",
@@ -50,13 +54,7 @@ const useServices = (props) => {
   const userStorage = JSON.parse(localStorage.getItem("userDetails"));
   const [roles, setRoles] = useState([]);
   const [createdByList, setCreatedByList] = useState([]);
-  const [subscriptionList, setSubscriptionList] = useState([]);
-  const [challengeDropdownList, setChallengeDropdownList] = useState([]);
-  const [userRatings, setUserRatings] = useState([]);
-  const [userSubscriptionDetails, setuserSubscriptionDetails] = useState({
-    currentSubscription: null,
-    historySubscription: null,
-  });
+  const [status, setStatus] = useState("");
   const [tableData, setTableData] = useState({
     result: null,
     pages: 0,
@@ -116,7 +114,9 @@ const useServices = (props) => {
 
     let validationFields;
 
-    if (userForm?.isNewEmployee) {
+    if (isEdit) {
+      validationFields = { ...editRequired };
+    } else if (userForm?.isNewEmployee) {
       validationFields = { ...newEmployeeRequired };
     } else {
       validationFields = { ...required };
@@ -133,6 +133,7 @@ const useServices = (props) => {
       ? {
           ...userForm,
           _id: recordId[0]?._id,
+          status: status || userForm?.status,
         }
       : { ...userForm };
 
@@ -170,16 +171,12 @@ const useServices = (props) => {
         tableQuery(query);
       }
       if (response?.data?.responseCode === 114) {
-        if (response?.data?.message === "Mobile number already exists.") {
-          setErrors((p) => ({
-            ...p,
-            mobileNumber: "Mobile number already exists",
-          }));
-        } else if (response?.data?.message === "Email already exists.") {
-          setErrors((p) => ({ ...p, email: "Email already exists" }));
-        }
-        setLoading({ ...loading, isOpen: false });
+        publishNotification(
+          response?.data?.message || "Error while processing request",
+          "error",
+        );
       }
+      setLoading({ ...loading, isOpen: false });
     } catch (error) {
       publishNotification(
         `Error while ${isEdit ? "updating" : "creating"} user`,
@@ -195,7 +192,7 @@ const useServices = (props) => {
       store.dispatch({ type: "IS_BACKDROP_OPEN", value: true });
       const response = await APIRequest.request(
         "GET",
-        `${ConfigAPIURL.getCampaign}?_id=${recordId[0]?._id}`,
+        `${ConfigAPIURL.getOrder}?_id=${recordId[0]?._id}`,
         // JSON.stringify({
         //   userId: recordId[0]?.userId,
         // }),
@@ -213,6 +210,10 @@ const useServices = (props) => {
           giftingModel: result?.giftingModel || "",
           products: result?.products || "",
           message: result?.message || "",
+          address: result?.deliveryAddress?.address || "",
+          city: result?.deliveryAddress?.city || "",
+          state: result?.deliveryAddress?.state || "",
+          pincode: result?.deliveryAddress?.pincode || "",
         });
       }
     } catch (error) {
@@ -323,6 +324,8 @@ const useServices = (props) => {
     getEmployeeList,
     campaignList,
     getCampaignList,
+    setStatus,
+    status,
   };
 };
 
